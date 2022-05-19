@@ -1,9 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Overview from './overview/overview';
-import Related from './related/related';
-import Questions from './questions/questions';
-import Ratings from './ratings/ratings';
+import Overview from './overview/overview.jsx';
+import Related from './related/related.jsx';
+import Questions from './questions/questions.jsx';
+import Ratings from './ratings/ratings.jsx';
 
 const root = createRoot(document.getElementById('root'));
 
