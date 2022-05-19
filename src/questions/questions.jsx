@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default Questions;
+
 
 const Questions = function Questions(props) {
   const [count, setCount] = useState(0);
@@ -21,3 +21,5 @@ const Questions = function Questions(props) {
     </div>
   );
 };
+
+export default Questions;
