@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Related() {
+function Related(props) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     document.title = `You clicked related ${count} times`;

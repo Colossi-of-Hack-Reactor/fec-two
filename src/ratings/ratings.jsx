@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Ratings() {
+function Ratings(props) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     document.title = 'Done';
