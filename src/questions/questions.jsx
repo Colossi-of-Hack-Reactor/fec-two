@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-
-
 const Questions = function Questions(props) {
   const [count, setCount] = useState(0);
 

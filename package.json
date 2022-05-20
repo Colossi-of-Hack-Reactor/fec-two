@@ -6,10 +6,11 @@
   "author": "arkteck <arkteck@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack --mode=development",
+    "start": "webpack --mode=development --watch",
     "build": "webpack --mode=production",
     "dev": "webpack serve --open",
-    "test": "jest"
+    "test": "jest",
+    "server": "nodemon --watch server ./server/"
   },
   "dependencies": {
     "axios": "^0.27.2",

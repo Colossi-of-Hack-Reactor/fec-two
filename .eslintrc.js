@@ -19,12 +19,14 @@ module.exports = {
   ],
   rules: {
   },
-  import/resolver: {
-    node: {
-      extensions: [
-        '.js',
-        '.jsx',
-      ],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: [
+          '.js',
+          '.jsx',
+        ],
+      },
     },
   },
 };
