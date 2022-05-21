@@ -23,14 +23,9 @@ app.get('/products', (req, res) => {
       console.log('axios get products error', err);
     });
 });
-/* API for Questions */
-app.get('/questions', (req, res) => {
-  const cid = req.query.questionID;
-  questionsAPI.getQuestions(cid, (data) => {
-    res.send(data);
-  });
-});
 
+/* API for Questions*/
+app.get('/questions', questionsAPI.getQuestionsRoute)
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

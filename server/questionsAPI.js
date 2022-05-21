@@ -3,7 +3,8 @@ const axios = require('axios');
 
 const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 
-const getQuestions = (params, callback) => {
+/* *******Get Questions Model + Route******* */
+const getQuestionsModel = (params, callback) => {
   const options = {
     method: 'GET',
     url: `${baseURL}qa/questions?product_id=${params}&count=20`,
@@ -16,7 +17,21 @@ const getQuestions = (params, callback) => {
     });
 };
 
+const getQuestionsRoute = ('/questions', (req, res) => {
+  const cid = req.query.questionID;
+  questionsAPI.getQuestions(cid, (data) => {
+    res.send(data);
+  });
+});
 
-module.exports ={
-  getQuestions,
-}
+module.exports = {
+  getQuestionsModel,
+  getQuestionsRoute,
+};
+
+/* app.get('/questions', (req, res) => {
+  const cid = req.query.questionID;
+  questionsAPI.getQuestions(cid, (data) => {
+    res.send(data);
+  });
+}); */
