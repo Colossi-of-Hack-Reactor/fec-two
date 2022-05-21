@@ -7,7 +7,7 @@ const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 const getQuestionsModel = (params, callback) => {
   const options = {
     method: 'GET',
-    url: `${baseURL}qa/questions?product_id=${params}&count=20`,
+    url: `${baseURL}/qa/questions?product_id=${params}&count=20`,
     headers: { Authorization: process.env.GITHUBKEY },
   };
   axios(options)
@@ -19,13 +19,12 @@ const getQuestionsModel = (params, callback) => {
 
 const getQuestionsRoute = ('/questions', (req, res) => {
   const cid = req.query.questionID;
-  questionsAPI.getQuestions(cid, (data) => {
+  getQuestionsModel(cid, (data) => {
     res.send(data);
   });
 });
 
 module.exports = {
-  getQuestionsModel,
   getQuestionsRoute,
 };
 
