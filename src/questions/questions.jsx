@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import SearchBar from './searchbar.jsx';
 
 
 
 const Questions = function Questions(props) {
-  const [count, setCount] = useState(0);
+
 
   return (
     <div>
-      <p>
-        You clicked questions
-        {' '}
-        {count}
-        {' '}
-        times!
-
-      </p>
-      <button type="button" onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
+      <SearchBar />
     </div>
   );
 };
