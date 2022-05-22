@@ -13,9 +13,11 @@ app.use(cors());
 
 app.get('/products', productsAPI.getProducts);
 app.get('/products/:product_id', productsAPI.getProduct);
+app.get('/products/:product_id/styles', productsAPI.getStyles);
+app.get('/products/:product_id/related', productsAPI.getRelated);
 
 /* API for Questions*/
-app.get('/questions', questionsAPI.getQuestionsRoute)
+app.get('/questions', questionsAPI.getQuestionsRoute);
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
