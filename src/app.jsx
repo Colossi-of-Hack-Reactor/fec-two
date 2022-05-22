@@ -28,25 +28,21 @@ function App() {
       <Overview
         product_id={product_id}
         setProduct_id={setProduct_id}
-        loading={loading}
         setLoading={setLoading}
       />
       <Related
         product_id={product_id}
         setProduct_id={setProduct_id}
-        loading={loading}
         setLoading={setLoading}
       />
       <Questions
         product_id={product_id}
         setProduct_id={setProduct_id}
-        loading={loading}
         setLoading={setLoading}
       />
       <Ratings
         product_id={product_id}
         setProduct_id={setProduct_id}
-        loading={loading}
         setLoading={setLoading}
       />
     </>
