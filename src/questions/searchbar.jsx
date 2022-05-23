@@ -19,7 +19,7 @@ const SearchInput = styled.input`
 `;
 
 const SearchBar = function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = function handleChange(input) {
     setSearchTerm(input);
@@ -29,13 +29,16 @@ const SearchBar = function SearchBar(props) {
     // 👇️ prevent page refresh
     event.preventDefault();
 
-    console.log("form submitted ✅");
+    console.log(searchTerm);
   };
   return (
     <div className="questionSearch">
       <form onSubmit={handleSubmit}>
         <Title className="searchbartitle">QUESTIONS & ANSWERS </Title>
         <SearchInput
+          id="questionSearchForm"
+          type="text"
+          value={searchTerm}
           onChange={(event) => {
             event.preventDefault();
             handleChange(event.target.value);
