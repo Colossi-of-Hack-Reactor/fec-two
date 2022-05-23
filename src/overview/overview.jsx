@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import QuantitySelector from './quantitySelector.jsx'
+import SizeSelector from './sizeSelector.jsx';
+import StyleSelector from './styleSelector.jsx';
 
 const Product = styled.div`
 color: blue;
@@ -13,6 +16,8 @@ color: blue;
 
 const Sale = styled.span`
   color: red;
+`;
+const Original = styled.span`
   text-decoration: line-through;
   text-decoration-style: solid;
 `;
@@ -137,11 +142,13 @@ function Overview(props) {
               <>
                 <Sale>
                   $
-                  {styles[style].original_price}
+                  {styles[style].sale_price}
+                  {' '}
                 </Sale>
-                {' '}
-                $
-                {styles[style].sale_price}
+                <Original>
+                  $
+                  {styles[style].original_price}
+                </Original>
               </>
             ) : (
               <>
@@ -150,58 +157,9 @@ function Overview(props) {
               </>
             )}
           </div>
-          <div>
-            Style:
-            {' '}
-            <select
-              name="style"
-              onChange={(e) => {
-                setStyle(e.target.value);
-              }}
-            >
-              {styles.map((s, i) => (
-                <option value={i} key={s.name}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            Select Size
-            {' '}
-            <select
-              name="size"
-              onChange={(e) => {
-                setSize(e.target.value);
-              }}
-            >
-              <option value={null}>
-                Select
-              </option>
-              {Object.keys(styles[style].skus).map((sku, i) => (
-                <option value={sku} key={sku}>
-                  {styles[style].skus[sku].size}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            Select Quantity
-            {' '}
-            <select
-              name="quantity"
-              onChange={(e) => {
-                setQuantity(e.target.value);
-              }}
-              disabled={size === null}
-            >
-              {size === null || styles[style].skus[size] === undefined ? <option>-</option>
-                : Array(Math.min(15, styles[style].skus[size].quantity))
-                  .fill(0).map((v, i) => i + 1).map((q) => (
-                    <option key={q} value={q}>{q}</option>
-                  ))}
-            </select>
-          </div>
+          <StyleSelector setStyle={setStyle} styles={styles} />
+          <SizeSelector setSize={setSize} style={style} styles={styles} />
+          <QuantitySelector setQuantity={setQuantity} size={size} style={style} styles={styles} />
         </>
       ) : ''}
       <div>
@@ -213,10 +171,12 @@ function Overview(props) {
       <div>
         Slogan:
         {' '}
+        {product.slogan}
       </div>
       <div>
         Description:
         {' '}
+        {product.description}
       </div>
     </>
   );
