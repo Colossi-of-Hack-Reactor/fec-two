@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+const Form = styled.form`
+  padding-bottom: 7px;
+`;
 const Title = styled.p`
   font-family: Sans-serif;
   font-weight: 100;
@@ -15,12 +18,10 @@ const SearchInput = styled.input`
     font-weight: 800;
     font-size: 13px;
   }
-
 `;
 
 const SearchBar = function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
-
   const handleChange = function handleChange(input) {
     setSearchTerm(input);
   };
@@ -28,12 +29,10 @@ const SearchBar = function SearchBar(props) {
   const handleSubmit = (event) => {
     // 👇️ prevent page refresh
     event.preventDefault();
-
-    console.log(searchTerm);
   };
   return (
     <div className="questionSearch">
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Title className="searchbartitle">QUESTIONS & ANSWERS </Title>
         <SearchInput
           id="questionSearchForm"
@@ -45,7 +44,7 @@ const SearchBar = function SearchBar(props) {
           }}
           placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS ... 🔍"
         />
-      </form>
+      </Form>
     </div>
   );
 };
