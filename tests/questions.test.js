@@ -13,15 +13,7 @@ import SearchBar from '../src/questions/searchbar.jsx';
 axios.defaults.baseURL = 'http://localhost:3000';
 let container;
 
-beforeEach(() => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
 
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
 
 describe("Questions", () => {
 
@@ -42,12 +34,3 @@ describe("Questions", () => {
 
 
 });
-
-/* it('Should store value enter in search in component state', async () => {
-  const user = userEvent.setup()
-  render(<SearchInput />);
-  const inputElement = screen.getByTestId("questionSearchForm");
-  userEvent.type(inputElement, "cory");
-  fireEvent.submit(getByTestId("questionSearchForm"));
-  expect(handleSubmit.callCount).to.equal(1);
-}) */
