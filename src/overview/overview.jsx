@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import Gallery from './gallery.jsx';
 
 const Product = styled.div`
 color: blue;
@@ -13,11 +14,11 @@ color: blue;
 
 function Overview(props) {
   const [count, setCount] = useState(5);
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
-  const [related, setRelated] = useState([]);
+  const [style, setStyle] = useState(0);
   const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function Overview(props) {
       },
     })
       .then((response) => {
-        setData(response.data);
+        setProducts(response.data);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -46,10 +47,7 @@ function Overview(props) {
       })
       .then((response) => {
         setStyles(response.data.results);
-        return axios.get(`/products/${product_id}/related`);
-      })
-      .then((response) => {
-        setRelated(response.data);
+        setStyle(0);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -88,7 +86,7 @@ function Overview(props) {
           />
         </label>
       </form>
-      {data.length ? data.map((d) => (
+      {products.length ? products.map((d) => (
         <Product key={d.id} data-testid="product" onClick={() => { setProduct_id(d.id); }}>
           <span>
             {d.id}
@@ -106,19 +104,15 @@ function Overview(props) {
           {typeof product[k] === 'object' ? '[object]' : product[k] }
         </div>
       ))}
-      {styles.map((k) => (
-        <div key={k.style_id}>
+      {styles.map((s, i) => (
+        <Product key={s.style_id} onClick={() => setStyle(i)}>
           style_id
           :
           {' '}
-          {k.style_id}
-        </div>
+          {s.style_id}
+        </Product>
       ))}
-      {related.map((k, i) => (
-        <div key={`${k}_${i}`}>
-          {k}
-        </div>
-      ))}
+      {styles.length ? <Gallery style={styles[style]} /> : ''}
 
     </>
   );
