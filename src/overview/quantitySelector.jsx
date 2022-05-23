@@ -4,7 +4,7 @@ function QuantitySelector(props) {
   const { setQuantity, size, style, styles } = props;
 
   return (
-    <div>
+    <label>
       Select Quantity
       {' '}
       <select
@@ -20,7 +20,7 @@ function QuantitySelector(props) {
               <option key={q} value={q}>{q}</option>
             ))}
       </select>
-    </div>
+    </label>
   );
 }
 

@@ -4,8 +4,8 @@ function StyleSelector(props) {
   const { setStyle, styles } = props;
 
   return (
-    <div>
-      Style:
+    <label>
+      Style
       {' '}
       <select
         name="style"
@@ -19,7 +19,7 @@ function StyleSelector(props) {
           </option>
         ))}
       </select>
-    </div>
+    </label>
   );
 }
 

@@ -5,7 +5,7 @@ function SizeSelector(props) {
 
   if (styles[style].skus.null) {
     return (
-      <div>
+      <label>
         Select Size
         {' '}
         <select
@@ -19,11 +19,11 @@ function SizeSelector(props) {
             OUT OF STOCK
           </option>
         </select>
-      </div>
+      </label>
     );
   }
   return (
-    <div>
+    <label>
       Select Size
       {' '}
       <select
@@ -41,7 +41,7 @@ function SizeSelector(props) {
           </option>
         ))}
       </select>
-    </div>
+    </label>
   );
 }
 
