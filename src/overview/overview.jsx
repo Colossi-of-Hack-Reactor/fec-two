@@ -24,6 +24,8 @@ function Overview(props) {
   const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
+  const [size, setSize] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
@@ -60,6 +62,15 @@ function Overview(props) {
         setLoading((a) => a - 1);
       });
   }, [product_id]);
+
+  useEffect(() => {
+    setSize(null);
+    setQuantity(1);
+  }, [style]);
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [size]);
 
   return (
     <>
@@ -140,15 +151,56 @@ function Overview(props) {
             )}
           </div>
           <div>
-            Style &gt;
+            Style:
             {' '}
-            {styles[style].name}
+            <select
+              name="style"
+              onChange={(e) => {
+                setStyle(e.target.value);
+              }}
+            >
+              {styles.map((s, i) => (
+                <option value={i} key={s.name}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             Select Size
+            {' '}
+            <select
+              name="size"
+              onChange={(e) => {
+                setSize(e.target.value);
+              }}
+            >
+              <option value={null}>
+                Select
+              </option>
+              {Object.keys(styles[style].skus).map((sku, i) => (
+                <option value={sku} key={sku}>
+                  {styles[style].skus[sku].size}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             Select Quantity
+            {' '}
+            <select
+              name="quantity"
+              onChange={(e) => {
+                setQuantity(e.target.value);
+              }}
+              disabled={size === null}
+            >
+              {size === null || styles[style].skus[size] === undefined ? <option>-</option>
+                : Array(Math.min(15, styles[style].skus[size].quantity))
+                  .fill(0).map((v, i) => i + 1).map((q) => (
+                    <option key={q} value={q}>{q}</option>
+                  ))}
+            </select>
           </div>
         </>
       ) : ''}
@@ -166,15 +218,6 @@ function Overview(props) {
         Description:
         {' '}
       </div>
-      {styles.map((s, i) => (
-        <Product key={s.style_id} onClick={() => setStyle(i)}>
-          style_id
-          :
-          {' '}
-          {s.style_id}
-        </Product>
-      ))}
-
     </>
   );
 }
