@@ -12,6 +12,12 @@ color: blue;
 }
 `;
 
+const GalleryDiv = styled.div`
+  max-width: 300px;
+  max-height: 300px;
+
+`;
+
 function Overview(props) {
   const [count, setCount] = useState(5);
   const [products, setProducts] = useState([]);
@@ -112,8 +118,9 @@ function Overview(props) {
           {s.style_id}
         </Product>
       ))}
-      {styles.length ? <Gallery style={styles[style]} /> : ''}
-
+      <GalleryDiv>
+        {styles.length ? <Gallery style={styles[style]} /> : ''}
+      </GalleryDiv>
     </>
   );
 }

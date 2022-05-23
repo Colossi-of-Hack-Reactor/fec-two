@@ -17,6 +17,11 @@ const Loading = styled.div`
     cursor: wait;
 `;
 
+const OverviewDiv = styled.div`
+  width: 75%;
+  height: 1000px;
+`;
+
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
@@ -25,11 +30,13 @@ function App() {
     <>
       {loading ? <Loading className="loading" data-testid="loading" /> : ''}
       <h1>Hello World</h1>
-      <Overview
-        product_id={product_id}
-        setProduct_id={setProduct_id}
-        setLoading={setLoading}
-      />
+      <OverviewDiv>
+        <Overview
+          product_id={product_id}
+          setProduct_id={setProduct_id}
+          setLoading={setLoading}
+        />
+      </OverviewDiv>
       <Related
         product_id={product_id}
         setProduct_id={setProduct_id}

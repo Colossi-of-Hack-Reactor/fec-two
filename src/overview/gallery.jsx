@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ImageGallery from 'react-image-gallery';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, DotGroup, Image } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 function Gallery(props) {
   const { style } = props;
@@ -17,14 +18,23 @@ function Gallery(props) {
   }, [style]);
 
   return (
-    <ImageGallery
-      items={images}
-      infinite={false}
-      thumbnailPosition="left"
-      disableThumbnailScroll
-      showPlayButton={false}
-      useBrowserFullScreen={false}
-    />
+    <CarouselProvider
+      naturalSlideWidth={100}
+      naturalSlideHeight={100}
+      totalSlides={images.length}
+      isIntrinsicHeight
+    >
+      <Slider>
+        {images.map((img, i) => (
+          <Slide index={i} key={img.original}>
+            <Image src={img.original} />
+          </Slide>
+        ))}
+      </Slider>
+      <DotGroup />
+      <ButtonBack>Back</ButtonBack>
+      <ButtonNext>Next</ButtonNext>
+    </CarouselProvider>
   );
 }
 
