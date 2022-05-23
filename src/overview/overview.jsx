@@ -11,13 +11,19 @@ color: blue;
 }
 `;
 
+const Sale = styled.span`
+  color: red;
+  text-decoration: line-through;
+  text-decoration-style: solid;
+`;
+
 function Overview(props) {
   const [count, setCount] = useState(5);
-  const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
-  const [related, setRelated] = useState([]);
+  const [style, setStyle] = useState(0);
   const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
@@ -28,7 +34,7 @@ function Overview(props) {
       },
     })
       .then((response) => {
-        setData(response.data);
+        setProducts(response.data);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -46,10 +52,7 @@ function Overview(props) {
       })
       .then((response) => {
         setStyles(response.data.results);
-        return axios.get(`/products/${product_id}/related`);
-      })
-      .then((response) => {
-        setRelated(response.data);
+        setStyle(0);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -88,7 +91,7 @@ function Overview(props) {
           />
         </label>
       </form>
-      {data.length ? data.map((d) => (
+      {products.length ? products.map((d) => (
         <Product key={d.id} data-testid="product" onClick={() => { setProduct_id(d.id); }}>
           <span>
             {d.id}
@@ -98,26 +101,78 @@ function Overview(props) {
           {d.name}
         </Product>
       )) : <Product>No products.</Product>}
-      {Object.keys(product).map((k) => (
-        <div key={k}>
-          {k}
-          :
-          {' '}
-          {typeof product[k] === 'object' ? '[object]' : product[k] }
-        </div>
-      ))}
-      {styles.map((k) => (
-        <div key={k.style_id}>
+      <div>
+        Rating
+      </div>
+      <div>
+        Reviews
+      </div>
+      <div>
+        Category:
+        {' '}
+        {product.category}
+      </div>
+      <div>
+        Expanded Product Name:
+        {' '}
+        {product.name}
+      </div>
+      {styles[style] ? (
+        <>
+          <div>
+            Price:
+            {' '}
+            {styles[style].sale_price ? (
+              <>
+                <Sale>
+                  $
+                  {styles[style].original_price}
+                </Sale>
+                {' '}
+                $
+                {styles[style].sale_price}
+              </>
+            ) : (
+              <>
+                $
+                {styles[style].original_price}
+              </>
+            )}
+          </div>
+          <div>
+            Style &gt;
+            {' '}
+            {styles[style].name}
+          </div>
+          <div>
+            Select Size
+          </div>
+          <div>
+            Select Quantity
+          </div>
+        </>
+      ) : ''}
+      <div>
+        Add to Bag
+      </div>
+      <div>
+        Star
+      </div>
+      <div>
+        Slogan:
+        {' '}
+      </div>
+      <div>
+        Description:
+        {' '}
+      </div>
+      {styles.map((s, i) => (
+        <Product key={s.style_id} onClick={() => setStyle(i)}>
           style_id
           :
           {' '}
-          {k.style_id}
-        </div>
-      ))}
-      {related.map((k, i) => (
-        <div key={`${k}_${i}`}>
-          {k}
-        </div>
+          {s.style_id}
+        </Product>
       ))}
 
     </>
