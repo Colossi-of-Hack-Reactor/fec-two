@@ -13,27 +13,27 @@ axios.defaults.baseURL = 'http://localhost:3000';
 
 describe('Overview component', function() {
 
-  it('should load product 37311 by default and change to different product when clicked', async () => {
+  it('should disable/enable quantity menu based on size selection', async () => {
     render(<App />);
     const user = userEvent.setup();
     await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-    expect(screen.getByText('id: 37311')).toBeInTheDocument();
-    await user.click(screen.getByText('37312', {ignore: 'div'}));
-    await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-    expect(screen.getByText('id: 37312')).toBeInTheDocument();
-  });
+    expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
+    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
+    await user.selectOptions(screen.getByRole('combobox', {name: 'Select Size'}), screen.getByRole('option', {name: 'S'}));
+    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).not.toBeDisabled();
+  })
 
-  it('should load number of products based on input', async () => {
+  it('should reset size and quantity selectors when different style is selected', async () => {
     render(<App />);
     const user = userEvent.setup();
     await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-    expect(screen.queryAllByTestId('product').length).toBe(5);
-    const countInput = screen.getByRole('spinbutton', {name: "Product Count:"});
-    expect(countInput).toHaveValue(5);
-    await user.clear(countInput);
-    await user.type(countInput, '10');
-    await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-    expect(screen.queryAllByTestId('product').length).toBe(10);
-  });
+    expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
+    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
+    await user.selectOptions(screen.getByRole('combobox', {name: 'Select Size'}), screen.getByRole('option', {name: 'S'}))
+    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).not.toBeDisabled();
+    await user.selectOptions(screen.getByRole('combobox', {name: 'Style'}), screen.getByRole('option', {name: 'Sky Blue & White'}));
+    expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
+    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
 
+  })
 });
