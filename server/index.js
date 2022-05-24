@@ -17,7 +17,7 @@ app.get('/products/:product_id/styles', productsAPI.getStyles);
 app.get('/products/:product_id/related', productsAPI.getRelated);
 
 /* API for Questions*/
-app.get('/questions', questionsAPI.getQuestionsRoute);
+app.get('/qa', questionsAPI.getQuestionsRoute);
 
 /* API for Ratings*/
 app.get('/reviews/', ratingsAPI.getReviews);
