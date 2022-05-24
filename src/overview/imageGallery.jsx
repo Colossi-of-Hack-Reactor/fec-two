@@ -9,14 +9,16 @@ const StyleImage = styled.img`
   height: 100px;
   width: 100px;
   border-radius: 50%;
+  margin: 4px;
 
   &.selected {
+    margin: 0;
     border: 4px solid orange;
   }
 `;
 
 const ImageZoom = styled.img`
-  height: 500px;
+  height: 700px;
 `;
 
 function StyleSelector(props) {
