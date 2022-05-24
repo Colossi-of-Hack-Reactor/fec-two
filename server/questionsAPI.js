@@ -19,6 +19,7 @@ const getQuestionsModel = (params, callback) => {
 
 const getQuestionsRoute = ('/questions', (req, res) => {
   const cid = req.query.questionID;
+  console.log('Get /questions')
   getQuestionsModel(cid, (data) => {
     res.send(data);
   });
@@ -28,9 +29,3 @@ module.exports = {
   getQuestionsRoute,
 };
 
-/* app.get('/questions', (req, res) => {
-  const cid = req.query.questionID;
-  questionsAPI.getQuestions(cid, (data) => {
-    res.send(data);
-  });
-}); */
