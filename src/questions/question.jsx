@@ -4,7 +4,10 @@ import Answer from "./answer.jsx";
 
 const Question = function Question(props) {
   return (
-    <div>Question Here</div>
+    <div>
+    <div>{props.info.question_body}</div>
+      <Answer info={props.info.answers} />
+    </div>
   );
 }
 
