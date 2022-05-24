@@ -5,6 +5,27 @@ function SizeSelector(props) {
 
   if (styles[style].skus.null) {
     return (
+      <div>
+        <label>
+          Select Size
+          {' '}
+          <select
+            name="size"
+            onChange={(e) => {
+              setSize(e.target.value);
+            }}
+            disabled
+          >
+            <option value="Select">
+              OUT OF STOCK
+            </option>
+          </select>
+        </label>
+      </div>
+    );
+  }
+  return (
+    <div>
       <label>
         Select Size
         {' '}
@@ -13,35 +34,18 @@ function SizeSelector(props) {
           onChange={(e) => {
             setSize(e.target.value);
           }}
-          disabled
         >
-          <option value={null}>
-            OUT OF STOCK
+          <option value="Select">
+            Select
           </option>
+          {Object.keys(styles[style].skus).map((sku, i) => (
+            <option value={sku} key={sku}>
+              {styles[style].skus[sku].size}
+            </option>
+          ))}
         </select>
       </label>
-    );
-  }
-  return (
-    <label>
-      Select Size
-      {' '}
-      <select
-        name="size"
-        onChange={(e) => {
-          setSize(e.target.value);
-        }}
-      >
-        <option value={null}>
-          Select
-        </option>
-        {Object.keys(styles[style].skus).map((sku, i) => (
-          <option value={sku} key={sku}>
-            {styles[style].skus[sku].size}
-          </option>
-        ))}
-      </select>
-    </label>
+    </div>
   );
 }
 

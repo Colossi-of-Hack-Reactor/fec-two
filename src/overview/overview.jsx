@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import QuantitySelector from './quantitySelector.jsx'
 import SizeSelector from './sizeSelector.jsx';
 import StyleSelector from './styleSelector.jsx';
+import ImageGallery from './imageGallery.jsx';
 
 const Product = styled.div`
 color: blue;
@@ -29,8 +30,9 @@ function Overview(props) {
   const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
-  const [size, setSize] = useState(null);
+  const [size, setSize] = useState('Select');
   const [quantity, setQuantity] = useState(1);
+  const [image, setImage] = useState(0);
   const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
@@ -69,9 +71,10 @@ function Overview(props) {
   }, [product_id]);
 
   useEffect(() => {
-    setSize(null);
+    setSize('Select');
     setQuantity(1);
-  }, [style]);
+    setImage(0);
+  }, [style, product]);
 
   useEffect(() => {
     setQuantity(1);
@@ -157,7 +160,8 @@ function Overview(props) {
               </>
             )}
           </div>
-          <StyleSelector setStyle={setStyle} styles={styles} />
+          <StyleSelector setStyle={setStyle} styles={styles} style={style} />
+          <ImageGallery style={style} styles={styles} image={image} setImage={setImage} />
           <SizeSelector setSize={setSize} style={style} styles={styles} />
           <QuantitySelector setQuantity={setQuantity} size={size} style={style} styles={styles} />
         </>
