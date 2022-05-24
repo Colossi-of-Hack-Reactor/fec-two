@@ -45,6 +45,7 @@ function StyleSelector(props) {
                     key={s.style_id}
                     src={s.photos[0].thumbnail_url}
                     onClick={() => setStyle(4 * i + j)}
+                    data-testid={`style-${4 * i + j}`}
                   />
                   {4 * i + j === style ? <Check>☑️</Check> : ''}
                 </TD>

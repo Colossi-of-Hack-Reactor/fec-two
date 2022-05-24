@@ -164,11 +164,20 @@ function Overview(props) {
           <ImageGallery style={style} styles={styles} image={image} setImage={setImage} />
           <SizeSelector setSize={setSize} style={style} styles={styles} />
           <QuantitySelector setQuantity={setQuantity} size={size} style={style} styles={styles} />
+          {
+            styles[style].skus.null ? (null) : (
+              <div>
+                <button
+                  type="button"
+                  disabled={size === 'Select'}
+                >
+                  Add to Bag
+                </button>
+              </div>
+            )
+          }
         </>
       ) : ''}
-      <div>
-        Add to Bag
-      </div>
       <div>
         Star
       </div>
