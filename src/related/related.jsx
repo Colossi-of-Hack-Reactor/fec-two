@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductCard from './productCard.jsx';
+import { ProductCard } from './productCard.jsx';
 
 function Related({ product_id }) {
   const [products, setProducts] = useState([]);
@@ -14,7 +14,9 @@ function Related({ product_id }) {
       })
       .catch((err) => console.log('FAILURE', err));
   }, []);
+
+  return <div>{products.map((product) => <ProductCard product={product} key={product.id} />)}</div>;
 }
-// console.log(products)
-// return (${products.map((product) => <ProductCard product={product} />)})
+
+
 export default Related;
