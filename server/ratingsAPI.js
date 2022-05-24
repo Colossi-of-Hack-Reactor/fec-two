@@ -20,7 +20,6 @@ exports.getReviews = (req, res) => {
 exports.getReviewsByProductId = (req, res) => {
   axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
     .then((response) => {
-      console.log('request get /reviews/meta', response.data);
       res.status(200).send(response.data);
     })
     .catch((err) => {
@@ -29,7 +28,6 @@ exports.getReviewsByProductId = (req, res) => {
 };
 
 exports.addReview = (req, res) => {
-  console.log(req.body);
   axios.post(`${baseURL}/reviews`, { headers, params: req.body })
     .then((response) => {
       // console.log('request post /reviews/', req.body);
