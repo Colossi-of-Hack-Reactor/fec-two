@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import RatingListEntry from './ratingListEntry.jsx';
 
-export default function RatingList({ reviews }) {
+export default function RatingList({ meta }) {
   return (
-    <>
+    <div>
       <div>
-        {reviews.map((review) => (
-          <RatingListEntry
-            key={review.id}
-            review={review}
-          />
-        ))}
+        {/* <span>{meta.ratings[2]}</span>
+        <span>{meta.ratings[3]}</span>
+        <span>{meta.ratings[4]}</span>
+        <span>{meta.ratings[5]}</span> */}
       </div>
       <div>
-        <button type="button"> MORE REVIEWS </button>
-        {' '}
-        <button type="button"> ADD A REVIEW + </button>
+        <span>
+          {meta.characteristics.Size.value}
+        </span>
+        <span>
+          {meta.characteristics.Width.value}
+        </span>
+        <span>
+          {meta.characteristics.Comfort.value}
+        </span>
       </div>
-    </>
-  )
-};
+    </div>
+  );
+}

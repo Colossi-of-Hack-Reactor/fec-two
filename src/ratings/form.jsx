@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Modal from './modal.jsx'
 // import withRangeOption from "./withRangeOption.jsx"
 
-export default function Form({product_id}) {
+export default function Form({ product_id }) {
 
   // const[overall, setOverall] = useState("Great");
   // 1 star - “Poor”
@@ -17,6 +18,7 @@ export default function Form({product_id}) {
   const [email, setEmail] = useState('');
 
 
+
   // useEffect(handleCheck() {
   //   if(recommend === "Yes") {
   //   setRecommend("No");
@@ -24,28 +26,18 @@ export default function Form({product_id}) {
   // setRecommend("Yes");
   //   });
 
-  // handlePost(e) {
-  //   e.preventDefault();
-  //   const { newEntry } = this.state;
-  //   axios.post("/posts", newEntry)
-  //     .then((data) => {
-  //       console.log("Added a post!");
-  //     })
-  //     .catch((err) => console.log(err));
-  //   this.props.onSubmit();
-  // }
   const handleSubmit = () => {
     // console.log({product_id, summary, nickname, content, email});
     axios.post(`/products/${product_id}/reviews`, {
-        product_id, summary, nickname, content, email
+      product_id, summary, nickname, content, email,
     })
       .then(() => {
-        console.log("Added a review! ");
+        console.log('Added a review! ');
       })
       .catch((err) => {
         console.log('axios post reviews error', err);
       });
-    }
+  };
 
   return (
     <section>
@@ -141,10 +133,8 @@ export default function Form({product_id}) {
           </label>
         </div>
         <div>
-          <button
-          type="button"
-          onClick={handleSubmit}>
-          Submit review
+          <button type="button" onClick={handleSubmit}>
+            Submit review
           </button>
         </div>
       </form>

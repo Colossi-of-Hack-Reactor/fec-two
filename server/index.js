@@ -20,8 +20,9 @@ app.get('/products/:product_id/related', productsAPI.getRelated);
 app.get('/questions', questionsAPI.getQuestionsRoute);
 
 /* API for Ratings*/
-app.get('/products/:product_id/reviews', ratingsAPI.getReviews);
-app.post('/products/:product_id/reviews', ratingsAPI.addReview);
+app.get('/reviews/', ratingsAPI.getReviews);
+app.get('/reviews/meta', ratingsAPI.getReviewsByProductId);
+app.post('/products/:product_id/reviews/', ratingsAPI.addReview);
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

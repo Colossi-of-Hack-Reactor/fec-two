@@ -8,13 +8,24 @@ const headers = {
 
 /* *******Get Ratings Model + Route******* */
 exports.getReviews = (req, res) => {
-  axios.get(`${baseURL}/reviews`, { headers, params: req.query })
+  axios.get(`${baseURL}/reviews/`, { headers, params: req.query })
     .then((response) => {
-      console.log('request get /reviews', req.query);
+      console.log('request get /reviews', response.data.results);
+      res.status(200).send(response.data.results);
+    })
+    .catch((err) => {
+      console.log('axios get reviews error', err);
+    });
+};
+
+exports.getReviewsByProductId = (req, res) => {
+  axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
+    .then((response) => {
+      console.log('request get /reviews', response.data);
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      // console.log('axios get reviews error', err);
+      console.log('axios get reviews error', err);
     });
 };
 
