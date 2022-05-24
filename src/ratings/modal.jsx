@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ModalPop = styled.div`
+const Modal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+  display: ${({ show }) => (show === 'true' ? 'block' : 'none')};
 `;
 
 const ModalMain = styled.div`
@@ -20,24 +21,24 @@ const ModalMain = styled.div`
   transform: translate(-50 %, -50 %);
 `;
 
-const ModalBlock = styled.div`
-  display: block;
+const CloseButton = styled.div`
+  top:1%;
+  left:85%;
+  position: absolute;
 `;
 
-const ModalNone = styled.div`
-  display: none;
-`;
-
-
-export default function Modal({ handleClose, show, children }) {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
-
+function Popup({ handleClose, show, children }) {
   return (
-    <div className={showHideClassname}>
-      <section className="modal-main">
-        {children}
-        <button onClick={handleClose}>close</button>
-      </section>
-    </div>
+    <Modal show={show}>
+      <div>
+        <ModalMain>
+          <CloseButton>
+            <button type="button" onClick={handleClose}>close</button>
+          </CloseButton>
+          {children}
+        </ModalMain>
+      </div>
+    </Modal>
   );
-};
+}
+export default Popup;
