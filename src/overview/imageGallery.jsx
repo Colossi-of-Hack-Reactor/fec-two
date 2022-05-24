@@ -1,56 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
+import ImageGallery from 'react-image-gallery';
+import LeftNav from './r-i-g-src/controls/LeftNav.js';
+import RightNav from './r-i-g-src/controls/RightNav.js';
 
-const TD = styled.td`
-`;
-
-const StyleImage = styled.img`
-  cursor: pointer;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  margin: 4px;
-
-  &.selected {
-    margin: 0;
-    border: 4px solid orange;
-  }
-`;
-
-const ImageZoom = styled.img`
-  height: 700px;
+const ImageContainer = styled.div`
+  width: 800px;
 `;
 
 function StyleSelector(props) {
-  const { image, setImage, style, styles } = props;
-  const stylesArray = [];
-
-  for (let i = 0; i < styles[style].photos.length; i += 7) {
-    stylesArray.push(styles[style].photos.slice(i, i + 7));
-  }
+  const { style, styles } = props;
+  const images = styles[style].photos.map(photo => ({
+    original: photo.url,
+    thumbnail: photo.thumbnail_url,
+    originalHeight: '700px',
+    originalWidth: '700px',
+    thumbnailHeight: '100px',
+    thumbnailWidth: '100px',
+  }));
 
   return (
-    <>
-      <table>
-        <tbody>
-          {stylesArray.map((row, i) => (
-            <tr key={i}>
-              {row.map((s, j) => (
-                <TD key={j}>
-                  <StyleImage
-                    className={7 * i + j === image ? 'selected' : null}
-                    key={7 * i + j}
-                    src={s.thumbnail_url}
-                    onClick={() => setImage(7 * i + j)}
-                  />
-                </TD>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <ImageZoom src={styles[style].photos[image].url} />
-    </>
+    <ImageContainer>
+      <ImageGallery
+        items={images}
+        infinite={false}
+        thumbnailPosition="left"
+        showPlayButton={false}
+        renderLeftNav={(onClick, disabled) => {
+          if (disabled) {
+            return null;
+          }
+          return <LeftNav onClick={onClick} disabled={disabled} />;
+        }}
+        renderRightNav={(onClick, disabled) => {
+          if (disabled) {
+            return null;
+          }
+          return <RightNav onClick={onClick} disabled={disabled} />;
+        }}
+      />
+    </ImageContainer>
   );
 }
 

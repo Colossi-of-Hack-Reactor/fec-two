@@ -13,27 +13,21 @@ axios.defaults.baseURL = 'http://localhost:3000';
 
 describe('Overview component', function() {
 
-  it('should disable/enable quantity menu based on size selection', async () => {
+  it('should disable/enable certain menus and buttons conditionally', async () => {
     render(<App />);
     const user = userEvent.setup();
     await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
     expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
     expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
+    expect(screen.getByRole('button', {name: 'Add to Bag'})).toBeDisabled();
     await user.selectOptions(screen.getByRole('combobox', {name: 'Select Size'}), screen.getByRole('option', {name: 'S'}));
     expect(screen.getByRole('combobox', {name: 'Select Quantity'})).not.toBeDisabled();
-  })
-
-  it('should reset size and quantity selectors when different style is selected', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+    expect(screen.getByRole('button', {name: 'Add to Bag'})).not.toBeDisabled();
+    await user.click(screen.getByTestId('style-1'));
+    await new Promise((r) => setTimeout(r, 500));
     expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
     expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
-    await user.selectOptions(screen.getByRole('combobox', {name: 'Select Size'}), screen.getByRole('option', {name: 'S'}))
-    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).not.toBeDisabled();
-    await user.selectOptions(screen.getByRole('combobox', {name: 'Style'}), screen.getByRole('option', {name: 'Sky Blue & White'}));
-    expect(screen.getByRole('combobox', {name: 'Select Size'})).toHaveValue('Select');
-    expect(screen.getByRole('combobox', {name: 'Select Quantity'})).toBeDisabled();
-
+    expect(screen.getByRole('button', {name: 'Add to Bag'})).toBeDisabled();
   })
+
 });
