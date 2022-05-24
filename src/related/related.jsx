@@ -20,7 +20,7 @@ function Related({ product_id }) {
           });
       })
       .catch((err) => console.log('FAILURE', err));
-  }, []);
+  }, [product_id]);
 
   return (
     <div>
