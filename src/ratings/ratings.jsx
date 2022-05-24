@@ -9,14 +9,13 @@ const FormStyle = styled.div`
 color: purple;
 `;
 
-function Ratings(props) {
+export default function Ratings(props) {
   const [count, setCount] = useState(5);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
-  const [reviews, setReviews] = useState([]);
-  const [meta, setMeta] = useState({ product_id: '' });
-  const [ratings, setRatings] = useState({});
   const { product_id, setProduct_id, setLoading } = props;
+  const [reviews, setReviews] = useState([]);
+  const [meta, setMeta] = useState({});
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -26,7 +25,6 @@ function Ratings(props) {
       },
     })
       .then((response) => {
-        // console.log(response.data);
         setReviews(response.data);
         setLoading((a) => a - 1);
       })
@@ -44,26 +42,21 @@ function Ratings(props) {
       },
     })
       .then((response) => {
-        // setRatings(response.data.ratings);
-        setMeta({
-          product_id: response.data.product_id,
-          // ratings: response.data.ratings,
-          // recommended: response.data.recommended,
-        });
-        console.log(response.data.product_id);
+        setMeta(
+          response.data,
+        );
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        // console.log('axios get reviews error', err);
+        console.log('axios get /reviews/meta error', err);
         setLoading((a) => a - 1);
       });
-    console.log(meta);
   }, [product_id]);
 
   return (
     <div>
       <div>
-        {/* <RatingList meta={meta} /> */}
+        <RatingList meta={meta} />
       </div>
       <div>
         {reviews.length}
@@ -77,5 +70,3 @@ function Ratings(props) {
     </div>
   );
 }
-
-export default Ratings;

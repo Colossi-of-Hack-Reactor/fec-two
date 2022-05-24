@@ -8,7 +8,7 @@ export default function ReviewList({ reviews }) {
   return (
     <div>
       <div>
-        {reviews.map((review, i) => (
+        {reviews.map((review) => (
           <ReviewListEntry
             key={review.review_id}
             review={review}
@@ -21,5 +21,5 @@ export default function ReviewList({ reviews }) {
         <button type="button" onClick={() => setAdd('true')}> ADD A REVIEW + </button>
       </div>
     </div>
-  )
-};
+  );
+}

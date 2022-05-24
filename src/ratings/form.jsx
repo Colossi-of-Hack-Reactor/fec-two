@@ -4,32 +4,26 @@ import Modal from './modal.jsx'
 // import withRangeOption from "./withRangeOption.jsx"
 
 export default function Form({ product_id }) {
-
-  // const[overall, setOverall] = useState("Great");
-  // 1 star - “Poor”
-  // 2 stars - “Fair”
-  // 3 stars - “Average”
-  // 4 stars - “Good”
-  // 5 stars - “Great”
-  // const[recommend, setRecommend] = useState("Yes");
+  const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
-  const [content, setContent] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [body, setBody] = useState('');
+  const [recommend, setRecommend] = useState('true');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [photos, setPhotos] = useState([]);
+  const [characteristics, setChar] = useState({});
 
-
-
-  // useEffect(handleCheck() {
-  //   if(recommend === "Yes") {
-  //   setRecommend("No");
-  // }
-  // setRecommend("Yes");
-  //   });
+  const handleCheck = () => {
+    if (recommend === 'true') {
+      setRecommend('false');
+    }
+    setRecommend('true');
+  };
 
   const handleSubmit = () => {
-    // console.log({product_id, summary, nickname, content, email});
-    axios.post(`/products/${product_id}/reviews`, {
-      product_id, summary, nickname, content, email,
+    // console.log({product_id, summary, name, content, email});
+    axios.post('/reviews', {
+      product_id, summary, body, recommend, name, email,
     })
       .then(() => {
         console.log('Added a review! ');
@@ -58,7 +52,7 @@ export default function Form({ product_id }) {
             {' '}
             <small>Yes</small>
             {' '}
-            <input name="status" type="checkbox" />
+            <input name="status" type="checkbox" onChange={handleCheck} />
           </label>
         </div>
         <div>
@@ -74,7 +68,7 @@ export default function Form({ product_id }) {
               value={summary}
               maxLength="60"
               placeholder="Example: Best purchase ever!"
-              onChange={(e) => { setSummary(e.target.value) }}
+              onChange={(e) => setSummary(e.target.value)}
             />
           </label>
         </div>
@@ -85,11 +79,11 @@ export default function Form({ product_id }) {
             <textarea
               maxLength="1000"
               minLength="50"
-              value={content}
+              value={body}
               placeholder="Why did you like the product or not?"
               required
               autoComplete="off"
-              onChange={(e) => { setContent(e.target.value) }}
+              onChange={(e) => setBody(e.target.value)}
             />
           </label>
         </div>
@@ -107,13 +101,13 @@ export default function Form({ product_id }) {
         </div>
         <div>
           <label>
-            What is your nickname?
+            What is your name?
             <br />
             <input
-              value={nickname}
+              value={name}
               maxLength="60"
               placeholder="Example: jackson11!"
-              onChange={(e) => { setNickname(e.target.value) }}
+              onChange={(e) => setName(e.target.value)}
             />
             <br />
             <small> For privacy reasons, do not use your full name or email address </small>

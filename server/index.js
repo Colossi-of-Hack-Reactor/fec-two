@@ -22,7 +22,7 @@ app.get('/questions', questionsAPI.getQuestionsRoute);
 /* API for Ratings*/
 app.get('/reviews/', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getReviewsByProductId);
-app.post('/products/:product_id/reviews/', ratingsAPI.addReview);
+app.post('/reviews', ratingsAPI.addReview);
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

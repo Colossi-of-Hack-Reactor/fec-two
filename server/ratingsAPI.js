@@ -6,11 +6,10 @@ const headers = {
   Authorization: process.env.GITHUBKEY,
 };
 
-/* *******Get Ratings Model + Route******* */
+/* *******Get Ratings and Reviews Model + Route******* */
 exports.getReviews = (req, res) => {
   axios.get(`${baseURL}/reviews/`, { headers, params: req.query })
     .then((response) => {
-      // console.log('request get /reviews', response.data.results);
       res.status(200).send(response.data.results);
     })
     .catch((err) => {
@@ -21,9 +20,8 @@ exports.getReviews = (req, res) => {
 exports.getReviewsByProductId = (req, res) => {
   axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
     .then((response) => {
-      console.log('request get /reviews', response.data);
-      // res.status(200).send(response.data);
-      res.json(response.data);
+      console.log('request get /reviews/meta', response.data);
+      res.status(200).send(response.data);
     })
     .catch((err) => {
       console.log('axios get reviews error', err);
@@ -32,12 +30,12 @@ exports.getReviewsByProductId = (req, res) => {
 
 exports.addReview = (req, res) => {
   console.log(req.body);
-  axios.post(`${baseURL}/products/${req.body.product_id}/reviews`, { headers, params: req.body })
+  axios.post(`${baseURL}/reviews`, { headers, params: req.body })
     .then((response) => {
-      console.log('request post /reviews/', req.body);
-      res.status(200).send(response.data);
+      // console.log('request post /reviews/', req.body);
+      res.status(201).send(response.data);
     })
     .catch((err) => {
-      // console.log('axios post reviews error', err);
+      console.log('axios post reviews error', err);
     });
 };
