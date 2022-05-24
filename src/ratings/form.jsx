@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import withRangeOption from "./withRangeOption.jsx"
 
-export default function Form() {
+export default function Form({product_id}) {
 
   // const[overall, setOverall] = useState("Great");
   // 1 star - “Poor”
@@ -34,6 +34,18 @@ export default function Form() {
   //     .catch((err) => console.log(err));
   //   this.props.onSubmit();
   // }
+  const handleSubmit = () => {
+    // console.log({product_id, summary, nickname, content, email});
+    axios.post(`/products/${product_id}/reviews`, {
+        product_id, summary, nickname, content, email
+    })
+      .then(() => {
+        console.log("Added a review! ");
+      })
+      .catch((err) => {
+        console.log('axios post reviews error', err);
+      });
+    }
 
   return (
     <section>
@@ -129,7 +141,11 @@ export default function Form() {
           </label>
         </div>
         <div>
-          {/* <button type="submit" value="Submit review" onClick={this.handleSubmit} /> */}
+          <button
+          type="button"
+          onClick={handleSubmit}>
+          Submit review
+          </button>
         </div>
       </form>
     </section>

@@ -15,7 +15,7 @@ export default class Size extends React.Component {
 function withRangeOption(Component) {
 
   return class extends React.Component {
-    const[option, setOption] = useState(0);
+    const [option, setOption] = useState(0);
 
     handleChange = (e) => {
       setOption(e.target.value)

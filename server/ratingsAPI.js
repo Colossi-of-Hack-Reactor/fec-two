@@ -14,6 +14,18 @@ exports.getReviews = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get reviews error', err);
+      // console.log('axios get reviews error', err);
+    });
+};
+
+exports.addReview = (req, res) => {
+  console.log(req.body);
+  axios.post(`${baseURL}/products/${req.body.product_id}/reviews`, { headers, params: req.body })
+    .then((response) => {
+      console.log('request post /reviews/', req.body);
+      res.status(200).send(response.data);
+    })
+    .catch((err) => {
+      // console.log('axios post reviews error', err);
     });
 };

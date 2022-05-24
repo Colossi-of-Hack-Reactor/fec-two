@@ -4,35 +4,45 @@ import axios from 'axios';
 import RatingList from "./ratingList.jsx";
 import Form from "./form.jsx";
 
+const FormStyle = styled.div`
+color: purple;
+`;
+
 function Ratings(props) {
-  const [data, setData] = useState([]);
-  const [filter, setFilter] = useState("relevance");
+  const [count, setCount] = useState(5);
+  const [page, setPage] = useState(1);
+  const [reviews, setReviews] = useState([]);
+  const [sort, setSort] = useState('relevant');
+  const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
-    axios.get('/reviews')
+    setLoading((a) => a + 1);
+    axios.get('/reviews', {
+      params: {
+        count, page, sort, product_id
+      },
+    })
       .then((response) => {
-        setData(response.data);
+        setReviews(response.data);
+        setLoading((a) => a - 1);
       })
       .catch((err) => {
         console.log('axios get reviews error', err);
+        setLoading((a) => a - 1);
       });
-  }, []);
-
-  // checkFilter () {
-  //   if (filter === "")
-  // };
+  }, [count, page, sort, product_id]);
 
   return (
     <div>
       <div>
-        {data.length}
+        {reviews.length}
         {' '}
         reviews, sort by
         {' '}
-        {filter}
+        {sort}
       </div>
-      <RatingList reviews={data} />
-      <Form />
+      <RatingList reviews={reviews} />
+      <FormStyle><Form product_id={product_id} /></FormStyle>
     </div>
   );
 }
