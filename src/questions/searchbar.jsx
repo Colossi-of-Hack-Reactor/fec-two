@@ -15,7 +15,9 @@ const SearchInput = styled.input`
   width: 100%;
   height: 30px;
   ::placeholder {
-    font-weight: 800;
+    opacity: 1;
+    color: black;
+    font-weight: 500;
     font-size: 13px;
   }
 `;
@@ -42,7 +44,7 @@ const SearchBar = function SearchBar(props) {
             event.preventDefault();
             handleChange(event.target.value);
           }}
-          placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS ... 🔍"
+          placeholder=" HAVE A QUESTION? SEARCH FOR ANSWERS ... 🔍"
         />
       </Form>
     </div>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const Answer = function Answer(props) {
+const Answer = function Answer({ info }) {
+  console.log(info)
   return (
-    <div>Answer Here</div>
+    <div>answer here</div>
   );
-}
+};
 
 export default Answer;
