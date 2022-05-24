@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ProductCard } from './productCard.jsx';
+import ProductCard from './productCard.jsx';
 
 function Related({ product_id }) {
   const [products, setProducts] = useState([]);
@@ -19,9 +20,33 @@ function Related({ product_id }) {
       })
       .catch((err) => console.log('FAILURE', err));
   }, []);
-  return console.log(products)
-  // return <div>{products.map((product) => <ProductCard product={product} key={product.id} />)}</div>;
-}
+  return <div>
+    {products.map((product) => {
+      const altCards = [];
+      product.results.forEach((altStyle) => {
+        const {
+          name, original_price, photos, sale_price = 0,
+        } = altStyle;
 
+        altCards.push({
+          default: altStyle['default?'],
+          category: product.category,
+          style_name: name,
+          original_price,
+          sale_price,
+          photos,
+        });
+      });
+      let defaultIndex;
+      altCards.forEach((card, i) => {
+        if(card.default) {
+          defaultIndex = i;
+        }
+      })
+      return <ProductCard product={product} cards={altCards} totalStyles={altCards.length} defaultIndex={defaultIndex} key={product.id} />;
+    })
+    }
+  </div>;
+}
 
 export default Related;
