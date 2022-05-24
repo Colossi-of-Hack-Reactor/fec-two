@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import ReviewList from "./reviewList.jsx";
-import RatingList from "./ratingList.jsx";
-import Form from "./form.jsx";
-
-const FormStyle = styled.div`
-color: purple;
-`;
+import ReviewList from './reviewList.jsx';
+import RatingList from './ratingList.jsx';
+import { Flex, RatingContainer, FormContainer } from './flex.styled.jsx';
 
 export default function Ratings(props) {
   const [count, setCount] = useState(5);
@@ -54,19 +50,17 @@ export default function Ratings(props) {
   }, [product_id]);
 
   return (
-    <div>
-      <div>
-        <RatingList meta={meta} />
-      </div>
+    <Flex>
+      <RatingContainer><RatingList meta={meta} /></RatingContainer>
       <div>
         {reviews.length}
         {' '}
         reviews, sort by
         {' '}
         {sort}
+        <hr />
+        <ReviewList reviews={reviews} product_id={product_id} />
       </div>
-      <ReviewList reviews={reviews} />
-      <FormStyle><Form product_id={product_id} /></FormStyle>
-    </div>
+    </Flex>
   );
 }

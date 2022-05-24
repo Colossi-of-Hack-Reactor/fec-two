@@ -13,6 +13,16 @@ export default function Form({ product_id }) {
   const [photos, setPhotos] = useState([]);
   const [characteristics, setChar] = useState({});
 
+
+  // return (
+  //   <div className={showHideClassname}>
+  //     <section className="modal-main">
+  //       {children}
+  //       <button onClick={handleClose}>close</button>
+  //     </section>
+  //   </div>
+  // );
+
   const handleCheck = () => {
     if (recommend === 'true') {
       setRecommend('false');
