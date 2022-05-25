@@ -22,6 +22,8 @@ app.get('/products/:product_id/related', productsAPI.getRelated);
 
 /* API for Questions*/
 app.get('/qa', questionsAPI.getQuestionsRoute);
+app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
+
 
 /* API for Ratings*/
 app.get('/reviews/', ratingsAPI.getReviews);

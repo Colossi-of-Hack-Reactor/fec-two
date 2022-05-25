@@ -17,14 +17,24 @@ const QuestionLine = styled.div.attrs((props) => ({
 `;
 
 // next div inside grid, column 2 row props.row
-const Question = function Question({ info, setQuestions, index }) {
+const Question = function Question({
+  info,
+  setQuestions,
+  index,
+  answersToDisplay,
+  setAnswersToDisplay,
+}) {
   const [answersNum, setAnswersNum] = useState(2);
   return (
     <>
       <QuestionLine row={index + 1}>
         Q:
-        {' ' + info.question_body}
-        <Answer info={info.answers} />
+        {" " + info.question_body}
+        <Answer
+          info={info.answers}
+          answersToDisplay={answersToDisplay}
+          setAnswersToDisplay={setAnswersToDisplay}
+        />
       </QuestionLine>
       <Helpful index={index} info={info} />
       <AddAnswer index={index} info={info} />
