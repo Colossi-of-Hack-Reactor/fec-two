@@ -15,10 +15,18 @@ const RatingContainer = styled.div`
 
 const FormContainer = styled.div`
   color: purple;
-  width: 50%;
-  margin: 50px auto;
-  top: 50;
-  left: 50;
+  width: 90%;
+  margin: 10px auto;
+  top: 10;
+  left: 10;
 `;
 
-export { Flex, RatingContainer, FormContainer };
+const FormEleContainer = styled.div`
+  width: 25%;
+`;
+
+const FormHeader = styled.div`
+ color: black
+`;
+
+export { Flex, RatingContainer, FormContainer, FormEleContainer, FormHeader };
