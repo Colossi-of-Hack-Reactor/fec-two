@@ -10,12 +10,11 @@ const Vote = styled.div`
   text-decoration: underline;
 `;
 
-const HelpfulVote = function HelpfulVote({ info }) {
+const HelpfulVote = function HelpfulVote({ info, addHelpful, helpfulness}) {
   const onVoteClick = () => {
-    console.log(info, 'hi');
     axios.put(`http://localhost:3001/qa/questions/${info.question_id}/helpful`)
       .then(() => {
-        console.log('success');
+        addHelpful(helpfulness + 1)
       })
       .catch((err) => {
         console.log("Error sending helpful vote", err);

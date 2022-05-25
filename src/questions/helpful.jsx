@@ -6,7 +6,7 @@ const HelpfulDiv = styled.div.attrs((props) => ({
 }))`
 display: grid;
 grid-template-columns: 5fr 2fr 4fr;
-  padding-top: 2px;
+  padding-top: 0px;
   font-size: 10px;
   font-weight: 100;
   grid-column-start: 2;
@@ -30,12 +30,12 @@ grid-column-start: 3;
 `;
 
 const Helpful = function Helpful({ info, index }) {
-  console.log(info);
+  const [helpfulness, setHelpfulness] = useState(info.question_helpfulness);
   return (
     <HelpfulDiv row={index + 1}>
       <Word>Helpful?</Word>
-      <HelpfulVote info = {info}/>
-      <Votes>{'(' + info.question_helpfulness + ')'}</Votes>
+      <HelpfulVote info = {info} addHelpful = {setHelpfulness} helpfulness ={helpfulness}/>
+      <Votes>{'(' + helpfulness + ')'}</Votes>
     </HelpfulDiv>
   );
 };

@@ -21,7 +21,9 @@ const QAList = function QAList(props) {
     axios
       .get(`http://localhost:3001/qa?questionID=${product_id}`)
       .then((res) => {
-        setQainfo(res.data.results);
+        let results = res.data.results;
+        results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
+        setQainfo(results);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -30,12 +32,11 @@ const QAList = function QAList(props) {
       });
   }, [product_id]);
 
-  console.log(qainfo);
   return (
     <Qbox>
       {qainfo.map((current, index) => {
         if (index < questionsToDisplay) {
-          return <Question info={current} key={current.question_id} numOFQuestions={questionsToDisplay} index={index} setQuestions={setQuestionsToDisplay} />;
+          return <Question info={current} key={current.question_id} numOFQuestions={questionsToDisplay} index={index} setQuestions={setQuestionsToDisplay} answersToDisplay={answersToDisplay} setAnswersToDisplay={setAnswersToDisplay} />;
         }
       })}
 
