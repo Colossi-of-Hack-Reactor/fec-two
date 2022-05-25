@@ -21,41 +21,46 @@ const Check = styled.span`
 
 function StyleSelector(props) {
   const { style, setStyle, styles } = props;
-  const stylesArray = [];
 
-  for (let i = 0; i < styles.length; i += 4) {
-    stylesArray.push(styles.slice(i, i + 4));
+  if (styles[style].photos[0].url !== null) {
+    const stylesArray = [];
+
+    for (let i = 0; i < styles.length; i += 4) {
+      stylesArray.push(styles.slice(i, i + 4));
+    }
+
+    return (
+      <>
+        <span>
+          Style:
+          {' '}
+          {styles[style].name}
+        </span>
+        <table>
+          <tbody>
+            {stylesArray.map((row, i) => (
+              <tr key={i}>
+                {row.map((s, j) => (
+                  <TD key={s.style_id}>
+                    <StyleImage
+                      className={4 * i + j === style ? 'selected' : null}
+                      key={s.style_id}
+                      src={s.photos[0].thumbnail_url}
+                      onClick={() => setStyle(4 * i + j)}
+                      data-testid={`style-${4 * i + j}`}
+                    />
+                    {4 * i + j === style ? <Check>☑️</Check> : ''}
+                  </TD>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    );
   }
 
-  return (
-    <>
-      <span>
-        Style:
-        {' '}
-        {styles[style].name}
-      </span>
-      <table>
-        <tbody>
-          {stylesArray.map((row, i) => (
-            <tr key={i}>
-              {row.map((s, j) => (
-                <TD key={s.style_id}>
-                  <StyleImage
-                    className={4 * i + j === style ? 'selected' : null}
-                    key={s.style_id}
-                    src={s.photos[0].thumbnail_url}
-                    onClick={() => setStyle(4 * i + j)}
-                    data-testid={`style-${4 * i + j}`}
-                  />
-                  {4 * i + j === style ? <Check>☑️</Check> : ''}
-                </TD>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
+  return null;
 }
 
 export default StyleSelector;
