@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-
+import List from './css/cssRelated';
 import ProductCard from './productCard.jsx';
 
 function Related({
@@ -26,9 +26,11 @@ function Related({
       })
       .catch((err) => console.log('FAILURE', err));
   }, [product_id]);
-
+  const styles = {
+    display: 'flex', width: 'fit-content', border: '1px solid #E6E6E6', 'border-radius': '10px', padding: '20px',
+  };
   return (
-    <div>
+    <List>
       {products.map((product) => {
         const altCards = [];
         product.results.forEach((altStyle) => {
@@ -56,7 +58,7 @@ function Related({
           <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} yourOutfits={yourOutfits} />
         );
       })}
-    </div>
+    </List>
   );
 }
 
