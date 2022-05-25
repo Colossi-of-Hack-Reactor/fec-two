@@ -14,11 +14,11 @@ const Modal = styled.div`
 const ModalMain = styled.div`
   position: fixed;
   background: white;
-  width: 80 %;
+  width: 45%;
   height: auto;
-  top: 50 %;
-  left: 50 %;
-  transform: translate(-50 %, -50 %);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const CloseButton = styled.div`
@@ -41,4 +41,5 @@ function Popup({ handleClose, show, children }) {
     </Modal>
   );
 }
+
 export default Popup;

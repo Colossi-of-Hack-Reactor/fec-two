@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Flex, RatingContainer, FormContainer, FormEleContainer, FormHeader } from './flex.styled.jsx';
 // import withRangeOption from "./withRangeOption.jsx"
+import StarRatings from 'react-star-ratings';
 
 export default function Form({ product_id }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
-  const [recommend, setRecommend] = useState('true');
+  const [recommend, setRecommend] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
@@ -21,17 +22,21 @@ export default function Form({ product_id }) {
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
 
+  const changeRating = (newRating, name) => {
+    setRating(newRating);
+  };
+
   const handleCheck = () => {
-    if (recommend === 'true') {
-      setRecommend('false');
+    if (recommend === true) {
+      setRecommend(false);
     }
-    setRecommend('true');
+    setRecommend(true);
   };
 
   const handleSubmit = () => {
     // console.log({product_id, summary, name, content, email});
     axios.post('/reviews', {
-      product_id, summary, body, recommend, name, email,
+      product_id, rating, summary, body, recommend, name, email, photos, characteristics,
     })
       .then(() => {
         console.log('Added a review! ');
@@ -46,7 +51,11 @@ export default function Form({ product_id }) {
       <section>
         <header>
           <h2>Write Your Review</h2>
-          {/* <h4>About the {product}</h4> */}
+          <h3>
+            About the
+            {' '}
+            {product_id}
+          </h3>
         </header>
         <form>
           <FormHeader>
@@ -56,14 +65,24 @@ export default function Form({ product_id }) {
               </label>
             </h3>
           </FormHeader>
+          <div>
+            <StarRatings
+              rating={rating}
+              starDimension="30px"
+              starRatedColor="Gainsboro"
+              changeRating={changeRating}
+              numberOfStars={5}
+              name='rating'
+            />
+          </div>
           <hr />
           <FormHeader>
             <label>
               <span>Do you recommend this product?</span>
               {' '}
-              <small>Yes</small>
-              {' '}
               <input name="status" type="checkbox" onChange={handleCheck} />
+              {' '}
+              <small>Yes</small>
             </label>
           </FormHeader>
           <hr />
@@ -75,7 +94,7 @@ export default function Form({ product_id }) {
               </label>
             </h3>
             {Object.keys(chars).map((char) => (
-              <div>
+              <span>
                 <span>{char}</span>
                 {' '}
                 <select>
@@ -83,7 +102,8 @@ export default function Form({ product_id }) {
                     <option value={i + 1}>{elem}</option>
                   ))}
                 </select>
-              </div>
+                {' '}
+              </span>
             ))}
           </FormHeader>
           <hr />
@@ -99,8 +119,8 @@ export default function Form({ product_id }) {
               <textarea
                 value={summary}
                 maxLength="60"
-                rows="3"
-                cols="40"
+                rows="2"
+                cols="65"
                 placeholder="Example: Best purchase ever!"
                 onChange={(e) => setSummary(e.target.value)}
               />
@@ -119,8 +139,8 @@ export default function Form({ product_id }) {
               <textarea
                 maxLength="1000"
                 minLength="50"
-                rows="5"
-                cols="40"
+                rows="6"
+                cols="65"
                 value={body}
                 placeholder="Why did you like the product or not?"
                 required
@@ -180,7 +200,8 @@ export default function Form({ product_id }) {
                 value={email}
                 maxLength="60"
                 placeholder="Example: jackson11@email.com"
-                onChange={(e) => setEmail(e.target.value)} />
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </label>
           </div>
           <hr />

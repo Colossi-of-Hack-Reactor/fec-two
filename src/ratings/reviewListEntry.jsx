@@ -1,18 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import StarRatings from 'react-star-ratings';
+import styled from "styled-components";
+
+const Time = styled.div`
+  padding-top: 5px;
+  font-size: 14px;
+  font-weight: 100;
+  position: absolute;
+  right: 60px;
+`;
+
+const Yes = styled.div`
+  text-decoration: underline;
+`;
 
 export default function ReviewListEntry({ review }) {
   const [yes, setYes] = useState(0);
-  console.log(review);
 
   return (
     <div>
       <div>
-        <label>star</label>
-        <small>
-          {review.date}
-          {' '}
+        <div>
+          <StarRatings
+            rating={review.rating}
+            starDimension="15px"
+            starSpacing="2px"
+            starRatedColor="DimGray"
+            starEmptyColor="Gainsboro"
+          />
+        </div>
+        <Time>
           {review.reviewer_name}
-        </small>
+          {', '}
+          {review.date.slice(0, 10)}
+        </Time>
       </div>
       <div>
         <h3>{review.summary}</h3>
@@ -35,7 +56,7 @@ export default function ReviewListEntry({ review }) {
         <small>
           Helpful?
           {' '}
-          <p onClick={() => setYes(yes + 1)}>Yes</p>
+          <span onClick={() => setYes(yes + 1)}>Yes</span>
           {' '}
           ({yes})
           {' | '}
