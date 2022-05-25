@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Modal from './modal.jsx'
 import { Flex, RatingContainer, FormContainer, FormEleContainer, FormHeader } from './flex.styled.jsx';
 // import withRangeOption from "./withRangeOption.jsx"
 
@@ -13,16 +12,14 @@ export default function Form({ product_id }) {
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
   const [characteristics, setChar] = useState({});
-
-
-  // return (
-  //   <div className={showHideClassname}>
-  //     <section className="modal-main">
-  //       {children}
-  //       <button onClick={handleClose}>close</button>
-  //     </section>
-  //   </div>
-  // );
+  const chars = {
+    Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
+    Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
+    Comfort: ['Uncomfortable', 'Slightly uncomfortable', 'Ok', 'Comfortable', 'Perfect'],
+    Quality: ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'],
+    Length: ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
+    Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
+  };
 
   const handleCheck = () => {
     if (recommend === 'true') {
@@ -77,12 +74,17 @@ export default function Form({ product_id }) {
                 <span>Characteristics</span>
               </label>
             </h3>
-            <span>Size</span>
-            <span>Width</span>
-            <span>Comfort</span>
-            <span>Quality</span>
-            <span>Length</span>
-            <span>Fit</span>
+            {Object.keys(chars).map((char) => (
+              <div>
+                <span>{char}</span>
+                {' '}
+                <select>
+                  {chars[char].map((elem, i) => (
+                    <option value={i + 1}>{elem}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
           </FormHeader>
           <hr />
           <FormHeader>
@@ -157,6 +159,7 @@ export default function Form({ product_id }) {
               <input
                 value={name}
                 maxLength="60"
+                width="100%"
                 placeholder="Example: jackson11!"
                 onChange={(e) => setName(e.target.value)}
               />
