@@ -32,7 +32,7 @@ const ProductCard = function ProductCard({
   const addOutfit = (e) => {
     e.preventDefault();
     yourOutfits.push(product.id);
-    setOutfits();
+    setOutfits(yourOutfits);
   };
 
   const detailedView = (e) => {
