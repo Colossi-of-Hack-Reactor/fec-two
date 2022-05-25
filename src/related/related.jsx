@@ -11,24 +11,32 @@ function Related({
 }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    axios.get(`/products/${product_id}/related`)
-      .then((res) => res.data)
-      .then((relatedIds) => {
-        const uniqIdsList = relatedIds.filter((id, i) => relatedIds.indexOf(id) === i);
-        Promise.allSettled(uniqIdsList.map((id) => axios.get(`/products/${id}`)))
+    if (product_id) {
+      axios.get(`/products/${product_id}/related`)
+        .then((res) => res.data)
+        .then((relatedIds) => {
+          const uniqIdsList = relatedIds.filter((id, i) => relatedIds.indexOf(id) === i);
+          compileOutfits(uniqIdsList);
+        })
+        .catch((err) => console.log('FAILURE', err));
+    } else {
+      console.log('firing outfits')
+      compileOutfits(yourOutfits);
+    }
+  }, ([product_id, yourOutfits]));
+
+  function compileOutfits(productList) {
+    Promise.allSettled(productList.map((id) => axios.get(`/products/${id}`)))
+      .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
+      .then((productsArr) => {
+        Promise.allSettled(productList.map((id) => axios.get(`/products/${id}/styles`)))
           .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
-          .then((productsArr) => {
-            Promise.allSettled(uniqIdsList.map((id) => axios.get(`/products/${id}/styles`)))
-              .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
-              .then((data) => productsArr.map((product, i) => Object.assign(data[i], product)))
-              .then((finalProductArr) => setProducts(finalProductArr));
-          });
+          .then((data) => productsArr.map((product, i) => Object.assign(data[i], product)))
+          .then((finalProductArr) => setProducts(finalProductArr));
       })
       .catch((err) => console.log('FAILURE', err));
-  }, [product_id]);
-  const styles = {
-    display: 'flex', width: 'fit-content', border: '1px solid #E6E6E6', 'border-radius': '10px', padding: '20px',
-  };
+  }
+
   return (
     <List>
       {products.map((product) => {
@@ -63,10 +71,14 @@ function Related({
 }
 
 Related.propTypes = {
-  product_id: PropTypes.number.isRequired,
+  product_id: PropTypes.number,
   yourOutfits: PropTypes.array.isRequired,
   setProduct_id: PropTypes.func.isRequired,
   setOutfits: PropTypes.func.isRequired,
+};
+
+Related.defaultProps = {
+  product_id: undefined,
 };
 
 export default Related;
