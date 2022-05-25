@@ -34,7 +34,7 @@ const Helpful = function Helpful({ info, index }) {
   return (
     <HelpfulDiv row={index + 1}>
       <Word>Helpful?</Word>
-      <HelpfulVote />
+      <HelpfulVote info = {info}/>
       <Votes>{'(' + info.question_helpfulness + ')'}</Votes>
     </HelpfulDiv>
   );
