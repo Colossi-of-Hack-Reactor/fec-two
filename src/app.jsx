@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Overview from './overview/overview.jsx';
@@ -20,6 +21,7 @@ const Loading = styled.div`
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
+  const [yourOutfits, setOutfits] = useState([]);
 
   return (
     <>
@@ -33,7 +35,9 @@ function App() {
       <Related
         product_id={product_id}
         setProduct_id={setProduct_id}
+        yourOutfits={yourOutfits}
         setLoading={setLoading}
+        setOutfits={setOutfits}
       />
       <Questions
         product_id={product_id}

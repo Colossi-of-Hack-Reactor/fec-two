@@ -1,19 +1,24 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { PropTypes } from 'prop-types';
 
 import ProductCard from './productCard.jsx';
 
-function Related({ product_id }) {
+function Related({
+  product_id, yourOutfits, setProduct_id, setOutfits,
+}) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios.get(`/products/${product_id}/related`)
       .then((res) => res.data)
       .then((relatedIds) => {
-        Promise.allSettled(relatedIds.map((id) => axios.get(`/products/${id}`)))
+        const uniqIdsList = relatedIds.filter((id, i) => relatedIds.indexOf(id) === i);
+        Promise.allSettled(uniqIdsList.map((id) => axios.get(`/products/${id}`)))
           .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
           .then((productsArr) => {
-            Promise.allSettled(relatedIds.map((id) => axios.get(`/products/${id}/styles`)))
+            Promise.allSettled(uniqIdsList.map((id) => axios.get(`/products/${id}/styles`)))
               .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
               .then((data) => productsArr.map((product, i) => Object.assign(data[i], product)))
               .then((finalProductArr) => setProducts(finalProductArr));
@@ -47,11 +52,19 @@ function Related({ product_id }) {
           }
         });
         return (
-          <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} />
+          // eslint-disable-next-line max-len
+          <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} yourOutfits={yourOutfits} />
         );
       })}
     </div>
   );
 }
+
+Related.propTypes = {
+  product_id: PropTypes.number.isRequired,
+  yourOutfits: PropTypes.array.isRequired,
+  setProduct_id: PropTypes.func.isRequired,
+  setOutfits: PropTypes.func.isRequired,
+};
 
 export default Related;

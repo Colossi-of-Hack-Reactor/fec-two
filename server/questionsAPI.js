@@ -32,7 +32,7 @@ const getQuestionsRoute = ('/questions',
 (req, res) => {
   console.log("Get /questions");
   const cid = req.query.questionID;
-
+  
   getQuestionsModel(cid, (data) => {
     res.send(data);
   });

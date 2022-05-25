@@ -9,7 +9,6 @@ const headers = {
 exports.getProducts = (req, res) => {
   axios.get(`${baseURL}/products`, { headers, params: req.query })
     .then((response) => {
-      console.log('request get /products', req.query);
       res.status(200).send(response.data);
     })
     .catch((err) => {
@@ -20,7 +19,6 @@ exports.getProducts = (req, res) => {
 exports.getProduct = (req, res) => {
   axios.get(`${baseURL}/products/${req.params.product_id}`, { headers })
     .then((response) => {
-      console.log(`request get /products/${req.params.product_id}`);
       res.status(200).send(response.data);
     })
     .catch((err) => {
@@ -31,7 +29,6 @@ exports.getProduct = (req, res) => {
 exports.getStyles = (req, res) => {
   axios.get(`${baseURL}/products/${req.params.product_id}/styles`, { headers })
     .then((response) => {
-      console.log(`request get /products/${req.params.product_id}/styles`);
       res.status(200).send(response.data);
     })
     .catch((err) => {
@@ -42,7 +39,6 @@ exports.getStyles = (req, res) => {
 exports.getRelated = (req, res) => {
   axios.get(`${baseURL}/products/${req.params.product_id}/related`, { headers })
     .then((response) => {
-      console.log(`request get /products/${req.params.product_id}/related`);
       res.status(200).send(response.data);
     })
     .catch((err) => {

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import Flex from './flex.styled.jsx';
 
 export default function RatingList({ meta }) {
   return (
-    // <Flex>
       <div>
         {
           Object.keys(meta).length !== 0
@@ -35,6 +33,5 @@ export default function RatingList({ meta }) {
             ) : (null)
         }
       </div>
-    // </Flex>
   );
 }
