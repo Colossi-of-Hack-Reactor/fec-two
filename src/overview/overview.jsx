@@ -1,27 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import QuantitySelector from './quantitySelector.jsx'
 import SizeSelector from './sizeSelector.jsx';
 import StyleSelector from './styleSelector.jsx';
 import ImageGallery from './imageGallery.jsx';
-
-const Product = styled.div`
-color: blue;
-
-&:hover {
-  cursor: pointer;
-}
-`;
-
-const Sale = styled.span`
-  color: red;
-`;
-const Original = styled.span`
-  text-decoration: line-through;
-  text-decoration-style: solid;
-`;
+import {
+  Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
+  FeatsDiv, OverallDiv,
+} from './overviewStyled.js';
 
 function Overview(props) {
   const [count, setCount] = useState(5);
@@ -81,7 +68,7 @@ function Overview(props) {
   }, [size]);
 
   return (
-    <>
+    <OverallDiv>
       <form>
         <label>
           Product Count:
@@ -120,78 +107,98 @@ function Overview(props) {
           {d.name}
         </Product>
       )) : <Product>No products.</Product>}
-      <div>
-        Rating
-      </div>
-      <div>
-        Reviews
-      </div>
-      <div>
-        Category:
-        {' '}
-        {product.category}
-      </div>
-      <div>
-        Expanded Product Name:
-        {' '}
-        {product.name}
-      </div>
       {styles[style] ? (
         <>
-          <div>
-            Price:
-            {' '}
-            {styles[style].sale_price ? (
-              <>
-                <Sale>
-                  $
-                  {styles[style].sale_price}
-                  {' '}
-                </Sale>
-                <Original>
-                  $
-                  {styles[style].original_price}
-                </Original>
-              </>
-            ) : (
-              <>
-                $
-                {styles[style].original_price}
-              </>
-            )}
-          </div>
-          <StyleSelector setStyle={setStyle} styles={styles} style={style} />
-          <ImageGallery style={style} styles={styles} image={image} setImage={setImage} />
-          <SizeSelector setSize={setSize} style={style} styles={styles} />
-          <QuantitySelector setQuantity={setQuantity} size={size} style={style} styles={styles} />
-          {
-            styles[style].skus.null ? (null) : (
+          <OverviewDiv>
+            <ImageDiv>
+              <ImageGallery style={style} styles={styles} image={image} setImage={setImage} />
+            </ImageDiv>
+            <InfoDiv>
               <div>
-                <button
-                  type="button"
-                  disabled={size === 'Select'}
-                >
-                  Add to Bag
-                </button>
+                Rating
               </div>
-            )
-          }
+              <div>
+                Reviews
+              </div>
+              <div>
+                Category:
+                {' '}
+                {product.category}
+              </div>
+              <div>
+                Expanded Product Name:
+                {' '}
+                {product.name}
+              </div>
+              <div>
+                Price:
+                {' '}
+                {styles[style].sale_price ? (
+                  <>
+                    <Sale>
+                      $
+                      {styles[style].sale_price}
+                      {' '}
+                    </Sale>
+                    <Original>
+                      $
+                      {styles[style].original_price}
+                    </Original>
+                  </>
+                ) : (
+                  <>
+                    $
+                    {styles[style].original_price}
+                  </>
+                )}
+              </div>
+              <StyleSelector setStyle={setStyle} styles={styles} style={style} />
+              <SizeSelector setSize={setSize} style={style} styles={styles} />
+              <QuantitySelector
+                setQuantity={setQuantity}
+                size={size}
+                style={style}
+                styles={styles}
+              />
+              {
+                styles[style].skus.null ? (null) : (
+                  <div>
+                    <button
+                      type="button"
+                      disabled={size === 'Select'}
+                    >
+                      Add to Bag
+                    </button>
+                  </div>
+                )
+              }
+              <div>
+                Star
+              </div>
+            </InfoDiv>
+          </OverviewDiv>
+          <WordsDiv>
+            <SloDesDiv>
+              <p style={{ fontWeight: 'bold' }}>
+                {product.slogan}
+              </p>
+              <p style={{ fontStyle: 'italic' }}>
+                {product.description}
+              </p>
+            </SloDesDiv>
+            <FeatsDiv>
+              {product.features.map((feat) => (
+                <p key={feat.feature}>
+                  {feat.feature}
+                  {': '}
+                  {feat.value}
+                </p>
+              ))}
+            </FeatsDiv>
+          </WordsDiv>
         </>
       ) : ''}
-      <div>
-        Star
-      </div>
-      <div>
-        Slogan:
-        {' '}
-        {product.slogan}
-      </div>
-      <div>
-        Description:
-        {' '}
-        {product.description}
-      </div>
-    </>
+    </OverallDiv>
   );
 }
 
