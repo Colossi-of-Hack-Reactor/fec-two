@@ -42,7 +42,7 @@ const ProductCard = function ProductCard({
 
   return (
     <SlimDiv>
-      <button type="button" aria-label="add to outfit" onClick={(e) => addOutfit(e)}>Some Icon goes here</button>
+      <button type="button" aria-label="add to outfit" onClick={(e) => addOutfit(e)}>Add this outfit!</button>
       <div role="button" tabIndex="0" onSubmit={(e) => detailedView(e)}>
         <div>
           <UniformImg alt={index !== undefined ? `${cards[index].style_name}, category is ${cards[index].category}` : `Sorry, no physical description is available for this item. Product category is ${product.category} and comes in the following styles: ${allStyles}`} src={(index !== undefined && cards[index].photos[0].thumbnail_url) ? cards[index].photos[0].thumbnail_url : '/assets/android-chrome-192x192.png'} />
