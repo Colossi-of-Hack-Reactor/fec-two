@@ -17,7 +17,7 @@ export default function Ratings(props) {
   const [sort, setSort] = useState('relevant');
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
-  const [rating, setRating] = useState('');
+  const [filter, setFilter] = useState({});
   const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
@@ -56,11 +56,15 @@ export default function Ratings(props) {
       });
   }, [product_id]);
 
+  const handleFilterRating = (value) => {
+    setFilter((f) => { f[value] = 1; return f; });
+  };
+
   return (
     <GridContainer>
       <div>
         <h3>RATINGS &amp; REVIEWS</h3>
-        <RatingList meta={meta} setRating={setRating} />
+        <RatingList meta={meta} handleFilterRating={handleFilterRating} />
       </div>
       <div>
         <h3>
@@ -71,7 +75,7 @@ export default function Ratings(props) {
           {sort}
         </h3>
         <hr />
-        <ReviewList reviews={reviews} product_id={product_id} rating={rating} />
+        <ReviewList reviews={reviews} product_id={product_id} filter={filter} />
       </div>
     </GridContainer>
   );

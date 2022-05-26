@@ -46,7 +46,7 @@ text-decoration: underline;
 }
 `;
 
-export default function RatingList({ meta, setRating }) {
+export default function RatingList({ meta, handleFilterRating }) {
   const starRange = [5, 4, 3, 2, 1];
   const chars = {
     Size: ['Too small', 'Perfect', 'Too wide'],
@@ -60,7 +60,6 @@ export default function RatingList({ meta, setRating }) {
   let totalScore = 0;
   let totalRating = 0;
   let recommend = 100;
-
   if (Object.keys(meta).length !== 0) {
     for (const key in meta.ratings) {
       totalScore += key * Number(meta.ratings[key]);
@@ -68,15 +67,10 @@ export default function RatingList({ meta, setRating }) {
       recommend = Number(meta.recommended.true) / (Number(meta.recommended.true) + Number(meta.recommended.false)) * 100;
     }
   }
-
-  let total = (totalScore / totalRating);
-  let score = Math.ceil(4 * total) * 0.25;
-  let round = total.toFixed(1);
+  const total = (totalScore / totalRating);
+  const score = Math.ceil(4 * total) * 0.25;
+  const round = total.toFixed(1);
   recommend = recommend.toFixed(0);
-
-  // handleChange () {
-
-  // }
 
   return (
     <div>
@@ -94,7 +88,7 @@ export default function RatingList({ meta, setRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <Flex key={i} onClick={() => setRating(rating)}>
+                <Flex key={i} onClick={() => handleFilterRating(rating)}>
                   <Box>{rating}</Box>
                   <Box>star</Box>
                   <Bar progress={meta.ratings[rating] / totalRating * 100} />

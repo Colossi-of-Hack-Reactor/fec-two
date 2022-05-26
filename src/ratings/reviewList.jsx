@@ -3,7 +3,7 @@ import ReviewListEntry from './reviewListEntry.jsx';
 import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
-export default function ReviewList({ reviews, product_id, rating }) {
+export default function ReviewList({ reviews, product_id, filter }) {
   const [more, setMore] = useState('false');
   const [show, setShow] = useState('false');
 
@@ -16,17 +16,17 @@ export default function ReviewList({ reviews, product_id, rating }) {
   };
 
   // useEffect(() => {
-  // }, [rating]);
+  // }, [filter]);
+  console.log(filter);
 
   return (
     <div>
       <div>
         {reviews.map((review) => (
-          // review.rating
           <ReviewListEntry
             key={review.review_id}
             review={review}
-            rating={rating}
+            filter={filter}
           />
         ))}
       </div>

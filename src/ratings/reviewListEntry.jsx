@@ -14,14 +14,14 @@ const Yes = styled.div`
   text-decoration: underline;
 `;
 
-export default function ReviewListEntry({ review, rating }) {
+export default function ReviewListEntry({ review, filter }) {
   const [yes, setYes] = useState(0);
-  console.log(rating);
+  console.log(filter);
   // console.log(review.rating);
 
   return (
     <div>
-      {rating === review.rating ? (
+      {filter[review.rating] !== undefined || Object.keys(filter).length === 0 ? (
         <>
           <div>
             <div>
