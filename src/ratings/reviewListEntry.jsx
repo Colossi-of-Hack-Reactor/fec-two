@@ -14,56 +14,64 @@ const Yes = styled.div`
   text-decoration: underline;
 `;
 
-export default function ReviewListEntry({ review }) {
+export default function ReviewListEntry({ review, rating }) {
   const [yes, setYes] = useState(0);
+  console.log(rating);
+  // console.log(review.rating);
 
   return (
     <div>
-      <div>
-        <div>
-          <StarRatings
-            rating={review.rating}
-            starDimension="15px"
-            starSpacing="2px"
-            starRatedColor="DimGray"
-            starEmptyColor="Gainsboro"
-          />
-        </div>
-        <Time>
-          {review.reviewer_name}
-          {', '}
-          {review.date.slice(0, 10)}
-        </Time>
-      </div>
-      <div>
-        <h3>{review.summary}</h3>
-        <p>{review.body}</p>
-      </div>
-      <div>
-        {
-          review.photos.length !== 0
-            ? review.photos.map((photo, i) => (
-              <img
-                key={i}
-                src={photo.url}
-                width="100"
-                alt="header img"
+      {rating === review.rating ? (
+        <>
+          <div>
+            <div>
+              <StarRatings
+                rating={review.rating}
+                starDimension="15px"
+                starSpacing="2px"
+                starRatedColor="DimGray"
+                starEmptyColor="Gainsboro"
               />
-            )) : (null)
-        }
-      </div>
-      <div>
-        <small>
-          Helpful?
-          {' '}
-          <span onClick={() => setYes(yes + 1)}>Yes</span>
-          {' '}
-          ({yes})
-          {' | '}
-          Report
-        </small>
-      </div>
-      <hr />
+            </div>
+            <Time>
+              {review.reviewer_name}
+              {', '}
+              {review.date.slice(0, 10)}
+            </Time>
+          </div>
+          <div>
+            <h3>{review.summary}</h3>
+            <p>{review.body}</p>
+          </div>
+          <div>
+            {
+              review.photos.length !== 0
+                ? review.photos.map((photo, i) => (
+                  <img
+                    key={i}
+                    src={photo.url}
+                    width="100"
+                    alt="header img"
+                  />
+                )) : (null)
+            }
+          </div>
+          <div>
+            <small>
+              Helpful?
+              {' '}
+              <span onClick={() => setYes(yes + 1)}>Yes</span>
+              {' '}
+              (
+              {yes}
+              )
+              {' | '}
+              Report
+            </small>
+          </div>
+          <hr />
+        </>
+      ) : (null)}
     </div>
   );
 }

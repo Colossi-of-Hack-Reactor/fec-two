@@ -40,6 +40,10 @@ align-items: center;
 
 const Box = styled.label`
 margin: 3px;
+text-decoration: underline;
+&:hover {
+  color: tomato;
+}
 `;
 
 export default function RatingList({ meta, setRating }) {
@@ -90,11 +94,9 @@ export default function RatingList({ meta, setRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <Flex key={i}>
-                  <label>
-                    <Box onClick={(e) => setRating(e.target.value)}>{rating}</Box>
-                    <Box>star</Box>
-                  </label>
+                <Flex key={i} onClick={() => setRating(rating)}>
+                  <Box>{rating}</Box>
+                  <Box>star</Box>
                   <Bar progress={meta.ratings[rating] / totalRating * 100} />
                 </Flex>
               ))}

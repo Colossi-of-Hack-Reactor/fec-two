@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReviewListEntry from './reviewListEntry.jsx';
 import Form from "./form.jsx";
 import Popup from './modal.jsx'
-import { Flex, FormContainer } from './flex.styled.jsx';
 
 export default function ReviewList({ reviews, product_id, rating }) {
   const [more, setMore] = useState('false');
@@ -16,11 +15,8 @@ export default function ReviewList({ reviews, product_id, rating }) {
     setShow('false');
   };
 
-  useEffect(() => {
-    setSize('Select');
-    setQuantity(1);
-    setImage(0);
-  }, [rating]);
+  // useEffect(() => {
+  // }, [rating]);
 
   return (
     <div>
@@ -30,6 +26,7 @@ export default function ReviewList({ reviews, product_id, rating }) {
           <ReviewListEntry
             key={review.review_id}
             review={review}
+            rating={rating}
           />
         ))}
       </div>
@@ -39,7 +36,7 @@ export default function ReviewList({ reviews, product_id, rating }) {
         <button type="button" onClick={showModal}> ADD A REVIEW + </button>
       </div>
       <Popup show={show} handleClose={hideModal}>
-      <FormContainer><Form product_id={product_id} /></FormContainer>
+        <Form product_id={product_id} />
       </Popup>
     </div>
   );

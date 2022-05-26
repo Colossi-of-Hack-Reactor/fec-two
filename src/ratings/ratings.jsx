@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ReviewList from './reviewList.jsx';
 import RatingList from './ratingList.jsx';
-import { Flex, RatingContainer, FormContainer } from './flex.styled.jsx';
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 400px auto;
+  gap: 50px;
+  margin: 150px;
+`;
 
 export default function Ratings(props) {
   const [count, setCount] = useState(5);
@@ -51,22 +57,22 @@ export default function Ratings(props) {
   }, [product_id]);
 
   return (
-    <div>
-      <h3>RATINGS &amp; REVIEWS</h3>
-      <Flex>
-        <RatingContainer><RatingList meta={meta} setRating={setRating} /></RatingContainer>
-        <div>
-          <h3>
-            {reviews.length}
-            {' '}
-            reviews, sort by
-            {' '}
-            {sort}
-          </h3>
-          <hr />
-          <ReviewList reviews={reviews} product_id={product_id} rating={rating} />
-        </div>
-      </Flex>
-    </div>
+    <GridContainer>
+      <div>
+        <h3>RATINGS &amp; REVIEWS</h3>
+        <RatingList meta={meta} setRating={setRating} />
+      </div>
+      <div>
+        <h3>
+          {reviews.length}
+          {' '}
+          reviews, sort by
+          {' '}
+          {sort}
+        </h3>
+        <hr />
+        <ReviewList reviews={reviews} product_id={product_id} rating={rating} />
+      </div>
+    </GridContainer>
   );
 }
