@@ -9,9 +9,10 @@ export default function Ratings(props) {
   const [count, setCount] = useState(5);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
-  const { product_id, setProduct_id, setLoading } = props;
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
+  const [rating, setRating] = useState('');
+  const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -53,7 +54,7 @@ export default function Ratings(props) {
     <div>
       <h3>RATINGS &amp; REVIEWS</h3>
       <Flex>
-        <RatingContainer><RatingList meta={meta} /></RatingContainer>
+        <RatingContainer><RatingList meta={meta} setRating={setRating} /></RatingContainer>
         <div>
           <h3>
             {reviews.length}
@@ -63,7 +64,7 @@ export default function Ratings(props) {
             {sort}
           </h3>
           <hr />
-          <ReviewList reviews={reviews} product_id={product_id} />
+          <ReviewList reviews={reviews} product_id={product_id} rating={rating} />
         </div>
       </Flex>
     </div>

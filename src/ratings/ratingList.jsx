@@ -32,7 +32,17 @@ const Chars = styled.div`
   margin: 20px;
 `;
 
-export default function RatingList({ meta }) {
+const Flex = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+`;
+
+const Box = styled.label`
+margin: 3px;
+`;
+
+export default function RatingList({ meta, setRating }) {
   const starRange = [5, 4, 3, 2, 1];
   const chars = {
     Size: ['Too small', 'Perfect', 'Too wide'],
@@ -60,6 +70,10 @@ export default function RatingList({ meta }) {
   let round = total.toFixed(1);
   recommend = recommend.toFixed(0);
 
+  // handleChange () {
+
+  // }
+
   return (
     <div>
       {
@@ -75,25 +89,15 @@ export default function RatingList({ meta }) {
                 starEmptyColor="Gainsboro"
               />
               <h4>{recommend}% of reviews recommend this product</h4>
-              <div>
-                5 starts <Bar progress={60} />
-              </div>
-              <div>
-                {starRange.map((range, i) => (
-                  <div key={i}>
-                    <span>{meta.ratings[range]}</span>
-                    <Star>
-                      <StarRatings
-                        rating={range}
-                        starDimension="20px"
-                        starSpacing="5px"
-                        starRatedColor="DimGray"
-                        starEmptyColor="Gainsboro"
-                      />
-                    </Star>
-                  </div>
-                ))}
-              </div>
+              {starRange.map((rating, i) => (
+                <Flex key={i}>
+                  <label>
+                    <Box onClick={(e) => setRating(e.target.value)}>{rating}</Box>
+                    <Box>star</Box>
+                  </label>
+                  <Bar progress={meta.ratings[rating] / totalRating * 100} />
+                </Flex>
+              ))}
               <div>
                 <Chars>
                   {

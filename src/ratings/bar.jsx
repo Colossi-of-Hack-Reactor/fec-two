@@ -2,10 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Parentdiv = styled.div`
-  height: 15px;
+  height: 10px;
   width: 100%;
   background-color: WhiteSmoke;
-  // margin: 50px;
+  margin: 20px;
+  &:hover {
+    border: 2px solid tomato;
+    background-color: #ffe6de;
+  }
 `;
 
 const Childdiv = styled.div`
@@ -13,20 +17,15 @@ const Childdiv = styled.div`
   width: ${({progress}) => (progress)}%;
   background-color: DimGray;
   text-align: right;
-`;
-
-const Progresstext = styled.div`
-  // padding: 10px;
-  color: black;
-  font-weight: 900;
+  // &:hover {
+  //   background-color: red;
+  // }
 `;
 
 function Bar({ progress }) {
   return (
     <Parentdiv>
-      <Childdiv progress={progress}>
-        <Progresstext>{progress}</Progresstext>
-      </Childdiv>
+      <Childdiv progress={progress} />
     </Parentdiv>
   );
 }
