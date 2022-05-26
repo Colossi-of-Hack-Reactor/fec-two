@@ -60,14 +60,13 @@ function ImageGallery(props) {
   return (
     <ImageContainer>
       {styles[style].photos.map((p, i) => (
-        <>
+        <React.Fragment key={i}>
           <BigImageDiv
             bg={p.url || noImageLink}
             onClick={() => setZoom(true)}
             vis={i === image}
           />
           <Thumbnail
-            key={i}
             className={i === image ? 'selected' : null}
           >
             <ThumbnailImg
@@ -76,7 +75,7 @@ function ImageGallery(props) {
               className={i === image ? 'selected' : null}
             />
           </Thumbnail>
-        </>
+        </React.Fragment>
       ))}
       {zoom ? (
         <ExpandedView
