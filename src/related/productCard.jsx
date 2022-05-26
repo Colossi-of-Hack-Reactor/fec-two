@@ -8,12 +8,12 @@ import {
 } from './css/cssProductCard';
 
 const ProductCard = function ProductCard({
-  product, cards, defaultIndex, yourOutfits, setProduct_id, setOutfits,
+  product, cards, defaultIndex, outfits, setProduct_id, setOutfits, outfitsIdList, setOutfitsIdList,
 }) {
   const [index, setIndex] = useState(defaultIndex);
   const [inOutfits, setInOutfits] = useState(false);
   useEffect((newIndex) => {
-    if (yourOutfits.includes(product.id)) {
+    if (outfitsIdList.includes(product.id)) {
       setInOutfits(true);
     }
     setIndex(newIndex || defaultIndex);
@@ -25,12 +25,18 @@ const ProductCard = function ProductCard({
 
   const toggleOutfitStatus = (e) => {
     e.preventDefault();
+    const newList = JSON.parse(JSON.stringify(outfits));
+    const newIdList = outfitsIdList.slice();
     if (inOutfits) {
-      yourOutfits.splice(yourOutfits.indexOf(product.id), 1);
+      console.log('where is this?', product);
+      newIdList.splice(outfitsIdList.indexOf(product.id), 1);
+      delete newList[product.id];
     } else {
-      yourOutfits.push(product.id);
+      newIdList.push(product.id);
+      newList[product.id] = { product, cards, defaultIndex };
     }
-    setOutfits(yourOutfits);
+    setOutfitsIdList(outfitsIdList => newIdList);
+    setOutfits(outfits => newList);
     setInOutfits(!inOutfits);
   };
 
@@ -63,9 +69,11 @@ const ProductCard = function ProductCard({
 ProductCard.propTypes = {
   product: PropTypes.object.isRequired,
   cards: PropTypes.array.isRequired,
-  yourOutfits: PropTypes.array.isRequired,
+  outfits: PropTypes.object.isRequired,
+  outfitsIdList: PropTypes.array.isRequired,
   setProduct_id: PropTypes.func.isRequired,
   setOutfits: PropTypes.func.isRequired,
+  setOutfitsIdList: PropTypes.func.isRequired,
   defaultIndex: PropTypes.any,
 };
 

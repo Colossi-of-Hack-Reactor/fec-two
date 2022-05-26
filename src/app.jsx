@@ -21,7 +21,8 @@ const Loading = styled.div`
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
-  const [yourOutfits, setOutfits] = useState([]);
+  const [outfitsIdList, setOutfitsIdList] = useState([]);
+  const [outfits, setOutfits] = useState({});
 
   return (
     <>
@@ -34,10 +35,20 @@ function App() {
       />
       <Related
         product_id={product_id}
+        outfitsIdList={outfitsIdList}
+        outfits={outfits}
         setProduct_id={setProduct_id}
-        yourOutfits={yourOutfits}
         setLoading={setLoading}
         setOutfits={setOutfits}
+        setOutfitsIdList={setOutfitsIdList}
+      />
+      <Related
+        setProduct_id={setProduct_id}
+        outfitsIdList={outfitsIdList}
+        outfits={outfits}
+        setLoading={setLoading}
+        setOutfits={setOutfits}
+        setOutfitsIdList={setOutfitsIdList}
       />
       <Questions
         product_id={product_id}
