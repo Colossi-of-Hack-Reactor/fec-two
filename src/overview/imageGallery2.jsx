@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ExpandedView from './expandedView.jsx';
 
@@ -39,7 +39,8 @@ const BigImageDiv = styled.div`
   cursor: zoom-in;
   height: 100%;
   width: 100%;
-
+  opacity: ${(props) => props.vis ? 1 : 0};
+  transition: opacity .5s ease-in;
 `;
 
 const BigImage = styled.img`
@@ -52,23 +53,30 @@ function ImageGallery(props) {
   const { style, styles, image, setImage } = props;
   const [zoom, setZoom] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = zoom ? 'hidden' : 'visible';
+  }, [zoom]);
+
   return (
     <ImageContainer>
-      <BigImageDiv
-        bg={styles[style].photos[image].url || noImageLink}
-        onClick={() => setZoom(true)}
-      />
       {styles[style].photos.map((p, i) => (
-        <Thumbnail
-          key={i}
-          className={i === image ? 'selected' : null}
-        >
-          <ThumbnailImg
-            src={p.thumbnail_url || noImageLink}
-            onClick={() => setImage(i)}
-            className={i === image ? 'selected' : null}
+        <>
+          <BigImageDiv
+            bg={p.url || noImageLink}
+            onClick={() => setZoom(true)}
+            vis={i === image}
           />
-        </Thumbnail>
+          <Thumbnail
+            key={i}
+            className={i === image ? 'selected' : null}
+          >
+            <ThumbnailImg
+              src={p.thumbnail_url || noImageLink}
+              onClick={() => setImage(i)}
+              className={i === image ? 'selected' : null}
+            />
+          </Thumbnail>
+        </>
       ))}
       {zoom ? (
         <ExpandedView
