@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
@@ -7,7 +8,7 @@ import List from './css/cssRelated';
 import ProductCard from './productCard.jsx';
 
 function Related({
-  product_id, yourOutfits, setProduct_id, setOutfits,
+  product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList,
 }) {
   const [products, setProducts] = useState([]);
 
@@ -32,16 +33,14 @@ function Related({
           compileOutfits(uniqIdsList);
         })
         .catch((err) => console.log('FAILURE', err));
-    } else {
-      compileOutfits(yourOutfits);
     }
-  }, [product_id, yourOutfits]);
+  }, [product_id]);
 
   return (
     <div>
       {product_id !== undefined ? <h3>Related Products</h3> : <h3>Your Outfits</h3>}
       <List>
-        {products.map((product) => {
+        {product_id !== undefined ? products.map((product) => {
           const altCards = [];
           product.results.forEach((altStyle) => {
             const {
@@ -64,8 +63,12 @@ function Related({
             }
           });
           return (
-            // eslint-disable-next-line max-len
-            <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} yourOutfits={yourOutfits} />
+            <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} outfits={outfits} setOutfitsIdList={setOutfitsIdList} outfitsIdList={outfitsIdList} />
+          );
+        }) : outfitsIdList.map((id) => {
+          const outfit = outfits[id];
+          return (
+            <ProductCard product={outfit.product} cards={outfit.cards} defaultIndex={outfit.defaultIndex} key={outfit.product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} outfits={outfits} setOutfitsIdList={setOutfitsIdList} outfitsIdList={outfitsIdList} />
           );
         })}
       </List>
@@ -75,9 +78,11 @@ function Related({
 
 Related.propTypes = {
   product_id: PropTypes.number,
-  yourOutfits: PropTypes.array.isRequired,
+  outfitsIdList: PropTypes.array.isRequired,
+  outfits: PropTypes.object.isRequired,
   setProduct_id: PropTypes.func.isRequired,
   setOutfits: PropTypes.func.isRequired,
+  setOutfitsIdList: PropTypes.func.isRequired,
 };
 
 Related.defaultProps = {
