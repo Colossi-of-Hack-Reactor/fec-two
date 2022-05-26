@@ -17,18 +17,18 @@ exports.getReviews = (req, res) => {
     });
 };
 
-exports.getReviewsByProductId = (req, res) => {
+exports.getRatingsByProductId = (req, res) => {
   axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
     .then((response) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get reviews error', err);
+      console.log('axios get ratings by product id', err);
     });
 };
 
 exports.addReview = (req, res) => {
-  axios.post(`${baseURL}/reviews`, { headers, params: req.body })
+  axios.post(`${baseURL}/reviews`, req.body, { headers })
     .then((response) => {
       // console.log('request post /reviews/', req.body);
       res.status(201).send(response.data);

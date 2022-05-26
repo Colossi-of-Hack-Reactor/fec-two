@@ -50,17 +50,22 @@ export default function Ratings(props) {
   }, [product_id]);
 
   return (
-    <Flex>
-      <RatingContainer><RatingList meta={meta} /></RatingContainer>
-      <div>
-        {reviews.length}
-        {' '}
-        reviews, sort by
-        {' '}
-        {sort}
-        <hr />
-        <ReviewList reviews={reviews} product_id={product_id} />
-      </div>
-    </Flex>
+    <div>
+      <h3>RATINGS &amp; REVIEWS</h3>
+      <Flex>
+        <RatingContainer><RatingList meta={meta} /></RatingContainer>
+        <div>
+          <h3>
+            {reviews.length}
+            {' '}
+            reviews, sort by
+            {' '}
+            {sort}
+          </h3>
+          <hr />
+          <ReviewList reviews={reviews} product_id={product_id} />
+        </div>
+      </Flex>
+    </div>
   );
 }

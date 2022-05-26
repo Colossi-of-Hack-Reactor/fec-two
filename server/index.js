@@ -27,7 +27,7 @@ app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
 
 /* API for Ratings*/
 app.get('/reviews/', ratingsAPI.getReviews);
-app.get('/reviews/meta', ratingsAPI.getReviewsByProductId);
+app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
 
 app.listen(process.env.PORT);
