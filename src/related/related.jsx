@@ -9,8 +9,20 @@ import ProductCard from './productCard.jsx';
 function Related({
   product_id, yourOutfits, setProduct_id, setOutfits,
 }) {
-  console.log('in related', product_id === undefined);
   const [products, setProducts] = useState([]);
+
+  const compileOutfits = (productList) => {
+    Promise.allSettled(productList.map((id) => axios.get(`/products/${id}`)))
+      .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
+      .then((productsArr) => {
+        Promise.allSettled(productList.map((id) => axios.get(`/products/${id}/styles`)))
+          .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
+          .then((data) => productsArr.map((product, i) => Object.assign(data[i], product)))
+          .then((finalProductArr) => setProducts(finalProductArr));
+      })
+      .catch((err) => console.log('FAILURE', err));
+  };
+
   useEffect(() => {
     if (product_id) {
       axios.get(`/products/${product_id}/related`)
@@ -21,53 +33,43 @@ function Related({
         })
         .catch((err) => console.log('FAILURE', err));
     } else {
-      console.log('firing outfits')
       compileOutfits(yourOutfits);
     }
   }, [product_id, yourOutfits]);
 
-  function compileOutfits(productList) {
-    Promise.allSettled(productList.map((id) => axios.get(`/products/${id}`)))
-      .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
-      .then((productsArr) => {
-        Promise.allSettled(productList.map((id) => axios.get(`/products/${id}/styles`)))
-          .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
-          .then((data) => productsArr.map((product, i) => Object.assign(data[i], product)))
-          .then((finalProductArr) => setProducts(finalProductArr));
-      })
-      .catch((err) => console.log('FAILURE', err));
-  }
-
   return (
-    <List>
-      {products.map((product) => {
-        const altCards = [];
-        product.results.forEach((altStyle) => {
-          const {
-            name, original_price, photos, sale_price = 0,
-          } = altStyle;
+    <div>
+      {product_id !== undefined ? <h3>Related Products</h3> : <h3>Your Outfits</h3>}
+      <List>
+        {products.map((product) => {
+          const altCards = [];
+          product.results.forEach((altStyle) => {
+            const {
+              name, original_price, photos, sale_price = 0,
+            } = altStyle;
 
-          altCards.push({
-            default: altStyle['default?'],
-            category: product.category,
-            style_name: name,
-            original_price,
-            sale_price,
-            photos,
+            altCards.push({
+              default: altStyle['default?'],
+              category: product.category,
+              style_name: name,
+              original_price,
+              sale_price,
+              photos,
+            });
           });
-        });
-        let defaultIndex;
-        altCards.forEach((card, i) => {
-          if (card.default) {
-            defaultIndex = i;
-          }
-        });
-        return (
-          // eslint-disable-next-line max-len
-          <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} yourOutfits={yourOutfits} />
-        );
-      })}
-    </List>
+          let defaultIndex;
+          altCards.forEach((card, i) => {
+            if (card.default) {
+              defaultIndex = i;
+            }
+          });
+          return (
+            // eslint-disable-next-line max-len
+            <ProductCard product={product} cards={altCards} defaultIndex={defaultIndex} key={product.id} setProduct_id={setProduct_id} setOutfits={setOutfits} yourOutfits={yourOutfits} />
+          );
+        })}
+      </List>
+    </div>
   );
 }
 

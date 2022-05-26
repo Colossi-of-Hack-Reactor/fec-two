@@ -35,7 +35,7 @@ const ProductCard = function ProductCard({
     setInOutfits(!inOutfits);
   };
 
-  const detailedView = (e) => (e.preventDefault())//type === 'click' || e.code === 'Enter' ? setProduct_id(product.id) : null);
+  const detailedView = (e) => (e.type === 'click' || e.code === 'Enter' ? setProduct_id(product.id) : null);
 
   const margin = { margin: '30px' };
 
