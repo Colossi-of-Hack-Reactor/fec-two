@@ -25,16 +25,17 @@ const ProductCard = function ProductCard({
 
   const toggleOutfitStatus = (e) => {
     e.preventDefault();
+    const newList = yourOutfits.slice();
     if (inOutfits) {
-      yourOutfits.splice(yourOutfits.indexOf(product.id), 1);
+      newList.splice(yourOutfits.indexOf(product.id), 1);
     } else {
-      yourOutfits.push(product.id);
+      newList.push(product.id);
     }
-    setOutfits(yourOutfits);
+    setOutfits(yourOutfits => newList);
     setInOutfits(!inOutfits);
   };
 
-  const detailedView = (e) => (e.type === 'click' || e.code === 'Enter' ? setProduct_id(product.id) : null);
+  const detailedView = (e) => (e.preventDefault())//type === 'click' || e.code === 'Enter' ? setProduct_id(product.id) : null);
 
   const margin = { margin: '30px' };
 

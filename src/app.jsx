@@ -45,7 +45,7 @@ function App() {
         setLoading={setLoading}
         setOutfits={setOutfits}
       />
-      {/* <Questions
+      <Questions
         product_id={product_id}
         setProduct_id={setProduct_id}
         setLoading={setLoading}
@@ -54,7 +54,7 @@ function App() {
         product_id={product_id}
         setProduct_id={setProduct_id}
         setLoading={setLoading}
-      /> */}
+      />
     </>
   );
 }

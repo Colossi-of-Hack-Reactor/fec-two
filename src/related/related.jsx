@@ -9,6 +9,7 @@ import ProductCard from './productCard.jsx';
 function Related({
   product_id, yourOutfits, setProduct_id, setOutfits,
 }) {
+  console.log('in related', product_id === undefined);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     if (product_id) {
@@ -23,7 +24,7 @@ function Related({
       console.log('firing outfits')
       compileOutfits(yourOutfits);
     }
-  }, ([product_id, yourOutfits]));
+  }, [product_id, yourOutfits]);
 
   function compileOutfits(productList) {
     Promise.allSettled(productList.map((id) => axios.get(`/products/${id}`)))
