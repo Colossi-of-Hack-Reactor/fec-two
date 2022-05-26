@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import ExpandedView from './expandedView.jsx';
 
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 700px;
+  position: relative;
 `;
 
 const noImageLink = '/assets/No_image_available.svg';
 
 const Thumbnail = styled.div`
-
   padding: 4px;
   &.selected {
     padding: 0;
@@ -34,6 +34,11 @@ const ThumbnailImg = styled.img`
 const BigImageDiv = styled.div`
   position: absolute;
   z-index: 1;
+  background: url(${(props) => (props.bg)}) no-repeat;
+  background-size: contain;
+  cursor: zoom-in;
+  height: 100%;
+  width: 100%;
 
 `;
 
@@ -45,12 +50,14 @@ cursor: zoom-in;
 
 function ImageGallery(props) {
   const { style, styles, image, setImage } = props;
+  const [zoom, setZoom] = useState(false);
 
   return (
     <ImageContainer>
-      <BigImageDiv>
-        <BigImage src={styles[style].photos[image].url || noImageLink} />
-      </BigImageDiv>
+      <BigImageDiv
+        bg={styles[style].photos[image].url || noImageLink}
+        onClick={() => setZoom(true)}
+      />
       {styles[style].photos.map((p, i) => (
         <Thumbnail
           key={i}
@@ -63,6 +70,16 @@ function ImageGallery(props) {
           />
         </Thumbnail>
       ))}
+      {zoom ? (
+        <ExpandedView
+          style={style}
+          styles={styles}
+          image={image}
+          setImage={setImage}
+          setZoom={setZoom}
+          noImageLink={noImageLink}
+        />
+      ) : null}
     </ImageContainer>
   );
 }
