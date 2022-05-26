@@ -93,13 +93,13 @@ export default function Form({ product_id }) {
                 <span>Characteristics</span>
               </label>
             </h3>
-            {Object.keys(chars).map((char) => (
-              <span>
+            {Object.keys(chars).map((char, i) => (
+              <span key={i}>
                 <span>{char}</span>
                 {' '}
                 <select>
                   {chars[char].map((elem, i) => (
-                    <option value={i + 1}>{elem}</option>
+                    <option key={i} value={i + 1}>{elem}</option>
                   ))}
                 </select>
                 {' '}

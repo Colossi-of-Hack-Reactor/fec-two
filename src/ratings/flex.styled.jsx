@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Flex = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: row;
   flex-flow: row wrap;
   justify-content: space-evenly;

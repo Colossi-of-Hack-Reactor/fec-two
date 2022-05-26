@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import StarRatings from 'react-star-ratings';
 import styled from 'styled-components';
-// import Bar from './bar.jsx';
+import Bar from './bar.jsx';
+import ArrowDown from './triangle.jsx'
 
 const Star = styled.div`
   align: left;
 `;
+
 const Score = styled.div`
   color: DimGray;
   font-size: 70px;
@@ -13,20 +15,50 @@ const Score = styled.div`
   font-weight: bold;
 `;
 
+const Char = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: space-between
+flex-wrap: wrap;
+`;
+
+const Chars = styled.div`
+  display: flex;
+  flex-direction: column;
+  // flex-flow: row wrap;
+  justify-content: space-evenly;
+  // align-items: start;
+  margin: 20px;
+`;
+
 export default function RatingList({ meta }) {
   const starRange = [5, 4, 3, 2, 1];
-  console.log(meta);
+  const chars = {
+    Size: ['Too small', 'Perfect', 'Too wide'],
+    Width: ['Too narrow', 'Perfect', 'Too wide'],
+    Comfort: ['Uncomfortable', 'Ok', 'Perfect'],
+    Quality: ['Poor', 'Perfect'],
+    Length: ['Runs Short', 'Perfect', 'Runs long'],
+    Fit: ['Runs tight', 'Perfect', 'Runs long'],
+  };
+
   let totalScore = 0;
   let totalRating = 0;
+  let recommend = 100;
+
   if (Object.keys(meta).length !== 0) {
-    for (let key in meta.ratings) {
+    for (const key in meta.ratings) {
       totalScore += key * Number(meta.ratings[key]);
       totalRating += Number(meta.ratings[key]);
+      recommend = Number(meta.recommended.true) / (Number(meta.recommended.true) + Number(meta.recommended.false)) * 100;
     }
   }
+
   let total = (totalScore / totalRating);
   let score = Math.ceil(4 * total) * 0.25;
   let round = total.toFixed(1);
+  recommend = recommend.toFixed(0);
 
   return (
     <div>
@@ -42,11 +74,13 @@ export default function RatingList({ meta }) {
                 starRatedColor="DimGray"
                 starEmptyColor="Gainsboro"
               />
-              <hr />
-              {/* <Bar bgcolor="red" progress="60" height={30} /> */}
+              <h4>{recommend}% of reviews recommend this product</h4>
               <div>
-                {starRange.map((range) => (
-                  <div>
+                5 starts <Bar progress={60} />
+              </div>
+              <div>
+                {starRange.map((range, i) => (
+                  <div key={i}>
                     <span>{meta.ratings[range]}</span>
                     <Star>
                       <StarRatings
@@ -60,20 +94,24 @@ export default function RatingList({ meta }) {
                   </div>
                 ))}
               </div>
-              <hr />
               <div>
-                {
-                  meta.characteristics
-                    ? Object.keys(meta.characteristics).map((char, i) => (
-                      <div key={i}>
-                        <span>{char}</span>
-                        {' '}
-                        <span>{meta.characteristics[char].value}</span>
-                      </div>
-                    )) : (null)
-                }
+                <Chars>
+                  {
+                    meta.characteristics
+                      ? Object.keys(meta.characteristics).map((char, i) => (
+                        <div key={i}>
+                          <span>{char}</span>
+                          <ArrowDown
+                            percentage={((meta.characteristics[char].value / 5) * 100).toFixed(0)}
+                          />
+                          <Char>
+                            {chars[char].map((elem, i) => (<span key={i}>{elem}</span>))}
+                          </Char>
+                        </div>
+                      )) : (null)
+                  }
+                </Chars>
               </div>
-              <hr />
             </div>
           ) : (null)
       }
