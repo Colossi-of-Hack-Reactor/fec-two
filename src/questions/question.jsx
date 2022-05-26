@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Answer from "./answer.jsx";
+import AnswerList from "./answer.jsx";
 import Helpful from "./helpful.jsx";
 import AddAnswer from "./addanswer.jsx";
 
@@ -16,7 +16,7 @@ const QuestionLine = styled.div.attrs((props) => ({
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-// next div inside grid, column 2 row props.row
+
 const Question = function Question({
   info,
   setQuestions,
@@ -25,15 +25,16 @@ const Question = function Question({
   setAnswersToDisplay,
 }) {
   const [answersNum, setAnswersNum] = useState(2);
+
   return (
     <>
       <QuestionLine row={index + 1}>
         Q:
         {" " + info.question_body}
-        <Answer
-          info={info.answers}
+        <AnswerList
           answersToDisplay={answersToDisplay}
           setAnswersToDisplay={setAnswersToDisplay}
+          info={info.answers}
         />
       </QuestionLine>
       <Helpful index={index} info={info} />
