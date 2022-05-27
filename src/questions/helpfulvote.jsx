@@ -8,6 +8,7 @@ const Vote = styled.div`
   font-weight: 100;
   grid-column-start: 2;
   text-decoration: underline;
+  text-align: right;
 `;
 
 const HelpfulVote = function HelpfulVote({ info, addHelpful, helpfulness}) {

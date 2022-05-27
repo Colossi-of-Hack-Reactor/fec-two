@@ -28,6 +28,18 @@ const putQuestionsModel = (params, callback) => {
       console.log(error);
     });
 };
+const putAnswersModel = (params, callback) => {
+  const options = {
+    method: "PUT",
+    url: `${baseURL}/qa/answers/${params}/helpful`,
+    headers: { Authorization: process.env.GITHUBKEY },
+  };
+  axios(options)
+    .then((response) => callback(response.data))
+    .catch((error) => {
+      console.log(error);
+    });
+};
 const getQuestionsRoute = ('/questions',
 (req, res) => {
   console.log("Get /questions");
@@ -45,9 +57,17 @@ const putHelpful = ('/qa/questions', (req, res) => {
   });
 });
 
+const putAnswerHelpful = ('/qa/answers', (req, res) => {
+  const aid = req.params.answer_id;
+  putAnswersModel(aid, (data) => {
+    res.send("Success");
+  });
+});
+
 module.exports = {
   getQuestionsRoute,
   putHelpful,
+  putAnswerHelpful,
 };
 /*
 (`/qa/questions?question_id=${req.query.question_id}/report`, )
