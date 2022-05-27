@@ -11,6 +11,14 @@ const GridContainer = styled.div`
   margin: 150px;
 `;
 
+const Clear = styled.label`
+  color: blue;
+  &:hover {
+    color: tomato;
+    text-decoration: underline;
+  }
+`;
+
 export default function Ratings(props) {
   const [count, setCount] = useState(5);
   const [page, setPage] = useState(1);
@@ -69,7 +77,6 @@ export default function Ratings(props) {
   const handleSort = (e) => {
     setSort(e.target.value);
   };
-  console.log(sort);
 
   return (
     <GridContainer>
@@ -88,8 +95,15 @@ export default function Ratings(props) {
             <option value="helpful">Helpful</option>
             <option value="newest">Newest</option>
           </select>
+          &nbsp;&nbsp;&nbsp;
+          filtered by
+          {' '}
+          {Object.keys(filter).map((val, i) =>
+            <span key={i}>{val}{' '}star,</span>
+          )}
+          &nbsp;
+          <Clear onClick={() => setFilter({})}>clear filter</Clear>
         </h3>
-        <hr />
         <ReviewList reviews={reviews} product_id={product_id} filter={filter} sort={sort} />
       </div>
     </GridContainer>

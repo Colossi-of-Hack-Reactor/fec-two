@@ -11,8 +11,11 @@ const Time = styled.div`
   right: 60px;
 `;
 
-const Yes = styled.div`
+const Help = styled.label`
   text-decoration: underline;
+  &:hover {
+    color: tomato;
+  }
 `;
 
 export default function ReviewListEntry({ review, filter }) {
@@ -45,8 +48,8 @@ export default function ReviewListEntry({ review, filter }) {
 
   return (
     <div>
-      {report === false &&
-      (filter[review.rating] !== undefined || Object.keys(filter).length === 0) ? (
+      {report === false
+        && (filter[review.rating] !== undefined || Object.keys(filter).length === 0) ? (
         <>
           <div>
             <div>
@@ -68,6 +71,8 @@ export default function ReviewListEntry({ review, filter }) {
             <h3>{review.summary}</h3>
             <p>{review.body}</p>
           </div>
+          {review.recommend ? <span>&#10003;&nbsp;I recommend this product</span> : null}
+          {review.response ? <p>{review.response}</p> : null}
           <div>
             {
               review.photos.length !== 0
@@ -82,21 +87,21 @@ export default function ReviewListEntry({ review, filter }) {
             }
           </div>
           <div>
-            <small>
-              Helpful?
-              {' '}
-              <u onClick={handleClickYes}>Yes</u>
-              {' '}
-              (
-              {yes}
-              )
-              {' | '}
-              <span onClick={handleClickReport}>Report</span>
-            </small>
+            Helpful?
+            &nbsp;
+            <Help onClick={handleClickYes}>Yes</Help>
+            {' '}
+            (
+            {yes}
+            )
+            &nbsp;&nbsp;
+            |
+            &nbsp;&nbsp;&nbsp;
+            <Help onClick={handleClickReport}>Report</Help>
           </div>
           <hr />
         </>
-      ) : (null)}
+        ) : (null)}
     </div>
   );
 }
