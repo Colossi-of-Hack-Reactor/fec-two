@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AnswerInfo from "./answerinfo.jsx";
+
 const AMark = styled.div.attrs((props) => ({
   row: props.row,
 }))`
@@ -22,7 +23,7 @@ const AnswerLine = styled.div.attrs((props) => ({
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-const AnswerBlock = function AnswerBlock({ info, index, noAnswers }) {
+const AnswerBlock = function AnswerBlock({ info, index, setNumOfanswers }) {
   let rownum = 0;
   const answerBody = info.body;
   if (index === 0) { rownum = 1; }

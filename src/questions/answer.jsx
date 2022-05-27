@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import AnswerBlock from './answerblock.jsx';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import AnswerBlock from "./answerblock.jsx";
+import MoreAnswers from "./moreanswers.jsx";
 
 const AnswerGrid = styled.div`
-
-width: 70%;
-display: grid;
-grid-template-columns: 16px 1fr;
-grid-template-rows: auto;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  grid-template-rows: auto;
 `;
 
 const NoAnswers = styled.div`
@@ -23,6 +23,8 @@ const AnswerList = function Answer({
   answersToDisplay,
   setAnswersToDisplay,
 }) {
+  console.log(info);
+  const [numOfAnswers, setNumOfAnswers] = useState(answersToDisplay);
   const createAnswersArr = function (obj) {
     const result = Object.values(info);
     result.sort((a, b) => b.helpfulness - a.helpfulness);
@@ -38,17 +40,25 @@ const AnswerList = function Answer({
   if (noAnswers) {
     return (
       <AnswerGrid>
-        <NoAnswers>
-          No answers yet! Be the first to Answer!
-        </NoAnswers>
+        <NoAnswers>No answers yet! Be the first to Answer!</NoAnswers>
       </AnswerGrid>
     );
   }
   return (
     <AnswerGrid>
       {sortedAnswers.map((answer, index) => {
-        if (index < answersToDisplay) {
+        if (index < numOfAnswers) {
           return <AnswerBlock key={answer.id} info={answer} index={index} />;
+        }
+        if (index === numOfAnswers) {
+          console.log(index)
+          return (
+            <MoreAnswers
+              index={index}
+              numOfAnswers={numOfAnswers}
+              setNumOfAnswers={setNumOfAnswers}
+            />
+          );
         }
       })}
     </AnswerGrid>

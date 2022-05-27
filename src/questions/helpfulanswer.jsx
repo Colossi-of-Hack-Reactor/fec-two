@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AnswerVote from "./answervote.jsx";
+
 const HelpfulDiv2 = styled.div.attrs((props) => ({
   row: props.row,
 }))`
