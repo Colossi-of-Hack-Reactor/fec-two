@@ -68,6 +68,10 @@ const WhiteBG = styled.span`
 `;
 
 const CloseMarkLink = '/assets/close-round-line.svg';
+const LeftArrowLink = '/assets/line-angle-left.svg';
+const RightArrowLink = '/assets/line-angle-right.svg';
+const UpArrowLink = '/assets/line-angle-up.svg';
+const DownArrowLink = '/assets/line-angle-down.svg';
 
 function ExpandedView(props) {
   const { style, styles, image, setImage, setZoom, noImageLink } = props;
