@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
+import axios from "axios";
 import SearchBar from "./searchbar.jsx";
 import QAList from "./qalist.jsx";
 
 const QAMainDiv = styled.div`
-  width: 70%;
+  width: 65%;
   margin: auto;
 `;
 

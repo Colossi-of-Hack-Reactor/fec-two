@@ -4,7 +4,8 @@ import axios from "axios";
 
 const Vote = styled.div`
   padding-top: 10px;
-  font-size: 10px;
+  padding-right: 3px;
+  font-size: 12px;
   font-weight: 100;
   grid-column-start: 2;
   text-decoration: underline;

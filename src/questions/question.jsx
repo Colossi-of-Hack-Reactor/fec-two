@@ -8,7 +8,7 @@ const QuestionLine = styled.div.attrs((props) => ({
   row: props.row,
 }))`
   padding-top: 10px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   grid-column-start: 1;
   grid-column-end: 2;

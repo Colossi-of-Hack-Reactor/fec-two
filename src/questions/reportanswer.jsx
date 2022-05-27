@@ -4,7 +4,7 @@ import axios from "axios";
 
 const NameDiv3 = styled.div`
 grid-column-start: 5;
-font-size: 10px;
+font-size: 12px;
 font-weight: 200;
 `;
 

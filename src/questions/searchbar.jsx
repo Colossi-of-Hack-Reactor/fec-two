@@ -14,7 +14,7 @@ const Container = styled.span`
 `;
 const SearchInput = styled.input`
   width: 100%;
-  height: 30px;
+  height: 40px;
   ::placeholder {
     font-weight: 800;
     font-size: 13px;

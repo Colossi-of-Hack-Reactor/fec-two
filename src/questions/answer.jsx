@@ -11,9 +11,9 @@ const AnswerGrid = styled.div`
 `;
 
 const NoAnswers = styled.div`
-padding-left: 2px;
+padding-left: 6px;
 padding-top: 11px;
-font-size: 10px;
+font-size: 14px;
 font-weight: 200;
 padding-bottom 6px;
 grid-column-start: 2;

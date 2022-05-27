@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const More = styled.div`
 font-size: 10px;
 font-weight: 600;
-padding-left: 3px;
+padding-left: 5px;
   padding-top: 10px;
   padding-bottom 3px;
   grid-column-start: 2;

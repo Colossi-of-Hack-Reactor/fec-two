@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Vote2 = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 100;
   padding-right: 3px;
   grid-column-start: 2;

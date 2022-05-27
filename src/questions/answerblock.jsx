@@ -5,8 +5,9 @@ import AnswerInfo from "./answerinfo.jsx";
 const AMark = styled.div.attrs((props) => ({
   row: props.row,
 }))`
+
   padding-top: 10px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   grid-column-start: 1;
   grid-row-start: ${(props) => props.row};;
@@ -14,7 +15,8 @@ const AMark = styled.div.attrs((props) => ({
 const AnswerLine = styled.div.attrs((props) => ({
   row: props.row,
 }))`
-  padding-top: 11px;
+padding-left: 3px;
+  padding-top: 12px;
   font-size: 12px;
   font-weight: 200;
   padding-bottom 6px;

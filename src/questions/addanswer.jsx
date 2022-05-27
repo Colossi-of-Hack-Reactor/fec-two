@@ -7,7 +7,7 @@ const AddAnswerDiv = styled.div.attrs((props) => ({
 }))`
 text-align: right;
   padding-top: 10px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 200;
   grid-column-start: 3;
   grid-column-end: 4;

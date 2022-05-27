@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const NameDiv = styled.div`
 grid-column-start: 1;
-font-size: 10px;
+font-size: 12px;
   font-weight: 200;
 `;
 
