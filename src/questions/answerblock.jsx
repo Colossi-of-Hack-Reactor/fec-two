@@ -23,7 +23,6 @@ const AnswerLine = styled.div.attrs((props) => ({
 `;
 
 const AnswerBlock = function AnswerBlock({ info, index, noAnswers }) {
-  console.log(info);
   let rownum = 0;
   const answerBody = info.body;
   if (index === 0) { rownum = 1; }

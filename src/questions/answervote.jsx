@@ -13,7 +13,6 @@ const Vote2 = styled.div`
 
 const AnswerVote = function AnswerVote({ info, setHelpfulness, helpfulness }) {
   const onVoteClick = () => {
-    console.log('clicked')
     axios.put(`http://localhost:3001/qa/answers/${info.id}/helpful`)
       .then(() => {
         setHelpfulness(helpfulness + 1);

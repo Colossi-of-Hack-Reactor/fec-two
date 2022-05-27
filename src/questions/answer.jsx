@@ -30,7 +30,7 @@ const AnswerList = function Answer({
   };
   // map answer block
   const sortedAnswers = createAnswersArr(info);
-  console.log(info);
+
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;

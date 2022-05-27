@@ -31,7 +31,6 @@ font-size: 10px;
   font-weight: 200;
 `;
 const AnswerInfo = function AnswerInfo({row, info}) {
-  console.log(info);
   return (
   <AnswerInfoBlock row={row}>
     <NameDate info={info} />

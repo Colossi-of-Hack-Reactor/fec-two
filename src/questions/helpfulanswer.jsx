@@ -22,6 +22,7 @@ const Votes2 = styled.div`
   font-size: 10px;
   font-weight: 100;
   grid-column-start: 3;
+  padding-right:
 `;
 
 const HelpfulAnswer = function HelpfulAnswer({ info, index }) {
