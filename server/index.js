@@ -25,13 +25,12 @@ app.get('/qa', questionsAPI.getQuestionsRoute);
 app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
 app.put('/qa/answers/:answer_id/helpful', questionsAPI.putAnswerHelpful);
 
-
-
 /* API for Ratings*/
 app.get('/reviews/', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
 app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
+app.put('/reviews/:review_id/report', ratingsAPI.putReviewReport);
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

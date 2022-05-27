@@ -17,6 +17,7 @@ const Yes = styled.div`
 
 export default function ReviewListEntry({ review, filter }) {
   const [yes, setYes] = useState(review.helpfulness);
+  const [report, setReport] = useState(false);
 
   const handleClickYes = () => {
     axios.put(`/reviews/${review.review_id}/helpful`, {
@@ -30,9 +31,22 @@ export default function ReviewListEntry({ review, filter }) {
       });
   };
 
+  const handleClickReport = () => {
+    axios.put(`/reviews/${review.review_id}/report`, {
+      params: { review_id: review.review_id },
+    })
+      .then(() => {
+        setReport(true);
+      })
+      .catch((err) => {
+        console.log('Error putting report review', err);
+      });
+  };
+
   return (
     <div>
-      {filter[review.rating] !== undefined || Object.keys(filter).length === 0 ? (
+      {report === false &&
+      (filter[review.rating] !== undefined || Object.keys(filter).length === 0) ? (
         <>
           <div>
             <div>
@@ -77,7 +91,7 @@ export default function ReviewListEntry({ review, filter }) {
               {yes}
               )
               {' | '}
-              Report
+              <span onClick={handleClickReport}>Report</span>
             </small>
           </div>
           <hr />

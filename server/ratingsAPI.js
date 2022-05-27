@@ -30,7 +30,6 @@ exports.getRatingsByProductId = (req, res) => {
 exports.addReview = (req, res) => {
   axios.post(`${baseURL}/reviews`, req.body, { headers })
     .then((response) => {
-      // console.log('request post /reviews/', req.body);
       res.status(201).send(response.data);
     })
     .catch((err) => {
@@ -41,10 +40,19 @@ exports.addReview = (req, res) => {
 exports.putReviewHelpful = (req, res) => {
   axios.put(`${baseURL}/reviews/${req.params.review_id}/helpful`, req.body, { headers })
     .then((response) => {
-      // console.log('request post /reviews/', req.body);
       res.status(204).send(response.data);
     })
     .catch((err) => {
       console.log('axios put review helpful error', err);
+    });
+};
+
+exports.putReviewReport = (req, res) => {
+  axios.put(`${baseURL}/reviews/${req.params.review_id}/report`, req.body, { headers })
+    .then((response) => {
+      res.status(204).send(response.data);
+    })
+    .catch((err) => {
+      console.log('axios put review report error', err);
     });
 };
