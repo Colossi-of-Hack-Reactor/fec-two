@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
-import { Flex, RatingContainer, FormContainer, FormEleContainer, FormHeader } from './flex.styled.jsx';
-// import withRangeOption from "./withRangeOption.jsx"
 import StarRatings from 'react-star-ratings';
+
+const FormHeader = styled.div`
+ color: black
+`;
+
+const FormContainer = styled.div`
+  color: purple;
+  width: 90%;
+  margin: 10px auto;
+  // top: 20;
+  // left: 20;
+`;
 
 export default function Form({ product_id }) {
   const [rating, setRating] = useState(5);
@@ -47,8 +58,7 @@ export default function Form({ product_id }) {
   };
 
   return (
-    <Flex>
-      <section>
+      <FormContainer>
         <header>
           <h2>Write Your Review</h2>
           <h3>
@@ -211,7 +221,6 @@ export default function Form({ product_id }) {
             </button>
           </div>
         </form>
-      </section>
-    </Flex>
+      </FormContainer>
   );
 }

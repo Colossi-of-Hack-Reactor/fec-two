@@ -3,15 +3,22 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ReviewList from './reviewList.jsx';
 import RatingList from './ratingList.jsx';
-import { Flex, RatingContainer, FormContainer } from './flex.styled.jsx';
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 300px auto;
+  gap: 100px;
+  margin: 150px;
+`;
 
 export default function Ratings(props) {
   const [count, setCount] = useState(5);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
-  const { product_id, setProduct_id, setLoading } = props;
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
+  const [filter, setFilter] = useState({});
+  const { product_id, setProduct_id, setLoading } = props;
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -28,7 +35,7 @@ export default function Ratings(props) {
         console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
-  }, [count, page, sort, product_id]);
+  }, [count, page, product_id]);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -49,23 +56,42 @@ export default function Ratings(props) {
       });
   }, [product_id]);
 
+  const handleFilterRating = (value) => {
+    const f = { ...filter };
+    if (f[value]) {
+      delete f[value];
+    } else {
+      f[value] = 1;
+    }
+    setFilter(f);
+  };
+
+  const handleSort = (e) => {
+    setSort(e.target.value);
+  };
+  console.log(sort);
+
   return (
-    <div>
-      <h3>RATINGS &amp; REVIEWS</h3>
-      <Flex>
-        <RatingContainer><RatingList meta={meta} /></RatingContainer>
-        <div>
-          <h3>
-            {reviews.length}
-            {' '}
-            reviews, sort by
-            {' '}
-            {sort}
-          </h3>
-          <hr />
-          <ReviewList reviews={reviews} product_id={product_id} />
-        </div>
-      </Flex>
-    </div>
+    <GridContainer>
+      <div>
+        <h3>RATINGS &amp; REVIEWS</h3>
+        <RatingList meta={meta} handleFilterRating={handleFilterRating} />
+      </div>
+      <div>
+        <h3>
+          {reviews.length}
+          {' '}
+          reviews, sort by
+          {' '}
+          <select onChange={handleSort}>
+            <option value="relevant">Relevant</option>
+            <option value="helpful">Helpful</option>
+            <option value="newest">Newest</option>
+          </select>
+        </h3>
+        <hr />
+        <ReviewList reviews={reviews} product_id={product_id} filter={filter} sort={sort} />
+      </div>
+    </GridContainer>
   );
 }
