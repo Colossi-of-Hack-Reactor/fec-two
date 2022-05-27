@@ -37,3 +37,14 @@ exports.addReview = (req, res) => {
       console.log('axios post reviews error', err);
     });
 };
+
+exports.putReviewHelpful = (req, res) => {
+  axios.put(`${baseURL}/reviews/${req.params.review_id}/helpful`, req.body, { headers })
+    .then((response) => {
+      // console.log('request post /reviews/', req.body);
+      res.status(204).send(response.data);
+    })
+    .catch((err) => {
+      console.log('axios put review helpful error', err);
+    });
+};

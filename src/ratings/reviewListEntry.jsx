@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import styled from "styled-components";
 
@@ -16,6 +17,18 @@ const Yes = styled.div`
 
 export default function ReviewListEntry({ review, filter }) {
   const [yes, setYes] = useState(review.helpfulness);
+
+  const handleClickYes = () => {
+    axios.put(`/reviews/${review.review_id}/helpful`, {
+      params: { review_id: review.review_id },
+    })
+      .then(() => {
+        setYes(yes + 1);
+      })
+      .catch((err) => {
+        console.log('Error putting helpful review', err);
+      });
+  };
 
   return (
     <div>
@@ -58,7 +71,7 @@ export default function ReviewListEntry({ review, filter }) {
             <small>
               Helpful?
               {' '}
-              <u onClick={() => setYes(yes + 1)}>Yes</u>
+              <u onClick={handleClickYes}>Yes</u>
               {' '}
               (
               {yes}

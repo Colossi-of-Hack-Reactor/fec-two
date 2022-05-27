@@ -31,6 +31,7 @@ app.put('/qa/answers/:answer_id/helpful', questionsAPI.putAnswerHelpful);
 app.get('/reviews/', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
+app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

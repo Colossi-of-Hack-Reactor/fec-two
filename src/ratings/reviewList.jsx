@@ -6,7 +6,6 @@ import Popup from './modal.jsx'
 export default function ReviewList({ reviews, product_id, filter, sort }) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
-  // const [data, setData] = useState(reviews);
 
   const showModal = () => {
     setShow(true);
