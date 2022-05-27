@@ -8,7 +8,7 @@ const Modal = styled.div`
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  display: ${({ show }) => (show === 'true' ? 'block' : 'none')};
+  display: ${({ show }) => (show ? 'block' : 'none')};
 `;
 
 const ModalMain = styled.div`
@@ -21,7 +21,7 @@ const ModalMain = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const CloseButton = styled.div`
+const CloseButton = styled.button`
   top:1%;
   left:85%;
   position: absolute;
@@ -32,9 +32,7 @@ function Popup({ handleClose, show, children }) {
     <Modal show={show}>
       <div>
         <ModalMain>
-          <CloseButton>
-            <button type="button" onClick={handleClose}>close</button>
-          </CloseButton>
+          <CloseButton type="button" onClick={handleClose}>close</CloseButton>
           {children}
         </ModalMain>
       </div>

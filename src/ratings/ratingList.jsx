@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import Bar from './bar.jsx';
 import ArrowDown from './triangle.jsx'
 
-const Star = styled.div`
-  align: left;
-`;
-
 const Score = styled.div`
   color: DimGray;
   font-size: 70px;
@@ -15,35 +11,37 @@ const Score = styled.div`
   font-weight: bold;
 `;
 
-const Char = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: space-between
-flex-wrap: wrap;
-`;
-
-const Chars = styled.div`
-  display: flex;
-  flex-direction: column;
-  // flex-flow: row wrap;
-  justify-content: space-evenly;
-  // align-items: start;
-  margin: 20px;
-`;
-
-const Flex = styled.div`
-display: flex;
-flex-direction: row;
+const Container = styled.div`
+display: grid;
+grid-template-columns: 15% 85%;
 align-items: center;
 `;
 
 const Box = styled.label`
-margin: 3px;
 text-decoration: underline;
 &:hover {
   color: tomato;
 }
+`;
+
+const CharsContainer = styled.div`
+  display: grid;
+  // grid-template-rows: 80px 80px 80px;
+  width: 100%;
+  padding-top: 30px;
+  gap: 20px;
+`;
+
+const Chars = styled.div`
+display: grid;
+  grid-template-rows: 30px 20px 20px;
+`;
+
+const Char = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+font-size: 15px;
 `;
 
 export default function RatingList({ meta, handleFilterRating }) {
@@ -88,18 +86,17 @@ export default function RatingList({ meta, handleFilterRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <Flex key={i} onClick={() => handleFilterRating(rating)}>
-                  <Box>{rating}</Box>
-                  <Box>star</Box>
+                <Container key={i} onClick={() => handleFilterRating(rating)}>
+                  <Box>{rating} star</Box>
                   <Bar progress={meta.ratings[rating] / totalRating * 100} />
-                </Flex>
+                </Container>
               ))}
               <div>
-                <Chars>
+                <CharsContainer>
                   {
                     meta.characteristics
                       ? Object.keys(meta.characteristics).map((char, i) => (
-                        <div key={i}>
+                        <Chars key={i}>
                           <span>{char}</span>
                           <ArrowDown
                             percentage={((meta.characteristics[char].value / 5) * 100).toFixed(0)}
@@ -107,10 +104,10 @@ export default function RatingList({ meta, handleFilterRating }) {
                           <Char>
                             {chars[char].map((elem, i) => (<span key={i}>{elem}</span>))}
                           </Char>
-                        </div>
+                        </Chars>
                       )) : (null)
                   }
-                </Chars>
+                </CharsContainer>
               </div>
             </div>
           ) : (null)

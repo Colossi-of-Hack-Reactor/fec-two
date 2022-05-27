@@ -5,7 +5,8 @@ const Parentdiv = styled.div`
   height: 10px;
   width: 100%;
   background-color: WhiteSmoke;
-  margin: 20px;
+  margin-top: 15px;
+  margin-bottom: 14px;
   &:hover {
     border: 2px solid tomato;
     background-color: #ffe6de;
@@ -17,9 +18,6 @@ const Childdiv = styled.div`
   width: ${({progress}) => (progress)}%;
   background-color: DimGray;
   text-align: right;
-  // &:hover {
-  //   background-color: red;
-  // }
 `;
 
 function Bar({ progress }) {

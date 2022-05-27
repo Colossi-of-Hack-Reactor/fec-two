@@ -6,8 +6,8 @@ import RatingList from './ratingList.jsx';
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 400px auto;
-  gap: 50px;
+  grid-template-columns: 300px auto;
+  gap: 100px;
   margin: 150px;
 `;
 
@@ -35,7 +35,7 @@ export default function Ratings(props) {
         console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
-  }, [count, page, sort, product_id]);
+  }, [count, page, product_id]);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -57,8 +57,19 @@ export default function Ratings(props) {
   }, [product_id]);
 
   const handleFilterRating = (value) => {
-    setFilter((f) => { f[value] = 1; return f; });
+    const f = { ...filter };
+    if (f[value]) {
+      delete f[value];
+    } else {
+      f[value] = 1;
+    }
+    setFilter(f);
   };
+
+  const handleSort = (e) => {
+    setSort(e.target.value);
+  };
+  console.log(sort);
 
   return (
     <GridContainer>
@@ -72,10 +83,14 @@ export default function Ratings(props) {
           {' '}
           reviews, sort by
           {' '}
-          {sort}
+          <select onChange={handleSort}>
+            <option value="relevant">Relevant</option>
+            <option value="helpful">Helpful</option>
+            <option value="newest">Newest</option>
+          </select>
         </h3>
         <hr />
-        <ReviewList reviews={reviews} product_id={product_id} filter={filter} />
+        <ReviewList reviews={reviews} product_id={product_id} filter={filter} sort={sort} />
       </div>
     </GridContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import StarRatings from 'react-star-ratings';
 import styled from "styled-components";
 
@@ -15,9 +15,7 @@ const Yes = styled.div`
 `;
 
 export default function ReviewListEntry({ review, filter }) {
-  const [yes, setYes] = useState(0);
-  console.log(filter);
-  // console.log(review.rating);
+  const [yes, setYes] = useState(review.helpfulness);
 
   return (
     <div>
@@ -60,7 +58,7 @@ export default function ReviewListEntry({ review, filter }) {
             <small>
               Helpful?
               {' '}
-              <span onClick={() => setYes(yes + 1)}>Yes</span>
+              <u onClick={() => setYes(yes + 1)}>Yes</u>
               {' '}
               (
               {yes}

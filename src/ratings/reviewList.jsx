@@ -3,35 +3,40 @@ import ReviewListEntry from './reviewListEntry.jsx';
 import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
-export default function ReviewList({ reviews, product_id, filter }) {
-  const [more, setMore] = useState('false');
-  const [show, setShow] = useState('false');
+export default function ReviewList({ reviews, product_id, filter, sort }) {
+  const [more, setMore] = useState(2);
+  const [show, setShow] = useState(false);
+  // const [data, setData] = useState(reviews);
 
   const showModal = () => {
-    setShow('true');
+    setShow(true);
   };
 
   const hideModal = () => {
-    setShow('false');
+    setShow(false);
   };
 
-  // useEffect(() => {
-  // }, [filter]);
-  console.log(filter);
+  // // const sortReview = () => {
+  //   reviews.sort((a, b) => b[sort] - a[sort]);
+  // // };
 
   return (
     <div>
       <div>
-        {reviews.map((review) => (
-          <ReviewListEntry
-            key={review.review_id}
-            review={review}
-            filter={filter}
-          />
-        ))}
+        {reviews.map((review, i) => {
+          if (i < more) {
+            return (
+              <ReviewListEntry
+                key={review.review_id}
+                review={review}
+                filter={filter}
+              />
+            );
+          }
+        })}
       </div>
       <div>
-        <button type="button" onClick={() => setMore('true')}> MORE REVIEWS </button>
+        { more < reviews.length ? <button type="button" onClick={() => setMore(more + 2)}> MORE REVIEWS </button> : null}
         {' '}
         <button type="button" onClick={showModal}> ADD A REVIEW + </button>
       </div>
