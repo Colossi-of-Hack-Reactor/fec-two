@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const AddAnswerDiv = styled.div.attrs((props) => ({
   row: props.row,
+
 }))`
+text-align: right;
   padding-top: 10px;
   font-size: 10px;
   font-weight: 200;
@@ -15,7 +17,7 @@ const AddAnswerDiv = styled.div.attrs((props) => ({
 
 const AddAnswer = function AddAnswer({ info, index }) {
   return (
-    <AddAnswerDiv row={index + 1}>AddAnswer</AddAnswerDiv>
+    <AddAnswerDiv row={index + 1}>{'|'}&nbsp;&nbsp;AddAnswer</AddAnswerDiv>
   );
 };
 
