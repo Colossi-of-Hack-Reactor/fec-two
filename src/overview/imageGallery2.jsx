@@ -43,12 +43,6 @@ const BigImageDiv = styled.div`
   transition: opacity .5s ease-in;
 `;
 
-const BigImage = styled.img`
-cursor: zoom-in;
-  max-height: 700px;
-  max-width: 700px;
-`;
-
 function ImageGallery(props) {
   const { style, styles, image, setImage } = props;
   const [zoom, setZoom] = useState(false);
