@@ -20,6 +20,7 @@ function Overview(props) {
   const [size, setSize] = useState(null);
   const [quantity, setQuantity] = useState({ value: 1, label: 1 });
   const [image, setImage] = useState(0);
+  const [thumb, setThumb] = useState(6);
   const { product_id, setProduct_id, setLoading } = props;
   const selectRef = React.useRef();
 
@@ -49,7 +50,6 @@ function Overview(props) {
       })
       .then((response) => {
         setStyles(response.data.results);
-        setStyle(0);
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -59,10 +59,27 @@ function Overview(props) {
   }, [product_id]);
 
   useEffect(() => {
+    setStyle(0);
+  }, [styles]);
+
+  useEffect(() => {
     setSize(null);
     setQuantity(null);
-    setImage(0);
-  }, [style, product_id]);
+    if (styles[style]) {
+      if (styles[style].photos.length <= image) {
+        setImage(styles[style].photos.length - 1);
+        setThumb(Math.max(6, styles[style].photos.length - 1));
+      }
+    }
+  }, [style, styles]);
+
+  useEffect(() => {
+    if (image > thumb) {
+      setThumb(image);
+    } else if (image < thumb - 6) {
+      setThumb(image + 6);
+    }
+  }, [image]);
 
   useEffect(() => {
     setQuantity({ value: 1, label: 1 });
@@ -117,6 +134,8 @@ function Overview(props) {
                 styles={styles}
                 image={image}
                 setImage={setImage}
+                thumb={thumb}
+                setThumb={setThumb}
               />
             </ImageDiv>
             <InfoDiv>

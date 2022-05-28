@@ -7,7 +7,7 @@ import {
 import { LeftArrowLink, RightArrowLink, noImageLink } from './overviewAssets.js';
 
 function ImageGallery(props) {
-  const { style, styles, image, setImage } = props;
+  const { style, styles, image, setImage, thumb, setThumb } = props;
   const [zoom, setZoom] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,14 @@ function ImageGallery(props) {
           />
         </BigImageDiv>
       ))}
-      <Thumbnails style={style} styles={styles} image={image} setImage={setImage} />
+      <Thumbnails
+        style={style}
+        styles={styles}
+        image={image}
+        setImage={setImage}
+        thumb={thumb}
+        setThumb={setThumb}
+      />
       <BigArrowDiv>
         <ArrowDiv zidx={2}>
           <ArrowContainer vis={image !== 0} zidx={2}>

@@ -5,16 +5,7 @@ import {
 import { noImageLink, UpArrowLink, DownArrowLink } from './overviewAssets.js';
 
 function Thumbnails(props) {
-  const { style, styles, image, setImage } = props;
-  const [thumb, setThumb] = useState(6);
-
-  useEffect(() => {
-    if (image > thumb) {
-      setThumb(image);
-    } else if (image < thumb - 6) {
-      setThumb(image + 6);
-    }
-  }, [image]);
+  const { style, styles, image, setImage, thumb, setThumb } = props;
 
   return (
     <ThumbnailDiv>
