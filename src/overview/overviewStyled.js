@@ -71,7 +71,7 @@ const Check = styled.img`
   height: 100px;
   width: 100px;
   z-index: 2;
-  opacity: 0.7;
+  opacity: .75;
 `;
 
 const WhiteBG = styled.span`
@@ -122,7 +122,6 @@ const BigImageDiv = styled.div`
   height: 100%;
   width: 100%;
   ${(props) => (props.vis ? '' : 'display: none;')};
-  transition: opacity .4s linear;
 `;
 
 const BigImage = styled.img`
@@ -136,7 +135,7 @@ const ArrowContainer = styled.div`
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, .4);
   visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
 `;
 
@@ -145,7 +144,7 @@ const Arrow = styled.img`
   z-index: ${(props) => (props.zidx)};
   height: 50px;
   width: 50px;
-  opacity: .8;
+  opacity: .75;
 `;
 
 const ArrowDiv = styled.div`
@@ -192,7 +191,7 @@ const ThumbnailIcon = styled.div`
   margin: 6px 15px;
   width: 30px;
   height: 30px;
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, .4);
   z-index: 11;
   cursor: pointer;
   outline: 1px solid rgba(0, 0, 0, .8);
@@ -208,13 +207,13 @@ const CloseButton = styled.img`
   top: 5%;
   right: 5%;
   z-index: 12;
-  opacity: 0.8;
+  opacity: .75;
   cursor: pointer;
 `;
 
 const ExpandedWhiteBG = styled.span`
   position: absolute;
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, .4);
   border-radius: 50%;
   top: 5%;
   right: 5%;

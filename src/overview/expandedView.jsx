@@ -4,7 +4,9 @@ import {
   ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, FullScreenDiv, ExpandedThumbnailDiv,
   ThumbnailIcon, CloseButton, ExpandedWhiteBG,
 } from './overviewStyled.js';
-import { CloseMarkLink, LeftArrowLink, RightArrowLink } from './overviewAssets.js';
+import {
+  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink,
+} from './overviewAssets.js';
 
 const ZoomZoomDiv = styled.div.attrs((props) => ({
   style: {
@@ -14,12 +16,11 @@ const ZoomZoomDiv = styled.div.attrs((props) => ({
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 8;
   background-image: url(${(props) => (props.bg)});
   background-repeat: no-repeat;
   background-size: ${(props) => (props.zoomZoom ? '150%' : 'contain')};
-  cursor: ${(props) => (props.zoomZoom ? 'zoom-out' : 'zoom-in')};
-  transition: background-size 1s ease-in;
+  cursor: ${(props) => (props.zoomZoom ? `url(${MinusLink}) 15 15, zoom-out` : `url(${PlusLink}) 15 15, zoom-in`)};
 `;
 
 function ExpandedView(props) {
@@ -59,14 +60,12 @@ function ExpandedView(props) {
   return (
     <FullScreenDiv>
       <ZoomZoomDiv
-        bg={styles[style].photos[image].url || noImageLink}
         onClick={(e) => {
           setClickCoord([e.clientX, e.clientY]);
           setZoomZoom((z) => !z);
         }}
-        clickCoord={clickCoord}
+        bg={styles[style].photos[image].url || noImageLink}
         zoomZoom={zoomZoom}
-        mouseCoord={mouseCoord}
         mouseLoc={[mouseCoord[0] / windowSize[0] * 100, mouseCoord[1] / windowSize[1] * 100]}
       />
       {zoomZoom ? null : (
