@@ -60,7 +60,7 @@ function Overview(props) {
 
   useEffect(() => {
     setSize(null);
-    setQuantity({ value: 1, label: 1 });
+    setQuantity(null);
     setImage(0);
   }, [style, product_id]);
 

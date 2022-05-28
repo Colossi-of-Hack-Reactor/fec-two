@@ -10,6 +10,7 @@ function QuantitySelector(props) {
         placeholder="-"
         name="quantity"
         isDisabled
+        value={null}
       />
     );
   }
@@ -26,7 +27,6 @@ function QuantitySelector(props) {
     <Select
       name="quantity"
       options={options}
-      defaultValue={quantity}
       value={quantity}
       onChange={setQuantity}
     />
