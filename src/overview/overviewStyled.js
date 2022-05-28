@@ -89,6 +89,7 @@ const ImageContainer = styled.div`
 `;
 
 const Thumbnail = styled.div`
+  ${(props) => (props.disp ? '' : 'display: none;')}
   z-index: 2;
   width: fit-content;
   height: fit-content;
@@ -96,36 +97,37 @@ const Thumbnail = styled.div`
 `;
 
 const ThumbnailImg = styled.img`
-  max-height: 100px;
-  max-width: 100px;
+  height: 80px;
+  width: 80px;
   cursor: pointer;
-  margin: 3px;
-  border-width: 4px;
-  border-style: solid;
-  border-image: linear-gradient(to bottom right, rgba(0, 0, 0, .4) 0%, rgba(255, 255, 255, .4) 100%) 1;
+  margin: 8px;
+  outline: 1px solid white;
+  box-shadow: 0px 0px 6px 6px rgba(0,0,0, .5);
 
   &.selected {
-    border-width: 4px;
-    border-style: solid;
-    border-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%) 1;
+    box-shadow: 0px 0px 6px 6px rgba(250, 70, 22, 1);
   }
 `;
+// border-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%) 1;
 
 const ThumbnailDiv = styled.div`
   display: flex;
   flex-direction: column;
+  z-index: 2;
 `;
 
 const BigImageDiv = styled.div`
   position: absolute;
-  z-index: 1;
-  background: url(${(props) => (props.bg)}) no-repeat;
-  background-size: contain;
-  cursor: zoom-in;
   height: 100%;
   width: 100%;
-  opacity: ${(props) => props.vis ? 1 : 0};
+  ${(props) => props.vis ? '' : 'display: none;'};
   transition: opacity .4s linear;
+`;
+
+const BigImage = styled.img`
+  cursor: zoom-in;
+  max-height: 100%;
+  max-width: 100%;
 `;
 
 const ArrowContainer = styled.div`
@@ -134,10 +136,11 @@ const ArrowContainer = styled.div`
   width: 50px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, .5);
+  visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
 `;
 
 const Arrow = styled.img`
-  cursor: pointer;
+  cursor: ${(props) => (props.cur)};
   z-index: 2;
   height: 50px;
   width: 50px;
@@ -148,6 +151,14 @@ const ArrowDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 4px;
+  z-index: 2;
+`;
+
+const ArrowDivV = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 4px;
 `;
 
 const BigArrowDiv = styled.div`
@@ -159,5 +170,6 @@ const BigArrowDiv = styled.div`
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
-  ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, BigArrowDiv,
+  ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
+  BigArrowDiv, BigImage,
 };

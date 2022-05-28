@@ -34,23 +34,28 @@ const ZoomZoomDiv = styled.div.attrs(props => ({
 
 const ThumbnailIcon = styled.div`
   border-radius: 50%;
-  margin: 10px;
+  margin: 6px 15px;
   width: 30px;
   height: 30px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, .6);
   z-index: 11;
   cursor: pointer;
+  outline: 1px solid rgba(0, 0, 0, .8);
   &.selected {
-    background-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%);
+    background-color: rgba(250, 70, 22, 1);
   }
 `;
+
+// &.selected {
+//   background-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%);
+// }
 
 const CloseButton = styled.img`
   position: absolute;
   height: 50px;
   width: 50px;
-  top: 1%;
-  right: 1%;
+  top: 5%;
+  right: 5%;
   z-index: 12;
   opacity: 0.8;
   cursor: pointer;
@@ -60,8 +65,8 @@ const WhiteBG = styled.span`
   position: absolute;
   background-color: rgba(255, 255, 255, .6);
   border-radius: 50%;
-  top: 1%;
-  right: 1%;
+  top: 5%;
+  right: 5%;
   height: 50px;
   width: 50px;
   z-index: 11;
