@@ -17,10 +17,11 @@ function Overview(props) {
   const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
-  const [size, setSize] = useState('Select');
-  const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState(null);
+  const [quantity, setQuantity] = useState({ value: 1, label: 1 });
   const [image, setImage] = useState(0);
   const { product_id, setProduct_id, setLoading } = props;
+  const selectRef = React.useRef();
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -58,13 +59,13 @@ function Overview(props) {
   }, [product_id]);
 
   useEffect(() => {
-    setSize('Select');
-    setQuantity(1);
+    setSize(null);
+    setQuantity({ value: 1, label: 1 });
     setImage(0);
-  }, [style, product]);
+  }, [style, product_id]);
 
   useEffect(() => {
-    setQuantity(1);
+    setQuantity({ value: 1, label: 1 });
   }, [size]);
 
   return (
@@ -158,19 +159,31 @@ function Overview(props) {
                 )}
               </div>
               <StyleSelector setStyle={setStyle} styles={styles} style={style} />
-              <SizeSelector setSize={setSize} style={style} styles={styles} />
+              <SizeSelector
+                size={size}
+                setSize={setSize}
+                style={style}
+                styles={styles}
+                selectRef={selectRef}
+              />
               <QuantitySelector
+                quantity={quantity}
                 setQuantity={setQuantity}
                 size={size}
                 style={style}
                 styles={styles}
+                selectRef={selectRef}
               />
               {
                 styles[style].skus.null ? (null) : (
                   <div>
                     <button
                       type="button"
-                      disabled={size === 'Select'}
+                      onClick={() => {
+                        if (selectRef.current) {
+                          selectRef.current.focus();
+                        }
+                      }}
                     >
                       Add to Bag
                     </button>
