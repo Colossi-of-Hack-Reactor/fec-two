@@ -28,7 +28,6 @@ const ProductCard = function ProductCard({
     const newList = JSON.parse(JSON.stringify(outfits));
     const newIdList = outfitsIdList.slice();
     if (inOutfits) {
-      console.log('where is this?', product);
       newIdList.splice(outfitsIdList.indexOf(product.id), 1);
       delete newList[product.id];
     } else {
