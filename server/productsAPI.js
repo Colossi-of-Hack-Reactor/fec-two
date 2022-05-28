@@ -1,6 +1,5 @@
-
 const axios = require('axios');
-const Promise = require('bluebird');
+
 const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 const headers = {
   Authorization: process.env.GITHUBKEY,
@@ -12,7 +11,7 @@ exports.getProducts = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get products error', err);
+      res.satus(404).send(err);
     });
 };
 
@@ -22,7 +21,7 @@ exports.getProduct = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get product info error', err);
+      res.satus(404).send(err);
     });
 };
 
@@ -32,7 +31,7 @@ exports.getStyles = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get product info error', err);
+      res.satus(404).send(err);
     });
 };
 
@@ -42,6 +41,6 @@ exports.getRelated = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get product info error', err);
+      res.satus(404).send(err);
     });
 };
