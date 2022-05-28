@@ -16,8 +16,9 @@ const MoreAnswers = function MoreAnswers({index, setNumOfAnswers, numOfAnswers})
   const onClick = function onClick() {
     setNumOfAnswers(numOfAnswers + 2);
   };
+  let key = index+1;
   // eslint-disable-next-line max-len
-  return <More onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 1}>ShowMoreAnswers</More>;
+  return <More key={key} onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 1}>ShowMoreAnswers</More>;
 };
 
 export default MoreAnswers;

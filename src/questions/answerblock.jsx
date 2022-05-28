@@ -15,7 +15,7 @@ const AMark = styled.div.attrs((props) => ({
 const AnswerLine = styled.div.attrs((props) => ({
   row: props.row,
 }))`
-padding-left: 3px;
+padding-left: 2px;
   padding-top: 12px;
   font-size: 12px;
   font-weight: 200;

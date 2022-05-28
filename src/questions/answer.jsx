@@ -18,12 +18,11 @@ font-weight: 200;
 padding-bottom 6px;
 grid-column-start: 2;
 `;
-const AnswerList = function Answer({
+const AnswerList = function AnswerList({
   info,
   answersToDisplay,
   setAnswersToDisplay,
 }) {
-  console.log(info);
   const [numOfAnswers, setNumOfAnswers] = useState(answersToDisplay);
   const createAnswersArr = function (obj) {
     const result = Object.values(info);
@@ -32,7 +31,7 @@ const AnswerList = function Answer({
   };
   // map answer block
   const sortedAnswers = createAnswersArr(info);
-
+  let key = answersToDisplay+1
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;
@@ -45,15 +44,15 @@ const AnswerList = function Answer({
     );
   }
   return (
-    <AnswerGrid>
+    <AnswerGrid key={Math.floor(Math.random() * 20000)}>
       {sortedAnswers.map((answer, index) => {
         if (index < numOfAnswers) {
           return <AnswerBlock key={answer.id} info={answer} index={index} />;
         }
         if (index === numOfAnswers) {
-          console.log(index)
           return (
             <MoreAnswers
+              key={answer.id}
               index={index}
               numOfAnswers={numOfAnswers}
               setNumOfAnswers={setNumOfAnswers}
