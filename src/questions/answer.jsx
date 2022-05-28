@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import AnswerBlock from './answerblock.jsx';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import AnswerBlock from "./answerblock.jsx";
+import MoreAnswers from "./moreanswers.jsx";
 
 const AnswerGrid = styled.div`
-
-width: 70%;
-display: grid;
-grid-template-columns: 16px 1fr;
-grid-template-rows: auto;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  grid-template-rows: auto;
 `;
 
 const NoAnswers = styled.div`
-padding-left: 2px;
+padding-left: 6px;
 padding-top: 11px;
-font-size: 10px;
+font-size: 14px;
 font-weight: 200;
 padding-bottom 6px;
 grid-column-start: 2;
 `;
-const AnswerList = function Answer({
+const AnswerList = function AnswerList({
   info,
   answersToDisplay,
   setAnswersToDisplay,
 }) {
+  const [numOfAnswers, setNumOfAnswers] = useState(answersToDisplay);
   const createAnswersArr = function (obj) {
     const result = Object.values(info);
     result.sort((a, b) => b.helpfulness - a.helpfulness);
@@ -30,7 +31,7 @@ const AnswerList = function Answer({
   };
   // map answer block
   const sortedAnswers = createAnswersArr(info);
-
+  let key = answersToDisplay+1
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;
@@ -38,17 +39,25 @@ const AnswerList = function Answer({
   if (noAnswers) {
     return (
       <AnswerGrid>
-        <NoAnswers>
-          No answers yet! Be the first to Answer!
-        </NoAnswers>
+        <NoAnswers>No answers yet! Be the first to Answer!</NoAnswers>
       </AnswerGrid>
     );
   }
   return (
-    <AnswerGrid>
+    <AnswerGrid key={Math.floor(Math.random() * 20000)}>
       {sortedAnswers.map((answer, index) => {
-        if (index < answersToDisplay) {
+        if (index < numOfAnswers) {
           return <AnswerBlock key={answer.id} info={answer} index={index} />;
+        }
+        if (index === numOfAnswers) {
+          return (
+            <MoreAnswers
+              key={answer.id}
+              index={index}
+              numOfAnswers={numOfAnswers}
+              setNumOfAnswers={setNumOfAnswers}
+            />
+          );
         }
       })}
     </AnswerGrid>

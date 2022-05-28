@@ -9,7 +9,7 @@ const AnswerInfoBlock = styled.div.attrs((props) => ({
 }))`
   display: grid;
   grid-template-columns: max-content max-content max-content max-content max-content;
-  padding-left: 3px;
+  padding-left: 5px;
   padding-top: 5px;
   padding-bottom 3px;
   grid-column-start: 2;
@@ -20,14 +20,14 @@ const SlashOne = styled.div`
 grid-column-start: 2;
 padding-left: 8px;
 padding-right: 8px;
-font-size: 10px;
+font-size: 12px;
   font-weight: 200;
 `;
 const SlashTwo = styled.div`
 grid-column-start: 4;
 padding-left: 8px;
 padding-right: 8px;
-font-size: 10px;
+font-size: 12px;
   font-weight: 200;
 `;
 const AnswerInfo = function AnswerInfo({row, info}) {

@@ -40,6 +40,18 @@ const putAnswersModel = (params, callback) => {
       console.log(error);
     });
 };
+const putAnswerReportModel = (params, callback) => {
+  const options = {
+    method: "PUT",
+    url: `${baseURL}/qa/answers/${params}/report`,
+    headers: { Authorization: process.env.GITHUBKEY },
+  };
+  axios(options)
+    .then((response) => callback(response.data))
+    .catch((error) => {
+      console.log(error);
+    });
+};
 const getQuestionsRoute = ('/questions',
 (req, res) => {
   console.log("Get /questions");
@@ -64,21 +76,17 @@ const putAnswerHelpful = ('/qa/answers', (req, res) => {
   });
 });
 
+const putAnswerReport = ('/qa/answers', (req, res) => {
+  const aid = req.params.answer_id;
+  putAnswerReportModel(aid, (data) => {
+    res.send("Success");
+  });
+});
+
 module.exports = {
   getQuestionsRoute,
   putHelpful,
   putAnswerHelpful,
+  putAnswerReport,
 };
-/*
-(`/qa/questions?question_id=${req.query.question_id}/report`, )
-(req, res) => {
-  console.log('hi');
-  axios.put(`${baseURL}/qa/questions?question_id=${req.query.question_id}/report`, { Authorization: process.env.GITHUBKEY })
-    .then((response) => {
-      console.log(response)
-      res.status(200).send(response.data);
-    })
-    .catch((err) => {
-      console.log('axios get product info error', err);
-    });
-}; */
+

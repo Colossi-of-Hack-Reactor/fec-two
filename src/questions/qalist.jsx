@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Question from "./question.jsx";
 import axios from "axios";
+import QAButtons from './qabuttons.jsx';
 
 const Qbox = styled.div`
   display: grid;
@@ -15,7 +16,6 @@ const QAList = function QAList(props) {
   const [qainfo, setQainfo] = useState([]);
   const [questionsToDisplay, setQuestionsToDisplay] = useState(4);
   const [answersToDisplay, setAnswersToDisplay] = useState(2);
-  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -26,6 +26,8 @@ const QAList = function QAList(props) {
         results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);
         setQainfo(results);
         setLoading((a) => a - 1);
+        setAnswersToDisplay(2);
+        setQuestionsToDisplay(2);
       })
       .catch((err) => {
         console.log("axios get products error", err);
@@ -50,6 +52,7 @@ const QAList = function QAList(props) {
           );
         }
       })}
+      <QAButtons setQuestionsToDisplay={setQuestionsToDisplay} questionsToDisplay={questionsToDisplay} />
     </Qbox>
   );
 };

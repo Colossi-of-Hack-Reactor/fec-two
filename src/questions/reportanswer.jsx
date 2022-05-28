@@ -4,23 +4,24 @@ import axios from "axios";
 
 const NameDiv3 = styled.div`
 grid-column-start: 5;
-font-size: 10px;
+font-size: 12px;
 font-weight: 200;
 `;
 
 const ReportAnswer = function ReportAnswer({ info }) {
   const [ReportedState, setReportedState] = useState(false);
   const onReportClick = () => {
-    console.log('clicked');
-    axios.put(`http://localhost:3001/qa/answers/${info.id}/helpful`)
+    axios.put(`http://localhost:3001/qa/answers/${info.id}/report`)
       .then(() => {
-        setHelpfulness(helpfulness + 1);
+        setReportedState(true);
       })
       .catch((err) => {
         console.log("Error sending helpful vote", err);
       });
   };
-
+  if (ReportedState === true) {
+    return (<NameDiv3>Reported</NameDiv3>);
+  }
   return (
     <NameDiv3 className = 'reportAnswer'
       onClick={(event) => {

@@ -25,10 +25,9 @@ app.get('/products/:product_id/related', productsAPI.getRelated);
 app.get('/qa', questionsAPI.getQuestionsRoute);
 app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
 app.put('/qa/answers/:answer_id/helpful', questionsAPI.putAnswerHelpful);
-
+app.put('/qa/answers/:answer_id/report', questionsAPI.putAnswerReport);
 
 /* API for Ratings */
-
 app.get('/reviews/', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);

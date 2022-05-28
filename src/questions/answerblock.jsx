@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AnswerInfo from "./answerinfo.jsx";
+
 const AMark = styled.div.attrs((props) => ({
   row: props.row,
 }))`
+
   padding-top: 10px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   grid-column-start: 1;
   grid-row-start: ${(props) => props.row};;
@@ -13,7 +15,8 @@ const AMark = styled.div.attrs((props) => ({
 const AnswerLine = styled.div.attrs((props) => ({
   row: props.row,
 }))`
-  padding-top: 11px;
+padding-left: 2px;
+  padding-top: 12px;
   font-size: 12px;
   font-weight: 200;
   padding-bottom 6px;
@@ -22,7 +25,7 @@ const AnswerLine = styled.div.attrs((props) => ({
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-const AnswerBlock = function AnswerBlock({ info, index, noAnswers }) {
+const AnswerBlock = function AnswerBlock({ info, index, setNumOfanswers }) {
   let rownum = 0;
   const answerBody = info.body;
   if (index === 0) { rownum = 1; }
