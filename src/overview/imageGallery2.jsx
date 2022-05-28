@@ -4,10 +4,7 @@ import Thumbnails from './thumbnails.jsx';
 import {
   ImageContainer, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, BigImage,
 } from './overviewStyled.js';
-
-const noImageLink = '/assets/No_image_available.svg';
-const LeftArrowLink = '/assets/angle-circle-left.svg';
-const RightArrowLink = '/assets/angle-circle-right.svg';
+import { LeftArrowLink, RightArrowLink, noImageLink } from './overviewAssets.js';
 
 function ImageGallery(props) {
   const { style, styles, image, setImage } = props;
@@ -34,21 +31,23 @@ function ImageGallery(props) {
       ))}
       <Thumbnails style={style} styles={styles} image={image} setImage={setImage} />
       <BigArrowDiv>
-        <ArrowDiv>
-          <ArrowContainer vis={image !== 0}>
+        <ArrowDiv zidx={2}>
+          <ArrowContainer vis={image !== 0} zidx={2}>
             <Arrow
               src={LeftArrowLink}
               onClick={() => setImage((a) => Math.max(0, a - 1))}
               cur="w-resize"
+              zidx={2}
             />
           </ArrowContainer>
         </ArrowDiv>
-        <ArrowDiv>
-          <ArrowContainer vis={image !== styles[style].photos.length - 1}>
+        <ArrowDiv zidx={2}>
+          <ArrowContainer vis={image !== styles[style].photos.length - 1} zidx={2}>
             <Arrow
               src={RightArrowLink}
               onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
               cur="e-resize"
+              zidx={2}
             />
           </ArrowContainer>
         </ArrowDiv>

@@ -2,8 +2,7 @@ import React from 'react';
 import {
   StyleDiv, StyleGrid, StyleImage, Check, WhiteBG,
 } from './overviewStyled.js';
-
-const checkmarkLink = '/assets/check-mark-circle-line.svg';
+import { CheckMarkLink } from './overviewAssets.js';
 
 function StyleSelector(props) {
   const { style, setStyle, styles } = props;
@@ -29,7 +28,7 @@ function StyleSelector(props) {
                 ? (
                   <>
                     <WhiteBG />
-                    <Check src={checkmarkLink} alt="check" />
+                    <Check src={CheckMarkLink} alt="check" />
                   </>
                 ) : ''}
             </StyleDiv>

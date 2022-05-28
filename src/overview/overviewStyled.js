@@ -71,7 +71,7 @@ const Check = styled.img`
   height: 100px;
   width: 100px;
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.7;
 `;
 
 const WhiteBG = styled.span`
@@ -113,6 +113,7 @@ const ThumbnailImg = styled.img`
 const ThumbnailDiv = styled.div`
   display: flex;
   flex-direction: column;
+
   z-index: 2;
 `;
 
@@ -120,7 +121,7 @@ const BigImageDiv = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  ${(props) => props.vis ? '' : 'display: none;'};
+  ${(props) => (props.vis ? '' : 'display: none;')};
   transition: opacity .4s linear;
 `;
 
@@ -131,7 +132,7 @@ const BigImage = styled.img`
 `;
 
 const ArrowContainer = styled.div`
-  z-index: 2;
+  z-index: ${(props) => (props.zidx)};
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -141,7 +142,7 @@ const ArrowContainer = styled.div`
 
 const Arrow = styled.img`
   cursor: ${(props) => (props.cur)};
-  z-index: 2;
+  z-index: ${(props) => (props.zidx)};
   height: 50px;
   width: 50px;
   opacity: .8;
@@ -151,8 +152,8 @@ const ArrowDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4px;
-  z-index: 2;
+  padding: 10px;
+  z-index: ${(props) => (props.zidx)};
 `;
 
 const ArrowDivV = styled.div`
@@ -167,9 +168,65 @@ const BigArrowDiv = styled.div`
   justify-content: space-between;
 `;
 
+const FullScreenDiv = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 7;
+    background-color: rgba(0, 0, 0, 1);
+    display: flex;
+`;
+
+const ExpandedThumbnailDiv = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+`;
+
+const ThumbnailIcon = styled.div`
+  border-radius: 50%;
+  margin: 6px 15px;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, .6);
+  z-index: 11;
+  cursor: pointer;
+  outline: 1px solid rgba(0, 0, 0, .8);
+  &.selected {
+    background-color: rgba(250, 70, 22, 1);
+  }
+`;
+
+const CloseButton = styled.img`
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: 5%;
+  right: 5%;
+  z-index: 12;
+  opacity: 0.8;
+  cursor: pointer;
+`;
+
+const ExpandedWhiteBG = styled.span`
+  position: absolute;
+  background-color: rgba(255, 255, 255, .6);
+  border-radius: 50%;
+  top: 5%;
+  right: 5%;
+  height: 50px;
+  width: 50px;
+  z-index: 11;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
-  BigArrowDiv, BigImage,
+  BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
+  ExpandedWhiteBG,
 };

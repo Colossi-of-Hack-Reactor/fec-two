@@ -1,29 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ExpandedView from './expandedView.jsx';
 import {
   Thumbnail, ThumbnailImg, ThumbnailDiv, ArrowDiv, ArrowContainer, Arrow, ArrowDivV,
 } from './overviewStyled.js';
-
-const noImageLink = '/assets/No_image_available.svg';
-const UpArrowLink = '/assets/angle-circle-up.svg';
-const DownArrowLink = '/assets/angle-circle-down.svg';
-
-function within(i, img, len) {
-  if (len < 8) {
-    return true;
-  }
-  let low = img - 3;
-  let high = img + 3;
-  if (low < 0) {
-    low = 0;
-    high = 6;
-  }
-  if (high > len - 1) {
-    high = len - 1;
-    low = len - 7;
-  }
-  return i >= low && i <= high;
-}
+import { noImageLink, UpArrowLink, DownArrowLink } from './overviewAssets.js';
 
 function Thumbnails(props) {
   const { style, styles, image, setImage } = props;
@@ -36,6 +15,7 @@ function Thumbnails(props) {
       setThumb(image + 6);
     }
   }, [image]);
+
   return (
     <ThumbnailDiv>
       {styles[style].photos.length > 7 ? (
