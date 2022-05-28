@@ -184,20 +184,24 @@ const ExpandedThumbnailDiv = styled.div`
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
+  z-index: 10;
 `;
 
 const ThumbnailIcon = styled.div`
   border-radius: 50%;
-  margin: 6px 15px;
+  margin: 8px 15px;
   width: 30px;
   height: 30px;
-  background-color: rgba(255, 255, 255, .4);
   z-index: 11;
   cursor: pointer;
   outline: 1px solid rgba(0, 0, 0, .8);
+  box-shadow: 0px 0px 4px 4px rgba(255, 255, 255, .8);
+
   &.selected {
     background-color: rgba(250, 70, 22, 1);
+    box-shadow: 0px 0px 4px 4px rgba(250, 70, 22, 1);
   }
+
 `;
 
 const CloseButton = styled.img`
