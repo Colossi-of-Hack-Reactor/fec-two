@@ -10,9 +10,9 @@ import ProductCard from './productCard.jsx';
 function Related({
   product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList,
 }) {
+  let altCards = [];
+  let defaultIndex = undefined;
   const [products, setProducts] = useState([]);
-  const altCards = [];
-  let defaultIndex;
   const compileOutfits = (productList) => {
     Promise.allSettled(productList.map((id) => axios.get(`/products/${id}`)))
       .then((promisesArr) => promisesArr.map((res) => (res.status === 'fulfilled' ? res.value.data : {})))
@@ -72,6 +72,8 @@ function Related({
       {sectionHeader(product_id)}
       <List>
         {product_id !== undefined ? products.map((product) => {
+          altCards = [];
+          defaultIndex = undefined;
           populateAltCards(product);
           return cardElement(product, altCards, defaultIndex, product.id);
         }) : outfitsIdList.map((id) => {
