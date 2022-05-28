@@ -1,73 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import {
+  ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, FullScreenDiv, ExpandedThumbnailDiv,
+  ThumbnailIcon, CloseButton, ExpandedWhiteBG,
+} from './overviewStyled.js';
+import {
+  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink,
+} from './overviewAssets.js';
 
-const FullScreenDiv = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 7;
-    background-color: rgba(0, 0, 0, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-
-const ZoomZoomDiv = styled.div.attrs(props => ({
+const ZoomZoomDiv = styled.div.attrs((props) => ({
   style: {
-  "backgroundPosition": props.zoomZoom ? `${props.mouseLoc[0]}% ${props.mouseLoc[1]}%` : 'center'
-}}))`
+    backgroundPosition: props.zoomZoom ? `${props.mouseLoc[0]}% ${props.mouseLoc[1]}%` : 'center',
+  },
+}))`
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 8;
   background-image: url(${(props) => (props.bg)});
   background-repeat: no-repeat;
-  background-size: ${(props) => props.zoomZoom ? '150%' : 'contain'};
-  cursor: ${(props) => props.zoomZoom ? 'zoom-out' : 'zoom-in'};
-  transition: background-size 1s ease-in;
-
+  background-size: ${(props) => (props.zoomZoom ? '150%' : 'contain')};
+  cursor: ${(props) => (props.zoomZoom ? `url(${MinusLink}) 15 15, zoom-out` : `url(${PlusLink}) 15 15, zoom-in`)};
 `;
-
-const ThumbnailIcon = styled.div`
-  border-radius: 50%;
-  margin: 10px;
-  width: 30px;
-  height: 30px;
-  background-color: white;
-  z-index: 11;
-  cursor: pointer;
-  &.selected {
-    background-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%);
-  }
-`;
-
-const CloseButton = styled.img`
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  top: 1%;
-  right: 1%;
-  z-index: 12;
-  opacity: 0.8;
-  cursor: pointer;
-`;
-
-const WhiteBG = styled.span`
-  position: absolute;
-  background-color: rgba(255, 255, 255, .6);
-  border-radius: 50%;
-  top: 1%;
-  right: 1%;
-  height: 50px;
-  width: 50px;
-  z-index: 11;
-`;
-
-const CloseMarkLink = '/assets/close-round-line.svg';
 
 function ExpandedView(props) {
   const { style, styles, image, setImage, setZoom, noImageLink } = props;
@@ -106,26 +60,48 @@ function ExpandedView(props) {
   return (
     <FullScreenDiv>
       <ZoomZoomDiv
-        bg={styles[style].photos[image].url || noImageLink}
         onClick={(e) => {
           setClickCoord([e.clientX, e.clientY]);
           setZoomZoom((z) => !z);
         }}
-        clickCoord={clickCoord}
+        bg={styles[style].photos[image].url || noImageLink}
         zoomZoom={zoomZoom}
-        mouseCoord={mouseCoord}
         mouseLoc={[mouseCoord[0] / windowSize[0] * 100, mouseCoord[1] / windowSize[1] * 100]}
       />
       {zoomZoom ? null : (
         <>
-          {styles[style].photos.map((p, i) => (
-            <ThumbnailIcon
-              key={i}
-              className={i === image ? 'selected' : null}
-              onClick={() => setImage(i)}
-            />
-          ))}
-          <WhiteBG />
+          <ExpandedThumbnailDiv>
+            {styles[style].photos.map((p, i) => (
+              <ThumbnailIcon
+                key={i}
+                className={i === image ? 'selected' : null}
+                onClick={() => setImage(i)}
+              />
+            ))}
+          </ExpandedThumbnailDiv>
+          <BigArrowDiv>
+            <ArrowDiv zidx={11}>
+              <ArrowContainer vis={image !== 0} zidx={11}>
+                <Arrow
+                  src={LeftArrowLink}
+                  onClick={() => setImage((a) => Math.max(0, a - 1))}
+                  cur="w-resize"
+                  zidx={11}
+                />
+              </ArrowContainer>
+            </ArrowDiv>
+            <ArrowDiv zidx={11}>
+              <ArrowContainer vis={image !== styles[style].photos.length - 1} zidx={11}>
+                <Arrow
+                  src={RightArrowLink}
+                  onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
+                  cur="e-resize"
+                  zidx={11}
+                />
+              </ArrowContainer>
+            </ArrowDiv>
+          </BigArrowDiv>
+          <ExpandedWhiteBG />
           <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} />
         </>
       )}

@@ -1,47 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import ExpandedView from './expandedView.jsx';
-
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-`;
-
-const noImageLink = '/assets/No_image_available.svg';
-
-const Thumbnail = styled.div`
-  padding: 4px;
-  &.selected {
-    padding: 0;
-  }
-  z-index: 2;
-  width: fit-content;
-`;
-
-const ThumbnailImg = styled.img`
-  max-height: 100px;
-  max-width: 100px;
-  cursor: pointer;
-
-  &.selected {
-    border-width: 4px;
-    border-style: solid;
-    border-image: linear-gradient(to bottom right, rgba(250,70,22,1) 0%, rgba(0,33,165,1) 100%) 1;
-  }
-`;
-
-const BigImageDiv = styled.div`
-  position: absolute;
-  z-index: 1;
-  background: url(${(props) => (props.bg)}) no-repeat;
-  background-size: contain;
-  cursor: zoom-in;
-  height: 100%;
-  width: 100%;
-  opacity: ${(props) => props.vis ? 1 : 0};
-  transition: opacity .5s ease-in;
-`;
+import Thumbnails from './thumbnails.jsx';
+import {
+  ImageContainer, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, BigImage,
+} from './overviewStyled.js';
+import { LeftArrowLink, RightArrowLink, noImageLink } from './overviewAssets.js';
 
 function ImageGallery(props) {
   const { style, styles, image, setImage } = props;
@@ -54,23 +17,41 @@ function ImageGallery(props) {
   return (
     <ImageContainer>
       {styles[style].photos.map((p, i) => (
-        <React.Fragment key={i}>
-          <BigImageDiv
-            bg={p.url || noImageLink}
+        <BigImageDiv
+          vis={i === image}
+          key={i}
+        >
+          <BigImage
+            src={p.url || noImageLink}
             onClick={() => setZoom(true)}
             vis={i === image}
+            key={i}
           />
-          <Thumbnail
-            className={i === image ? 'selected' : null}
-          >
-            <ThumbnailImg
-              src={p.thumbnail_url || noImageLink}
-              onClick={() => setImage(i)}
-              className={i === image ? 'selected' : null}
-            />
-          </Thumbnail>
-        </React.Fragment>
+        </BigImageDiv>
       ))}
+      <Thumbnails style={style} styles={styles} image={image} setImage={setImage} />
+      <BigArrowDiv>
+        <ArrowDiv zidx={2}>
+          <ArrowContainer vis={image !== 0} zidx={2}>
+            <Arrow
+              src={LeftArrowLink}
+              onClick={() => setImage((a) => Math.max(0, a - 1))}
+              cur="w-resize"
+              zidx={2}
+            />
+          </ArrowContainer>
+        </ArrowDiv>
+        <ArrowDiv zidx={2}>
+          <ArrowContainer vis={image !== styles[style].photos.length - 1} zidx={2}>
+            <Arrow
+              src={RightArrowLink}
+              onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
+              cur="e-resize"
+              zidx={2}
+            />
+          </ArrowContainer>
+        </ArrowDiv>
+      </BigArrowDiv>
       {zoom ? (
         <ExpandedView
           style={style}
