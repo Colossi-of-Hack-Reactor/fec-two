@@ -11,8 +11,9 @@ grid-template-rows: auto;
 `;
 
 const NoAnswers = styled.div`
+padding-left: 2px;
 padding-top: 11px;
-font-size: 12px;
+font-size: 10px;
 font-weight: 200;
 padding-bottom 6px;
 grid-column-start: 2;
@@ -29,7 +30,7 @@ const AnswerList = function Answer({
   };
   // map answer block
   const sortedAnswers = createAnswersArr(info);
-  console.log(info);
+
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;

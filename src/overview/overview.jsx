@@ -4,7 +4,7 @@ import axios from 'axios';
 import QuantitySelector from './quantitySelector.jsx'
 import SizeSelector from './sizeSelector.jsx';
 import StyleSelector from './styleSelector.jsx';
-import ImageGallery from './imageGallery.jsx';
+import ImageGallery from './imageGallery2.jsx';
 import {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
   FeatsDiv, OverallDiv,
@@ -111,7 +111,12 @@ function Overview(props) {
         <>
           <OverviewDiv>
             <ImageDiv>
-              <ImageGallery style={style} styles={styles} image={image} setImage={setImage} />
+              <ImageGallery
+                style={style}
+                styles={styles}
+                image={image}
+                setImage={setImage}
+              />
             </ImageDiv>
             <InfoDiv>
               <div>

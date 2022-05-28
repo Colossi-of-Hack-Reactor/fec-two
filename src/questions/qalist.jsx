@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Qbox = styled.div`
   display: grid;
-  grid-template-columns: 70% max-content max-content;
+  grid-template-columns: 1fr min-content min-content;
   grid-template-rows: 1fr;
 `;
 

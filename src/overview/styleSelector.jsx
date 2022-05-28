@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const TD = styled.td`
-  position: relative
+const StyleDiv = styled.div`
+  display: grid;
+  position: relative;
+  align-items: center;
+  justify-items: center;
+`;
+
+const StyleGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
 const StyleImage = styled.img`
@@ -12,23 +20,29 @@ const StyleImage = styled.img`
   border-radius: 50%;
 `;
 
-const Check = styled.span`
+const Check = styled.img`
   position: absolute;
-  top: 10%;
-  left: 10%;
-  text-shadow: 2px 2px;
+  height: 100px;
+  width: 100px;
+  z-index: 2;
+  opacity: 0.8;
 `;
+
+const WhiteBG = styled.span`
+  position: absolute;
+  background-color: rgba(255, 255, 255, .4);
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  z-index: 1;
+`;
+
+const checkmarkLink = '/assets/check-mark-circle-line.svg';
 
 function StyleSelector(props) {
   const { style, setStyle, styles } = props;
 
   if (styles[style].photos[0].url !== null) {
-    const stylesArray = [];
-
-    for (let i = 0; i < styles.length; i += 4) {
-      stylesArray.push(styles.slice(i, i + 4));
-    }
-
     return (
       <>
         <span>
@@ -36,26 +50,25 @@ function StyleSelector(props) {
           {' '}
           {styles[style].name}
         </span>
-        <table>
-          <tbody>
-            {stylesArray.map((row, i) => (
-              <tr key={i}>
-                {row.map((s, j) => (
-                  <TD key={s.style_id}>
-                    <StyleImage
-                      className={4 * i + j === style ? 'selected' : null}
-                      key={s.style_id}
-                      src={s.photos[0].thumbnail_url}
-                      onClick={() => setStyle(4 * i + j)}
-                      data-testid={`style-${4 * i + j}`}
-                    />
-                    {4 * i + j === style ? <Check>☑️</Check> : ''}
-                  </TD>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <StyleGrid>
+          {styles.map((s, i) => (
+            <StyleDiv key={s.style_id}>
+              <StyleImage
+                className={i === style ? 'selected' : null}
+                src={s.photos[0].thumbnail_url}
+                onClick={() => setStyle(i)}
+                data-testid={`style-${i}`}
+              />
+              {i === style
+                ? (
+                  <>
+                    <WhiteBG />
+                    <Check src={checkmarkLink} alt="check" />
+                  </>
+                ) : ''}
+            </StyleDiv>
+          ))}
+        </StyleGrid>
       </>
     );
   }

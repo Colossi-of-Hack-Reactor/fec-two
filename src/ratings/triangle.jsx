@@ -30,7 +30,7 @@ const Box = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;;
   align-items: space-between
 `;
 
@@ -52,12 +52,10 @@ function Boxes() {
 
 function ArrowDown({ percentage }) {
   return (
-    <div>
-      <ContainerTop>
-        <Boxes />
-        <Triangle percentage={percentage} />
-      </ContainerTop>
-    </div>
+    <ContainerTop>
+      <Boxes />
+      <Triangle percentage={percentage} />
+    </ContainerTop>
   );
 }
 

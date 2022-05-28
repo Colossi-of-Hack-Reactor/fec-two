@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const NameDiv3 = styled.div`
-grid-column-start: 5;
-font-size: 10px;
-font-weight: 200;
+const Vote2 = styled.div`
+  font-size: 10px;
+  font-weight: 100;
+  padding-right: 3px;
+  grid-column-start: 2;
+  grow-row-start: 1;
+  text-decoration: underline;
 `;
 
-const ReportAnswer = function ReportAnswer({ info }) {
-  const [ReportedState, setReportedState] = useState(false);
-  const onReportClick = () => {
-    console.log('clicked');
+const AnswerVote = function AnswerVote({ info, setHelpfulness, helpfulness }) {
+  const onVoteClick = () => {
     axios.put(`http://localhost:3001/qa/answers/${info.id}/helpful`)
       .then(() => {
         setHelpfulness(helpfulness + 1);
@@ -22,15 +23,15 @@ const ReportAnswer = function ReportAnswer({ info }) {
   };
 
   return (
-    <NameDiv3 className = 'reportAnswer'
+    <Vote2 className = 'vote2'
       onClick={(event) => {
         event.preventDefault();
-        onReportClick();
+        onVoteClick();
       }}
     >
-      Report Answer
-    </NameDiv3>
+      Yes
+    </Vote2>
   );
 };
 
-export default ReportAnswer;
+export default AnswerVote;

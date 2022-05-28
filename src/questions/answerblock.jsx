@@ -23,17 +23,11 @@ const AnswerLine = styled.div.attrs((props) => ({
 `;
 
 const AnswerBlock = function AnswerBlock({ info, index, noAnswers }) {
-  console.log(info);
   let rownum = 0;
   const answerBody = info.body;
   if (index === 0) { rownum = 1; }
   if (index > 0) { rownum = index * 2 + 1; }
-  console.log(noAnswers)
-  if (noAnswers) {
-    return (
-    <div> No answers yet! Be the first to Answer! </div>
-    )
-  }
+
   return (
     <>
       <AMark row={rownum}>A:</AMark>
