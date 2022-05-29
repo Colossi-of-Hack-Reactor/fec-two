@@ -52,6 +52,7 @@ const StyleDiv = styled.div`
   position: relative;
   align-items: center;
   justify-items: center;
+  padding: 8px;
 `;
 
 const StyleGrid = styled.div`

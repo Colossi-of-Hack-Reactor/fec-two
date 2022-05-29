@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import axios from 'axios';
 import QuantitySelector from './quantitySelector.jsx'
 import SizeSelector from './sizeSelector.jsx';
@@ -9,6 +10,7 @@ import {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
   FeatsDiv, OverallDiv,
 } from './overviewStyled.js';
+import { EmptyStarLink, FullStarLink } from './overviewAssets.js';
 
 function Overview(props) {
   const [count, setCount] = useState(5);
@@ -210,7 +212,8 @@ function Overview(props) {
                 )
               }
               <div>
-                Star
+                <img src={EmptyStarLink} alt="empty star" />
+                <img src={FullStarLink} alt="full star" />
               </div>
             </InfoDiv>
           </OverviewDiv>
@@ -238,5 +241,11 @@ function Overview(props) {
     </OverallDiv>
   );
 }
+
+Overview.propTypes = {
+  product_id: PropTypes.number.isRequired,
+  setProduct_id: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired,
+};
 
 export default Overview;

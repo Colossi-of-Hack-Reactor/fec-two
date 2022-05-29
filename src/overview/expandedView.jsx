@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import {
   ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, FullScreenDiv, ExpandedThumbnailDiv,
@@ -24,7 +25,9 @@ const ZoomZoomDiv = styled.div.attrs((props) => ({
 `;
 
 function ExpandedView(props) {
-  const { style, styles, image, setImage, setZoom, noImageLink } = props;
+  const {
+    style, styles, image, setImage, setZoom, noImageLink,
+  } = props;
   const [zoomZoom, setZoomZoom] = useState(false);
   const [clickCoord, setClickCoord] = useState([0, 0]);
   const [windowSize, setWindowSize] = useState([0, 0]);
@@ -108,5 +111,14 @@ function ExpandedView(props) {
     </FullScreenDiv>
   );
 }
+
+ExpandedView.propTypes = {
+  style: PropTypes.number.isRequired,
+  styles: PropTypes.arrayOf.isRequired,
+  image: PropTypes.number.isRequired,
+  setImage: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
+  noImageLink: PropTypes.string.isRequired,
+};
 
 export default ExpandedView;

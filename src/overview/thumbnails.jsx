@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { PropTypes } from 'prop-types';
 import {
-  Thumbnail, ThumbnailImg, ThumbnailDiv, ArrowDiv, ArrowContainer, Arrow, ArrowDivV,
+  Thumbnail, ThumbnailImg, ThumbnailDiv, ArrowContainer, Arrow, ArrowDivV,
 } from './overviewStyled.js';
 import { noImageLink, UpArrowLink, DownArrowLink } from './overviewAssets.js';
 
 function Thumbnails(props) {
-  const { style, styles, image, setImage, thumb, setThumb } = props;
+  const {
+    style, styles, image, setImage, thumb, setThumb,
+  } = props;
 
   return (
     <ThumbnailDiv>
@@ -65,5 +68,14 @@ function Thumbnails(props) {
     </ThumbnailDiv>
   );
 }
+
+Thumbnails.propTypes = {
+  style: PropTypes.number.isRequired,
+  styles: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  image: PropTypes.number.isRequired,
+  setImage: PropTypes.func.isRequired,
+  thumb: PropTypes.number.isRequired,
+  setThumb: PropTypes.func.isRequired,
+};
 
 export default Thumbnails;
