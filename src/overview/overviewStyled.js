@@ -227,10 +227,16 @@ const ExpandedWhiteBG = styled.span`
   z-index: 11;
 `;
 
+const SelectSizeMsg = styled.div`
+  opacity: ${(props) => (props.vis ? 1 : 0)};
+  color: red;
+  transition: opacity .5s;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
-  ExpandedWhiteBG,
+  ExpandedWhiteBG, SelectSizeMsg,
 };

@@ -8,7 +8,7 @@ import StyleSelector from './styleSelector.jsx';
 import ImageGallery from './imageGallery2.jsx';
 import {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
-  FeatsDiv, OverallDiv,
+  FeatsDiv, OverallDiv, SelectSizeMsg,
 } from './overviewStyled.js';
 import { EmptyStarLink, FullStarLink } from './overviewAssets.js';
 
@@ -23,6 +23,7 @@ function Overview(props) {
   const [quantity, setQuantity] = useState({ value: 1, label: 1 });
   const [image, setImage] = useState(0);
   const [thumb, setThumb] = useState(6);
+  const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
   const { product_id, setProduct_id, setLoading } = props;
   const selectRef = React.useRef();
 
@@ -180,6 +181,9 @@ function Overview(props) {
                 )}
               </div>
               <StyleSelector setStyle={setStyle} styles={styles} style={style} />
+              <SelectSizeMsg vis={showSelectSizeMsg}>
+                Please select a size.
+              </SelectSizeMsg>
               <SizeSelector
                 size={size}
                 setSize={setSize}
@@ -201,8 +205,12 @@ function Overview(props) {
                     <button
                       type="button"
                       onClick={() => {
-                        if (selectRef.current) {
-                          selectRef.current.focus();
+                        if (size === null) {
+                          if (selectRef.current) {
+                            selectRef.current.focus();
+                          }
+                          setShowSelectSizeMsg(true);
+                          setTimeout(() => setShowSelectSizeMsg(false), 3000);
                         }
                       }}
                     >
