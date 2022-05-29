@@ -9,21 +9,15 @@ function SizeSelector(props) {
 
   if (styles[style].skus.null) {
     return (
-      <div>
-        <label>
-          Select Size
-          {' '}
-          <Select
-            name="size"
-            isDisabled
-            value={null}
-            options={[{
-              value: 'Select', label: 'OUT OF STOCK',
-            }]}
-            placeholder="OUT OF STOCK"
-          />
-        </label>
-      </div>
+      <Select
+        name="size"
+        isDisabled
+        value={null}
+        options={[{
+          value: 'Select', label: 'OUT OF STOCK',
+        }]}
+        placeholder="OUT OF STOCK"
+      />
     );
   }
 

@@ -7,16 +7,15 @@ import SizeSelector from './sizeSelector.jsx';
 import StyleSelector from './styleSelector.jsx';
 import ImageGallery from './imageGallery2.jsx';
 import {
-  Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
-  FeatsDiv, OverallDiv, SelectSizeMsg,
+  Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
+  FeatsDiv, OverallDiv, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
 } from './overviewStyled.js';
 import { EmptyStarLink, FullStarLink } from './overviewAssets.js';
 
+let timeoutID = null;
+
 function Overview(props) {
-  const [count, setCount] = useState(5);
-  const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
-  const [page, setPage] = useState(1);
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
   const [size, setSize] = useState(null);
@@ -24,25 +23,8 @@ function Overview(props) {
   const [image, setImage] = useState(0);
   const [thumb, setThumb] = useState(6);
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
-  const { product_id, setProduct_id, setLoading } = props;
+  const { product_id, setLoading } = props;
   const selectRef = React.useRef();
-
-  useEffect(() => {
-    setLoading((a) => a + 1);
-    axios.get('/products', {
-      params: {
-        count, page,
-      },
-    })
-      .then((response) => {
-        setProducts(response.data);
-        setLoading((a) => a - 1);
-      })
-      .catch((err) => {
-        console.log('axios get products error', err);
-        setLoading((a) => a - 1);
-      });
-  }, [count, page]);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -90,44 +72,6 @@ function Overview(props) {
 
   return (
     <OverallDiv>
-      <form>
-        <label>
-          Product Count:
-          <input
-            type="number"
-            name="count"
-            label="count"
-            value={count}
-            min="1"
-            onChange={(e) => {
-              setCount(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          Page:
-          <input
-            type="number"
-            name="page"
-            label="page"
-            value={page}
-            min="1"
-            onChange={(e) => {
-              setPage(e.target.value);
-            }}
-          />
-        </label>
-      </form>
-      {products.length ? products.map((d) => (
-        <Product key={d.id} data-testid="product" onClick={() => { setProduct_id(d.id); }}>
-          <span>
-            {d.id}
-          </span>
-          :
-          {' '}
-          {d.name}
-        </Product>
-      )) : <Product>No products.</Product>}
       {styles[style] ? (
         <>
           <OverviewDiv>
@@ -184,21 +128,39 @@ function Overview(props) {
               <SelectSizeMsg vis={showSelectSizeMsg}>
                 Please select a size.
               </SelectSizeMsg>
-              <SizeSelector
-                size={size}
-                setSize={setSize}
-                style={style}
-                styles={styles}
-                selectRef={selectRef}
-              />
-              <QuantitySelector
-                quantity={quantity}
-                setQuantity={setQuantity}
-                size={size}
-                style={style}
-                styles={styles}
-                selectRef={selectRef}
-              />
+              <SizeQuantityDiv>
+                <SelectSpan>
+                  <SizeSelector
+                    size={size}
+                    setSize={setSize}
+                    style={style}
+                    styles={styles}
+                    selectRef={selectRef}
+                    setShowSelectSizeMsg={setShowSelectSizeMsg}
+                  />
+                </SelectSpan>
+                <SelectSpan
+                  onClick={() => {
+                    if (size === null && styles[style].skus[size] === undefined) {
+                      if (selectRef.current) {
+                        selectRef.current.focus();
+                      }
+                      setShowSelectSizeMsg(true);
+                      clearTimeout(timeoutID);
+                      timeoutID = setTimeout(() => setShowSelectSizeMsg(false), 3000);
+                    }
+                  }}
+                >
+                  <QuantitySelector
+                    quantity={quantity}
+                    setQuantity={setQuantity}
+                    size={size}
+                    style={style}
+                    styles={styles}
+                    selectRef={selectRef}
+                  />
+                </SelectSpan>
+              </SizeQuantityDiv>
               {
                 styles[style].skus.null ? (null) : (
                   <div>
@@ -210,7 +172,8 @@ function Overview(props) {
                             selectRef.current.focus();
                           }
                           setShowSelectSizeMsg(true);
-                          setTimeout(() => setShowSelectSizeMsg(false), 3000);
+                          clearTimeout(timeoutID);
+                          timeoutID = setTimeout(() => setShowSelectSizeMsg(false), 3000);
                         }
                       }}
                     >
@@ -252,7 +215,6 @@ function Overview(props) {
 
 Overview.propTypes = {
   product_id: PropTypes.number.isRequired,
-  setProduct_id: PropTypes.func.isRequired,
   setLoading: PropTypes.func.isRequired,
 };
 

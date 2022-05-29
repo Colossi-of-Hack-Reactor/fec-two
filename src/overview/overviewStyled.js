@@ -28,6 +28,8 @@ const ImageDiv = styled.div`
 
 const InfoDiv = styled.div`
   padding: 10px;
+  width: min-content;
+  min-width: 300px;
 `;
 
 const WordsDiv = styled.div`
@@ -57,6 +59,7 @@ const StyleDiv = styled.div`
 
 const StyleGrid = styled.div`
   display: grid;
+  width: min-content;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
@@ -232,10 +235,19 @@ const SelectSizeMsg = styled.div`
   transition: opacity .5s;
 `;
 
+const SizeQuantityDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const SelectSpan = styled.span`
+  padding: 10px;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
-  ExpandedWhiteBG, SelectSizeMsg,
+  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
 };
