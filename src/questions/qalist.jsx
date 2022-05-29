@@ -52,7 +52,7 @@ const QAList = function QAList(props) {
           );
         }
       })}
-      <QAButtons setQuestionsToDisplay={setQuestionsToDisplay} questionsToDisplay={questionsToDisplay} />
+      <QAButtons setQuestionsToDisplay={setQuestionsToDisplay} questionsToDisplay={questionsToDisplay} qainfo={qainfo} product_id={product_id}/>
     </Qbox>
   );
 };
