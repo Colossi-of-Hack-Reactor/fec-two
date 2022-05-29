@@ -120,7 +120,7 @@ function ExpandedView(props) {
 
 ExpandedView.propTypes = {
   style: PropTypes.number.isRequired,
-  styles: PropTypes.arrayOf.isRequired,
+  styles: PropTypes.arrayOf(PropTypes.shape).isRequired,
   image: PropTypes.number.isRequired,
   setImage: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
