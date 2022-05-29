@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import ExpandedView from './expandedView.jsx';
 import Thumbnails from './thumbnails.jsx';
 import {
@@ -7,7 +8,9 @@ import {
 import { LeftArrowLink, RightArrowLink, noImageLink } from './overviewAssets.js';
 
 function ImageGallery(props) {
-  const { style, styles, image, setImage } = props;
+  const {
+    style, styles, image, setImage, thumb, setThumb,
+  } = props;
   const [zoom, setZoom] = useState(false);
 
   useEffect(() => {
@@ -29,7 +32,14 @@ function ImageGallery(props) {
           />
         </BigImageDiv>
       ))}
-      <Thumbnails style={style} styles={styles} image={image} setImage={setImage} />
+      <Thumbnails
+        style={style}
+        styles={styles}
+        image={image}
+        setImage={setImage}
+        thumb={thumb}
+        setThumb={setThumb}
+      />
       <BigArrowDiv>
         <ArrowDiv zidx={2}>
           <ArrowContainer vis={image !== 0} zidx={2}>
@@ -65,5 +75,14 @@ function ImageGallery(props) {
     </ImageContainer>
   );
 }
+
+ImageGallery.propTypes = {
+  style: PropTypes.number.isRequired,
+  styles: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  image: PropTypes.number.isRequired,
+  setImage: PropTypes.func.isRequired,
+  thumb: PropTypes.number.isRequired,
+  setThumb: PropTypes.func.isRequired,
+};
 
 export default ImageGallery;

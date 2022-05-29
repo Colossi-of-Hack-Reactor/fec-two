@@ -28,6 +28,8 @@ const ImageDiv = styled.div`
 
 const InfoDiv = styled.div`
   padding: 10px;
+  width: min-content;
+  min-width: 300px;
 `;
 
 const WordsDiv = styled.div`
@@ -52,10 +54,12 @@ const StyleDiv = styled.div`
   position: relative;
   align-items: center;
   justify-items: center;
+  padding: 8px;
 `;
 
 const StyleGrid = styled.div`
   display: grid;
+  width: min-content;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
@@ -113,7 +117,6 @@ const ThumbnailImg = styled.img`
 const ThumbnailDiv = styled.div`
   display: flex;
   flex-direction: column;
-
   z-index: 2;
 `;
 
@@ -121,7 +124,7 @@ const BigImageDiv = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  ${(props) => (props.vis ? '' : 'display: none;')};
+  visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
 `;
 
 const BigImage = styled.img`
@@ -226,10 +229,25 @@ const ExpandedWhiteBG = styled.span`
   z-index: 11;
 `;
 
+const SelectSizeMsg = styled.div`
+  opacity: ${(props) => (props.vis ? 1 : 0)};
+  color: red;
+  transition: opacity .5s;
+`;
+
+const SizeQuantityDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const SelectSpan = styled.span`
+  padding: 10px;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
-  ExpandedWhiteBG,
+  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
 };

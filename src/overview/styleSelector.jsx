@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import {
   StyleDiv, StyleGrid, StyleImage, Check, WhiteBG,
 } from './overviewStyled.js';
@@ -40,5 +41,11 @@ function StyleSelector(props) {
 
   return null;
 }
+
+StyleSelector.propTypes = {
+  style: PropTypes.number.isRequired,
+  setStyle: PropTypes.func.isRequired,
+  styles: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
 
 export default StyleSelector;

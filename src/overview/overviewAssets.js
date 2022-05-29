@@ -7,8 +7,10 @@ const noImageLink = '/assets/No_image_available.svg';
 const CheckMarkLink = '/assets/check-mark-circle-line.svg';
 const PlusLink = '/assets/plus-round-line2.svg';
 const MinusLink = '/assets/minus-round-line2.svg';
+const EmptyStarLink = '/assets/star-empty.svg';
+const FullStarLink = '/assets/star-full.svg';
 
 export {
   CloseMarkLink, LeftArrowLink, RightArrowLink, UpArrowLink, DownArrowLink,
-  noImageLink, CheckMarkLink, PlusLink, MinusLink,
+  noImageLink, CheckMarkLink, PlusLink, MinusLink, EmptyStarLink, FullStarLink,
 };
