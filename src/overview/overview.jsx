@@ -9,8 +9,11 @@ import ImageGallery from './imageGallery2.jsx';
 import {
   Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
   FeatsDiv, OverallDiv, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
+  CategoryDiv, ProductNameDiv, PriceDiv, SocialDiv, SocialImg,
 } from './overviewStyled.js';
-import { EmptyStarLink, FullStarLink } from './overviewAssets.js';
+import {
+  EmptyStarLink, FullStarLink, FacebookLink, TwitterLink, PinterestLink, InstagramLink,
+} from './overviewAssets.js';
 
 let timeoutID = null;
 
@@ -18,8 +21,8 @@ function Overview(props) {
   const [product, setProduct] = useState({});
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
-  const [size, setSize] = useState(null);
-  const [quantity, setQuantity] = useState({ value: 1, label: 1 });
+  const [size, setSize] = useState('Select');
+  const [quantity, setQuantity] = useState(1);
   const [image, setImage] = useState(0);
   const [thumb, setThumb] = useState(6);
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
@@ -48,8 +51,8 @@ function Overview(props) {
   }, [styles]);
 
   useEffect(() => {
-    setSize(null);
-    setQuantity(null);
+    setSize('Select');
+    setQuantity(1);
     if (styles[style]) {
       if (styles[style].photos.length <= image) {
         setImage(styles[style].photos.length - 1);
@@ -67,7 +70,7 @@ function Overview(props) {
   }, [image]);
 
   useEffect(() => {
-    setQuantity({ value: 1, label: 1 });
+    setQuantity(1);
   }, [size]);
 
   return (
@@ -92,19 +95,13 @@ function Overview(props) {
               <div>
                 Reviews
               </div>
-              <div>
-                Category:
-                {' '}
+              <CategoryDiv data-testid="category">
                 {product.category}
-              </div>
-              <div>
-                Expanded Product Name:
-                {' '}
+              </CategoryDiv>
+              <ProductNameDiv data-testid="productName">
                 {product.name}
-              </div>
-              <div>
-                Price:
-                {' '}
+              </ProductNameDiv>
+              <PriceDiv data-testid="price">
                 {styles[style].sale_price ? (
                   <>
                     <Sale>
@@ -123,9 +120,9 @@ function Overview(props) {
                     {styles[style].original_price}
                   </>
                 )}
-              </div>
+              </PriceDiv>
               <StyleSelector setStyle={setStyle} styles={styles} style={style} />
-              <SelectSizeMsg vis={showSelectSizeMsg}>
+              <SelectSizeMsg vis={showSelectSizeMsg} data-testid="selectSizeMsg">
                 Please select a size.
               </SelectSizeMsg>
               <SizeQuantityDiv>
@@ -141,7 +138,7 @@ function Overview(props) {
                 </SelectSpan>
                 <SelectSpan
                   onClick={() => {
-                    if (size === null && styles[style].skus[size] === undefined) {
+                    if (size === 'Select' && styles[style].skus[size] === undefined) {
                       if (selectRef.current) {
                         selectRef.current.focus();
                       }
@@ -152,7 +149,6 @@ function Overview(props) {
                   }}
                 >
                   <QuantitySelector
-                    quantity={quantity}
                     setQuantity={setQuantity}
                     size={size}
                     style={style}
@@ -167,7 +163,7 @@ function Overview(props) {
                     <button
                       type="button"
                       onClick={() => {
-                        if (size === null) {
+                        if (size === 'Select') {
                           if (selectRef.current) {
                             selectRef.current.focus();
                           }
@@ -186,10 +182,16 @@ function Overview(props) {
                 <img src={EmptyStarLink} alt="empty star" />
                 <img src={FullStarLink} alt="full star" />
               </div>
+              <SocialDiv>
+                <SocialImg src={FacebookLink} />
+                <SocialImg src={TwitterLink} />
+                <SocialImg src={PinterestLink} />
+                <SocialImg src={InstagramLink} />
+              </SocialDiv>
             </InfoDiv>
           </OverviewDiv>
           <WordsDiv>
-            <SloDesDiv>
+            <SloDesDiv data-testid="sloganDescription">
               <p style={{ fontWeight: 'bold' }}>
                 {product.slogan}
               </p>
@@ -197,7 +199,7 @@ function Overview(props) {
                 {product.description}
               </p>
             </SloDesDiv>
-            <FeatsDiv>
+            <FeatsDiv data-testid="features">
               {product.features.map((feat) => (
                 <p key={feat.feature}>
                   {feat.feature}

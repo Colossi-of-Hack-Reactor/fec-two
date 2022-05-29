@@ -244,10 +244,37 @@ const SelectSpan = styled.span`
   padding: 10px;
 `;
 
+const CategoryDiv = styled.div`
+  text-transform: uppercase;
+
+`;
+
+const ProductNameDiv = styled.div`
+
+`;
+
+const PriceDiv = styled.div`
+
+`;
+
+const StyleNameDiv = styled.div`
+  text-transform: uppercase;
+`;
+
+const SocialDiv = styled.div`
+`;
+
+const SocialImg = styled.img`
+  padding: 10px;
+  height: 30px;
+  width: 30px;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
-  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
+  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan, CategoryDiv, ProductNameDiv,
+  PriceDiv, StyleNameDiv, SocialDiv, SocialImg,
 };

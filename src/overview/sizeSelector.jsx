@@ -1,43 +1,45 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import Select from 'react-select';
 
 function SizeSelector(props) {
-  const {
-    size, setSize, style, styles, selectRef,
-  } = props;
+  const { setSize, style, styles, selectRef } = props;
 
   if (styles[style].skus.null) {
     return (
-      <Select
-        name="size"
-        isDisabled
-        value={null}
-        options={[{
-          value: 'Select', label: 'OUT OF STOCK',
-        }]}
-        placeholder="OUT OF STOCK"
-      />
+      <div>
+        <select
+          name="size"
+          onChange={(e) => {
+            setSize(e.target.value);
+          }}
+          disabled
+        >
+          <option value="Select">
+            OUT OF STOCK
+          </option>
+        </select>
+      </div>
     );
   }
-
-  const options = Object.keys(styles[style].skus).map((sku) => (
-    {
-      value: sku,
-      label: styles[style].skus[sku].size,
-    }
-  ));
-
   return (
-    <Select
-      placeholder="SELECT SIZE"
-      name="size"
-      value={size}
-      onChange={setSize}
-      options={options}
-      ref={selectRef}
-      openMenuOnFocus
-    />
+    <div>
+      <select
+        name="size"
+        onChange={(e) => {
+          setSize(e.target.value);
+        }}
+        ref={selectRef}
+      >
+        <option value="Select">
+          Select Size
+        </option>
+        {Object.keys(styles[style].skus).map((sku, i) => (
+          <option value={sku} key={sku}>
+            {styles[style].skus[sku].size}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 
