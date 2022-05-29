@@ -114,7 +114,6 @@ const ThumbnailImg = styled.img`
 const ThumbnailDiv = styled.div`
   display: flex;
   flex-direction: column;
-
   z-index: 2;
 `;
 
@@ -122,7 +121,7 @@ const BigImageDiv = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  ${(props) => (props.vis ? '' : 'display: none;')};
+  visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
 `;
 
 const BigImage = styled.img`

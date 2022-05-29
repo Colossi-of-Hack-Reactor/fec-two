@@ -37,6 +37,12 @@ function ExpandedView(props) {
     function handleEscapeKey(event) {
       if (event.code === 'Escape') {
         setZoom(false);
+      } else if (event.code === 'ArrowLeft' || event.code === 'ArrowUp') {
+        setImage((a) => Math.max(0, a - 1));
+      } else if (event.code === 'ArrowRight' || event.code === 'ArrowDown') {
+        setImage((a) => Math.min(styles[style].photos.length - 1, a + 1));
+      } else if (event.code === 'Space') {
+        setZoomZoom((z) => !z);
       }
     }
     document.addEventListener('keydown', handleEscapeKey);
