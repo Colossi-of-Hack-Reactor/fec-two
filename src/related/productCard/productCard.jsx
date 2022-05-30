@@ -54,7 +54,6 @@ const ProductCard = function ProductCard({
   };
   const someNum = (prodRating) => (Math.floor(((prodRating - (prodRating % 0.25)) / 5) * 200));
   const findASale = (altProds) => {
-    console.log(altProds);
     altProds.forEach((prod, i) => {
       index = prod.sale_price ? i : index;
     });
