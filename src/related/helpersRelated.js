@@ -16,7 +16,6 @@ const compileOutfits = (productList, setProducts) => {
 
             const avgProductsRatings = productsRatings.map((product) => {
               const avgRating = ((product.reduce((memo, rating) => memo + Number.parseFloat(rating), 0)) / product.length).toFixed(2);
-              console.log(typeof avgRating);
               return Number.parseFloat(avgRating);
             });
             newProductsArr.forEach((product, i) => {
@@ -29,10 +28,6 @@ const compileOutfits = (productList, setProducts) => {
     })
     .catch((err) => console.log('FAILURE', err));
 };
-/*
-axios.get('reviews/meta', { params: { product_id }}).then((res)=>Object.keys(res.data.characteristics).map((cat)=>res.data.characteristics[cat].value))
-    .then(allRatings => console.log('Rating', (allRatings.reduce((memo, rating) => memo + Number.parseFloat(rating), 0) / 4).toFixed(2)));
-*/
 
 const updateRelatedCards = (product_id, setProducts) => {
   if (product_id !== undefined) {

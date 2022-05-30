@@ -10,7 +10,7 @@ import {
 const ProductCard = function ProductCard({
   product, cards, defaultIndex, rating = 0, outfits, setProduct_id, setOutfits, outfitsIdList, setOutfitsIdList,
 }) {
-  const [index, setIndex] = useState(defaultIndex);
+  let [index, setIndex] = useState(defaultIndex);
   const [inOutfits, setInOutfits] = useState(false);
   useEffect((newIndex) => {
     if (outfitsIdList.includes(product.id)) {
@@ -47,12 +47,20 @@ const ProductCard = function ProductCard({
       '.': 'point', 0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine',
     };
     let altText = '';
-    prodRating.toString().split('').forEach((char) => {
+    prodRating.toFixed(1).toString().split('').forEach((char) => {
       altText += `${wordEquivalents[char]} `;
     });
     return altText;
   };
   const someNum = (prodRating) => (Math.floor(((prodRating - (prodRating % 0.25)) / 5) * 200));
+  const findASale = (altProds) => {
+    console.log(altProds);
+    altProds.forEach((prod, i) => {
+      index = prod.sale_price ? i : index;
+    });
+  };
+  findASale(cards);
+
   return (
     <div style={{ margin: '20px' }}>
       <SlimDiv role="button" tabIndex="0" onKeyDown={(e) => detailedView(e)} onClick={(e) => detailedView(e)}>
@@ -60,14 +68,16 @@ const ProductCard = function ProductCard({
         <ul style={{ padding: '0px', listStyleType: 'none' }}>
           <li>{product.name}</li>
           <li>{`(${product.category})`}</li>
-          <li>{`$${index !== undefined ? cards[index].original_price : product.default_price}`}</li>
+          {(index !== undefined && cards[index].sale_price) && <li style={{ color: "red" }}>{`$${cards[index].sale_price}`}</li>}
+          {(index !== undefined && cards[index].sale_price) && <li><del>{`$${product.default_price}`}</del></li>}
+          {((index !== undefined && !cards[index].sale_price) || index === undefined) && <li>{`$${product.default_price}`}</li>}
           <li>
             <div style={{ width: '200px', height: '40px', backgroundColor: 'black' }}>
               <div style={{ width: `${someNum(rating).toString()}px`, height: '40px', backgroundColor: 'yellow' }}>
                 <img alt={`the average customer rating for this product is ${ratingAltText(rating)}stars`} src="assets/5-Black-Stars_Empty-Interior_White-Background.png" />
               </div>
             </div>
-            <div>{`(Average Rating: ${rating})`}</div>
+            <div>{`(Average Rating: ${rating.toFixed(1)})`}</div>
           </li>
         </ul>
       </SlimDiv>

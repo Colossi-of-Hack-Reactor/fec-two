@@ -22,7 +22,6 @@ function Related({
   const cardElement = (product, cards, defaultIndex, key) => (
     <ProductCard product={product} cards={cards} defaultIndex={defaultIndex} key={key} rating={product.rating} outfits={outfits} outfitsIdList={outfitsIdList} setProduct_id={setProduct_id} setOutfits={setOutfits} setOutfitsIdList={setOutfitsIdList} />
   );
-  console.log(products)
   return (
     <div>
       {sectionHeader(product_id)}
