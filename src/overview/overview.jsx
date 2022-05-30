@@ -22,7 +22,7 @@ function Overview(props) {
   const [styles, setStyles] = useState([]);
   const [style, setStyle] = useState(0);
   const [size, setSize] = useState('Select');
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState('1');
   const [image, setImage] = useState(0);
   const [thumb, setThumb] = useState(6);
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
@@ -52,7 +52,7 @@ function Overview(props) {
 
   useEffect(() => {
     setSize('Select');
-    setQuantity(1);
+    setQuantity('1');
     if (styles[style]) {
       if (styles[style].photos.length <= image) {
         setImage(styles[style].photos.length - 1);
@@ -70,7 +70,7 @@ function Overview(props) {
   }, [image]);
 
   useEffect(() => {
-    setQuantity(1);
+    setQuantity('1');
   }, [size]);
 
   return (
@@ -147,6 +147,7 @@ function Overview(props) {
                       timeoutID = setTimeout(() => setShowSelectSizeMsg(false), 3000);
                     }
                   }}
+                  data-testid="qtySelectSpan"
                 >
                   <QuantitySelector
                     setQuantity={setQuantity}

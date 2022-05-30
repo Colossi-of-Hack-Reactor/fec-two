@@ -229,6 +229,29 @@ const ExpandedWhiteBG = styled.span`
   z-index: 11;
 `;
 
+const ToggleFullscreenButton = styled.img`
+  height: 25px;
+  width: 25px;
+  z-index: 12;
+  opacity: .75;
+  cursor: pointer;
+`;
+
+const ToggleFullscreenBG = styled.span`
+  position: absolute;
+  background-color: rgba(255, 255, 255, .4);
+  bottom: 5%;
+  right: 5%;
+  height: 42px;
+  width: 42px;
+  z-index: 11;
+  border: 4px solid rgba(0, 0, 0, .75);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SelectSizeMsg = styled.div`
   opacity: ${(props) => (props.vis ? 1 : 0)};
   color: red;
@@ -276,5 +299,5 @@ export {
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
   ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan, CategoryDiv, ProductNameDiv,
-  PriceDiv, StyleNameDiv, SocialDiv, SocialImg,
+  PriceDiv, StyleNameDiv, SocialDiv, SocialImg, ToggleFullscreenButton, ToggleFullscreenBG,
 };

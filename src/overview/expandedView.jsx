@@ -3,11 +3,13 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import {
   ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, FullScreenDiv, ExpandedThumbnailDiv,
-  ThumbnailIcon, CloseButton, ExpandedWhiteBG,
+  ThumbnailIcon, CloseButton, ExpandedWhiteBG, ToggleFullscreenButton, ToggleFullscreenBG,
 } from './overviewStyled.js';
 import {
-  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink,
+  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink, ExpandLink, CollapseLink,
 } from './overviewAssets.js';
+
+const docElem = document.documentElement;
 
 const ZoomZoomDiv = styled.div.attrs((props) => ({
   style: {
@@ -32,6 +34,27 @@ function ExpandedView(props) {
   const [clickCoord, setClickCoord] = useState([0, 0]);
   const [windowSize, setWindowSize] = useState([0, 0]);
   const [mouseCoord, setMouseCoord] = useState([0, 0]);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  function toggleFullscreen() {
+    if (fullscreen) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+    } else {
+      if (docElem.requestFullscreen) {
+        docElem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        docElem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        docElem.msRequestFullscreen();
+      }
+    }
+  }
 
   useEffect(() => {
     function handleEscapeKey(event) {
@@ -112,6 +135,13 @@ function ExpandedView(props) {
           </BigArrowDiv>
           <ExpandedWhiteBG />
           <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} />
+          <ToggleFullscreenBG onClick={() => {
+            toggleFullscreen();
+            setFullscreen((z) => !z);
+          }}
+          >
+            <ToggleFullscreenButton src={ExpandLink} />
+          </ToggleFullscreenBG>
         </>
       )}
     </FullScreenDiv>

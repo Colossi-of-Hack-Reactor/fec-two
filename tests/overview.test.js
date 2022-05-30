@@ -6,13 +6,13 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import {render, fireEvent, screen, waitFor, waitForElementToBeRemoved} from '@testing-library/react';
-import selectEvent from 'react-select-event';
 import axios from 'axios';
 import App from '../src/app.jsx';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
 describe('Overview component', function() {
+  jest.setTimeout(8000);
 
   it('should render properly', async () => {
     render(<App />);
@@ -26,11 +26,25 @@ describe('Overview component', function() {
     expect(screen.getByTestId('sloganDescription')).not.toBeEmptyDOMElement();
     expect(screen.getByTestId('features')).not.toBeEmptyDOMElement();
     expect(screen.getByTestId('selectSizeMsg')).not.toBeVisible();
-    await user.click(screen.getByTestId('qtySelect'));
+    expect(screen.getByTestId('qtySelect')).toBeDisabled();
+    await user.click(screen.getByTestId('qtySelectSpan'));
     expect(screen.getByTestId('selectSizeMsg')).toBeVisible();
-    await selectEvent.select(screen.getByTestId('sizeSelect'), ['S']);
-    expect(screen.getByTestId('sizeSelect')).toHaveFormValues({value: 2});
-    expect(screen.getByTestId('qtySelect')).toHaveFormValues({value: 2});
+    await waitFor(() => {
+      expect(screen.getByTestId('selectSizeMsg')).not.toBeVisible();
+    }, {timeout: 3000});
+    await user.click(screen.getByRole('button', {name: 'Add to Bag'}));
+    expect(screen.getByTestId('selectSizeMsg')).toBeVisible();
+    await waitFor(() => {
+      expect(screen.getByTestId('selectSizeMsg')).not.toBeVisible();
+    }, {timeout: 3000});
+    await user.selectOptions(screen.getByTestId('sizeSelect'), screen.getByRole('option', {name: 'S'}));
+    await user.click(screen.getByTestId('qtySelectSpan'));
+    expect(screen.getByTestId('selectSizeMsg')).not.toBeVisible();
+    await user.click(screen.getByRole('button', {name: 'Add to Bag'}));
+    expect(screen.getByTestId('selectSizeMsg')).not.toBeVisible();
+    // await selectEvent.select(screen.getByTestId('sizeSelect'), ['S']);
+    // expect(screen.getByTestId('sizeSelect')).toHaveFormValues({value: 2});
+    // expect(screen.getByTestId('qtySelect')).toHaveFormValues({value: 2});
 
   });
 
