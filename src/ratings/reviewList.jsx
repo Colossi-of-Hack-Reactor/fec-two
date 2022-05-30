@@ -4,18 +4,17 @@ import ReviewListEntry from './reviewListEntry.jsx';
 import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
-const Button = styled.button`
-  background-color: white;
-  color: DimGray;
-  padding: 26px 6px;
-  font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+const Scroll = styled.div`
+  max-height: 500px;
+  overflow: hidden ${({ height }) => (height > 500 ? 'scroll' : 'hidden')};
 `;
 
 const ReviewContainer = styled.div`
-  margin-top: 30px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
+  width: 100%;
+  justify-content: flex-start;
 `;
 
 const ButtonContainer = styled.div`
@@ -25,9 +24,25 @@ const ButtonContainer = styled.div`
   gap: 20px;
 `;
 
+const Button = styled.button`
+  background-color: white;
+  color: DimGray;
+  padding: 26px 6px;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
 export default function ReviewList({ reviews, product_id, filter, sort }) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
+  const [height, setHeight] = useState(0);
+  const elementRef = React.useRef();
+
+  useEffect(() => {
+    setHeight(elementRef.current.clientHeight);
+  }, [reviews, filter]);
+
+  // console.log(height);
 
   const showModal = () => {
     setShow(true);
@@ -43,19 +58,21 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
 
   return (
     <div>
-      <ReviewContainer>
-        {reviews.map((review, i) => {
-          if (i < more) {
-            return (
-              <ReviewListEntry
-                key={review.review_id}
-                review={review}
-                filter={filter}
-              />
-            );
-          }
-        })}
-      </ReviewContainer>
+      <Scroll height={height}>
+        <ReviewContainer ref={elementRef}>
+          {reviews.map((review, i) => {
+            if (i < more) {
+              return (
+                <ReviewListEntry
+                  key={review.review_id}
+                  review={review}
+                  filter={filter}
+                />
+              );
+            }
+          })}
+        </ReviewContainer>
+      </Scroll>
       <ButtonContainer>
         {more < reviews.length
           ? <Button type="button" onClick={() => setMore(more + 2)}> MORE REVIEWS </Button>
