@@ -52,7 +52,7 @@ const ProductCard = function ProductCard({
     });
     return altText;
   };
-  const someNum = (prodRating) => (Math.floor((prodRating / 5) * 200));
+  const someNum = (prodRating) => (Math.floor(((prodRating - (prodRating % 0.25)) / 5) * 200));
   return (
     <div style={{ margin: '20px' }}>
       <SlimDiv role="button" tabIndex="0" onKeyDown={(e) => detailedView(e)} onClick={(e) => detailedView(e)}>
@@ -64,9 +64,10 @@ const ProductCard = function ProductCard({
           <li>
             <div style={{ width: '200px', height: '40px', backgroundColor: 'black' }}>
               <div style={{ width: `${someNum(rating).toString()}px`, height: '40px', backgroundColor: 'yellow' }}>
-                <img alt={`the rating for this product is ${ratingAltText(rating)}stars`} src="assets/5-Black-Stars_Empty-Interior_White-Background.png" />
+                <img alt={`the average customer rating for this product is ${ratingAltText(rating)}stars`} src="assets/5-Black-Stars_Empty-Interior_White-Background.png" />
               </div>
             </div>
+            <div>{`(Average Rating: ${rating})`}</div>
           </li>
         </ul>
       </SlimDiv>

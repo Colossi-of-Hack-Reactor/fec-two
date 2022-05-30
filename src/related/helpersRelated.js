@@ -16,9 +16,11 @@ const compileOutfits = (productList, setProducts) => {
 
             const avgProductsRatings = productsRatings.map((product) => {
               const avgRating = ((product.reduce((memo, rating) => memo + Number.parseFloat(rating), 0)) / product.length).toFixed(2);
-              return avgRating - (avgRating % 0.25);
+              console.log(typeof avgRating);
+              return Number.parseFloat(avgRating);
             });
             newProductsArr.forEach((product, i) => {
+              // eslint-disable-next-line no-param-reassign
               product.rating = avgProductsRatings[i];
             });
             return newProductsArr;
