@@ -7,7 +7,7 @@ const baseURL = "https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe";
 const getQuestionsModel = (params, callback) => {
   const options = {
     method: "GET",
-    url: `${baseURL}/qa/questions?product_id=${params}&count=500`,
+    url: `${baseURL}/qa/questions?product_id=${params}&count=1000`,
     headers: { Authorization: process.env.GITHUBKEY },
   };
   axios(options)

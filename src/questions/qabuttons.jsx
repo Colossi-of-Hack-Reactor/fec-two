@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import QuestionModal from "./questionmodal.jsx";
+import ShowLessQuestions from "./showlessquestions.jsx";
+
 const Wrap = styled.div`
   margin-top: 3%;
 `;
@@ -23,6 +25,7 @@ const QAButtons = function QAButtons({
   product_id,
 }) {
   const [showQ, setShowQ] = useState(false);
+  const [showLess, setShowLess] = useState(false);
   return (
     <Wrap>
       <MoreQ
@@ -30,6 +33,7 @@ const QAButtons = function QAButtons({
         onClick={(e) => {
           e.preventDefault();
           setQuestionsToDisplay(questionsToDisplay + 2);
+          setShowLess(true);
         }}
       >
         More Answered Questions
@@ -43,6 +47,7 @@ const QAButtons = function QAButtons({
       >
         Add a Question +
       </AddQuestion>
+      <ShowLessQuestions showLess={showLess} setShowLess={setShowLess} setQuestionsToDisplay={setQuestionsToDisplay} />
       <QuestionModal product_id={product_id} showQ={showQ} qainfo={qainfo} setShowQ={setShowQ} />
     </Wrap>
   );
