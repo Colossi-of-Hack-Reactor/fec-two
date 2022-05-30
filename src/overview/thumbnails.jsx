@@ -19,6 +19,7 @@ function Thumbnails(props) {
               src={UpArrowLink}
               onClick={() => setThumb((a) => Math.max(6, a - 1))}
               cur="n-resize"
+              data-testid="upArrow"
             />
           </ArrowContainer>
         </ArrowDivV>
@@ -28,6 +29,7 @@ function Thumbnails(props) {
             <Arrow
               src={UpArrowLink}
               cur="default"
+              data-testid="upArrow"
             />
           </ArrowContainer>
         </ArrowDivV>
@@ -42,6 +44,7 @@ function Thumbnails(props) {
             src={p.thumbnail_url || noImageLink}
             onClick={() => setImage(i)}
             className={i === image ? 'selected' : null}
+            data-testid={`thumbnailImg-${i}`}
           />
         </Thumbnail>
       ))}
@@ -52,6 +55,7 @@ function Thumbnails(props) {
               src={DownArrowLink}
               onClick={() => setThumb((a) => Math.min(styles[style].photos.length - 1, a + 1))}
               cur="s-resize"
+              data-testid="downArrow"
             />
           </ArrowContainer>
         </ArrowDivV>
@@ -61,6 +65,7 @@ function Thumbnails(props) {
             <Arrow
               src={DownArrowLink}
               cur="default"
+              data-testid="downArrow"
             />
           </ArrowContainer>
         </ArrowDivV>

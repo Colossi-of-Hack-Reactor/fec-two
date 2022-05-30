@@ -3,11 +3,13 @@ import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import {
   ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, FullScreenDiv, ExpandedThumbnailDiv,
-  ThumbnailIcon, CloseButton, ExpandedWhiteBG,
+  ThumbnailIcon, CloseButton, ExpandedWhiteBG, ToggleFullscreenButton, ToggleFullscreenBG,
 } from './overviewStyled.js';
 import {
-  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink,
+  CloseMarkLink, LeftArrowLink, RightArrowLink, PlusLink, MinusLink, ExpandLink, CollapseLink,
 } from './overviewAssets.js';
+
+const docElem = document.documentElement;
 
 const ZoomZoomDiv = styled.div.attrs((props) => ({
   style: {
@@ -32,6 +34,27 @@ function ExpandedView(props) {
   const [clickCoord, setClickCoord] = useState([0, 0]);
   const [windowSize, setWindowSize] = useState([0, 0]);
   const [mouseCoord, setMouseCoord] = useState([0, 0]);
+  const [fullscreen, setFullscreen] = useState(false);
+
+  function toggleFullscreen() {
+    if (fullscreen) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+    } else {
+      if (docElem.requestFullscreen) {
+        docElem.requestFullscreen();
+      } else if (docElem.webkitRequestFullscreen) { /* Safari */
+        docElem.webkitRequestFullscreen();
+      } else if (docElem.msRequestFullscreen) { /* IE11 */
+        docElem.msRequestFullscreen();
+      }
+    }
+  }
 
   useEffect(() => {
     function handleEscapeKey(event) {
@@ -76,6 +99,7 @@ function ExpandedView(props) {
         bg={styles[style].photos[image].url || noImageLink}
         zoomZoom={zoomZoom}
         mouseLoc={[mouseCoord[0] / windowSize[0] * 100, mouseCoord[1] / windowSize[1] * 100]}
+        data-testid="zoomZoom"
       />
       {zoomZoom ? null : (
         <>
@@ -85,6 +109,7 @@ function ExpandedView(props) {
                 key={i}
                 className={i === image ? 'selected' : null}
                 onClick={() => setImage(i)}
+                data-testid={`expandedThumbnail-${i}`}
               />
             ))}
           </ExpandedThumbnailDiv>
@@ -96,6 +121,7 @@ function ExpandedView(props) {
                   onClick={() => setImage((a) => Math.max(0, a - 1))}
                   cur="w-resize"
                   zidx={11}
+                  data-testid="expandedLeftArrow"
                 />
               </ArrowContainer>
             </ArrowDiv>
@@ -106,12 +132,22 @@ function ExpandedView(props) {
                   onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
                   cur="e-resize"
                   zidx={11}
+                  data-testid="expandedRightArrow"
                 />
               </ArrowContainer>
             </ArrowDiv>
           </BigArrowDiv>
           <ExpandedWhiteBG />
-          <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} />
+          <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} data-testid="closeExpanded" />
+          <ToggleFullscreenBG
+            onClick={() => {
+              toggleFullscreen();
+              setFullscreen((z) => !z);
+            }}
+            data-testid="toggleFullscreen"
+          >
+            <ToggleFullscreenButton src={ExpandLink} />
+          </ToggleFullscreenBG>
         </>
       )}
     </FullScreenDiv>

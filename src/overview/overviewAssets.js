@@ -9,8 +9,15 @@ const PlusLink = '/assets/plus-round-line2.svg';
 const MinusLink = '/assets/minus-round-line2.svg';
 const EmptyStarLink = '/assets/star-empty.svg';
 const FullStarLink = '/assets/star-full.svg';
+const FacebookLink = '/assets/facebook-brands.svg';
+const TwitterLink = '/assets/twitter-brands.svg';
+const PinterestLink = '/assets/pinterest-brands.svg';
+const InstagramLink = '/assets/instagram-brands.svg';
+const ExpandLink = '/assets/expand.svg';
+const CollapseLink = '/assets/collapse.svg';
 
 export {
   CloseMarkLink, LeftArrowLink, RightArrowLink, UpArrowLink, DownArrowLink,
   noImageLink, CheckMarkLink, PlusLink, MinusLink, EmptyStarLink, FullStarLink,
+  FacebookLink, TwitterLink, PinterestLink, InstagramLink, ExpandLink, CollapseLink,
 };

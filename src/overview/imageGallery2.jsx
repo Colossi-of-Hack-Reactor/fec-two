@@ -18,7 +18,7 @@ function ImageGallery(props) {
   }, [zoom]);
 
   return (
-    <ImageContainer>
+    <ImageContainer data-testid="imageGallery">
       {styles[style].photos.map((p, i) => (
         <BigImageDiv
           vis={i === image}
@@ -29,6 +29,7 @@ function ImageGallery(props) {
             onClick={() => setZoom(true)}
             vis={i === image}
             key={i}
+            data-testid={`bigImg-${i}`}
           />
         </BigImageDiv>
       ))}
@@ -48,6 +49,7 @@ function ImageGallery(props) {
               onClick={() => setImage((a) => Math.max(0, a - 1))}
               cur="w-resize"
               zidx={2}
+              data-testid="leftArrow"
             />
           </ArrowContainer>
         </ArrowDiv>
@@ -58,6 +60,7 @@ function ImageGallery(props) {
               onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
               cur="e-resize"
               zidx={2}
+              data-testid="rightArrow"
             />
           </ArrowContainer>
         </ArrowDiv>
