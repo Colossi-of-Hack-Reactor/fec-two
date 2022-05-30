@@ -23,7 +23,7 @@ exports.getRatingsByProductId = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get ratings by product id', err);
+      res.status(404).send(err);
     });
 };
 

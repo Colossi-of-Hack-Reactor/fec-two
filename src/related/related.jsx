@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import List from './css/cssRelated';
-import ProductCard from './productCard.jsx';
+import ProductCard from './productCard/productCard.jsx';
 import { compileOutfits, updateRelatedCards, populateAltCards } from './helpersRelated';
 function Related({
   product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList,
@@ -13,17 +13,16 @@ function Related({
   let altCards = [];
   let defaultIndex;
   const [products, setProducts] = useState([]);
-
-  const sectionHeader = (id) => (id !== undefined ? <h3>Related Products</h3> : <h3>Your Outfits</h3>);
-
-  const cardElement = (product, cards, defaultIndex, key) => (
-    <ProductCard product={product} cards={cards} defaultIndex={defaultIndex} key={key} outfits={outfits} outfitsIdList={outfitsIdList} setProduct_id={setProduct_id} setOutfits={setOutfits} setOutfitsIdList={setOutfitsIdList} />
-  );
-
   useEffect(() => {
     updateRelatedCards(product_id, setProducts);
   }, [product_id]);
 
+  const sectionHeader = (id) => (id !== undefined ? <h3>Related Products</h3> : <h3>Your Outfits</h3>);
+
+  const cardElement = (product, cards, defaultIndex, key) => (
+    <ProductCard product={product} cards={cards} defaultIndex={defaultIndex} key={key} rating={product.rating} outfits={outfits} outfitsIdList={outfitsIdList} setProduct_id={setProduct_id} setOutfits={setOutfits} setOutfitsIdList={setOutfitsIdList} />
+  );
+  console.log(products)
   return (
     <div>
       {sectionHeader(product_id)}
