@@ -1,5 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { OverviewSelect } from './overviewStyled.js';
 
 function QuantitySelector(props) {
   const {
@@ -7,7 +8,7 @@ function QuantitySelector(props) {
   } = props;
 
   return (
-    <select
+    <OverviewSelect
       name="quantity"
       onChange={(e) => {
         setQuantity(e.target.value);
@@ -20,7 +21,7 @@ function QuantitySelector(props) {
           .fill(0).map((v, i) => i + 1).map((q) => (
             <option key={q} value={q}>{q}</option>
           ))}
-    </select>
+    </OverviewSelect>
   );
 }
 

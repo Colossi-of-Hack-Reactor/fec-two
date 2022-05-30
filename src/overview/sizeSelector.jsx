@@ -1,5 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { OverviewSelect } from './overviewStyled.js';
 
 function SizeSelector(props) {
   const {
@@ -8,7 +9,7 @@ function SizeSelector(props) {
 
   if (styles[style].skus.null) {
     return (
-      <select
+      <OverviewSelect
         name="size"
         disabled
         data-testid="sizeSelect"
@@ -16,11 +17,11 @@ function SizeSelector(props) {
         <option value="Select">
           OUT OF STOCK
         </option>
-      </select>
+      </OverviewSelect>
     );
   }
   return (
-    <select
+    <OverviewSelect
       name="size"
       onChange={(e) => {
         setSize(e.target.value);
@@ -36,7 +37,7 @@ function SizeSelector(props) {
           {styles[style].skus[sku].size}
         </option>
       ))}
-    </select>
+    </OverviewSelect>
   );
 }
 
