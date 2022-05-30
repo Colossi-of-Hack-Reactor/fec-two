@@ -48,9 +48,9 @@ function ExpandedView(props) {
     } else {
       if (docElem.requestFullscreen) {
         docElem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
+      } else if (docElem.webkitRequestFullscreen) { /* Safari */
         docElem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
+      } else if (docElem.msRequestFullscreen) { /* IE11 */
         docElem.msRequestFullscreen();
       }
     }
@@ -99,6 +99,7 @@ function ExpandedView(props) {
         bg={styles[style].photos[image].url || noImageLink}
         zoomZoom={zoomZoom}
         mouseLoc={[mouseCoord[0] / windowSize[0] * 100, mouseCoord[1] / windowSize[1] * 100]}
+        data-testid="zoomZoom"
       />
       {zoomZoom ? null : (
         <>
@@ -108,6 +109,7 @@ function ExpandedView(props) {
                 key={i}
                 className={i === image ? 'selected' : null}
                 onClick={() => setImage(i)}
+                data-testid={`expandedThumbnail-${i}`}
               />
             ))}
           </ExpandedThumbnailDiv>
@@ -119,6 +121,7 @@ function ExpandedView(props) {
                   onClick={() => setImage((a) => Math.max(0, a - 1))}
                   cur="w-resize"
                   zidx={11}
+                  data-testid="expandedLeftArrow"
                 />
               </ArrowContainer>
             </ArrowDiv>
@@ -129,16 +132,19 @@ function ExpandedView(props) {
                   onClick={() => setImage((a) => Math.min(styles[style].photos.length - 1, a + 1))}
                   cur="e-resize"
                   zidx={11}
+                  data-testid="expandedRightArrow"
                 />
               </ArrowContainer>
             </ArrowDiv>
           </BigArrowDiv>
           <ExpandedWhiteBG />
-          <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} />
-          <ToggleFullscreenBG onClick={() => {
-            toggleFullscreen();
-            setFullscreen((z) => !z);
-          }}
+          <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} data-testid="closeExpanded" />
+          <ToggleFullscreenBG
+            onClick={() => {
+              toggleFullscreen();
+              setFullscreen((z) => !z);
+            }}
+            data-testid="toggleFullscreen"
           >
             <ToggleFullscreenButton src={ExpandLink} />
           </ToggleFullscreenBG>

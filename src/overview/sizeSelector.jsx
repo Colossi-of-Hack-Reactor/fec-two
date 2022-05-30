@@ -10,10 +10,8 @@ function SizeSelector(props) {
     return (
       <select
         name="size"
-        onChange={(e) => {
-          setSize(e.target.value);
-        }}
         disabled
+        data-testid="sizeSelect"
       >
         <option value="Select">
           OUT OF STOCK
