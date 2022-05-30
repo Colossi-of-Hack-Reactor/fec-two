@@ -14,17 +14,20 @@ const Modal = styled.div`
 const ModalMain = styled.div`
   position: fixed;
   background: white;
-  width: 45%;
+  width: 50%;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
 
-const CloseButton = styled.button`
-  top:1%;
-  left:85%;
+const CloseButton = styled.label`
+  font-size: 30px;
+  top: 16px;
+  right: 20px;
   position: absolute;
+  cursor: pointer;
+  background-color: white;
 `;
 
 function Popup({ handleClose, show, children }) {
@@ -32,7 +35,7 @@ function Popup({ handleClose, show, children }) {
     <Modal show={show}>
       <div>
         <ModalMain>
-          <CloseButton type="button" onClick={handleClose}>close</CloseButton>
+          <CloseButton onClick={handleClose}>&times;</CloseButton>
           {children}
         </ModalMain>
       </div>
