@@ -26,6 +26,8 @@ app.get('/qa', questionsAPI.getQuestionsRoute);
 app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
 app.put('/qa/answers/:answer_id/helpful', questionsAPI.putAnswerHelpful);
 app.put('/qa/answers/:answer_id/report', questionsAPI.putAnswerReport);
+app.post('/qa/questions/:question_id/answers', questionsAPI.addAnswer);
+app.post('/qa/questions/', questionsAPI.postQuestion);
 
 /* API for Ratings */
 app.get('/reviews/', ratingsAPI.getReviews);
