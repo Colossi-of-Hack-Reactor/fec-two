@@ -75,10 +75,6 @@ export default function Ratings(props) {
     setFilter(f);
   };
 
-  const handleSort = (e) => {
-    setSort(e.target.value);
-  };
-
   return (
     <GridContainer>
       <div>
@@ -91,7 +87,7 @@ export default function Ratings(props) {
           {' '}
           reviews, sort by
           {' '}
-          <select onChange={handleSort}>
+          <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="relevant">Relevant</option>
             <option value="helpful">Helpful</option>
             <option value="newest">Newest</option>

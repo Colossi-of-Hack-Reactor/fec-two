@@ -42,7 +42,7 @@ export default function Form({ product_id }) {
   const [photos, setPhotos] = useState([]);
   const [characteristics, setChar] = useState(
     {
-      Size: 'Perfect', Width: 'Perfect', Comfort: 'Perfect', Quality: 'Perfect', Length: 'Perfect', Fit: 'Perfect',
+      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
     },
   );
   const [value, setValue] = useState('Perfect');
@@ -67,7 +67,9 @@ export default function Form({ product_id }) {
   };
 
   const handleSelectChange = (e) => {
-    setChar({ [e.target.name]: e.target.value });
+    const cha = { ...characteristics };
+    cha[e.target.name] = e.target.value;
+    setChar(cha);
   };
 
   const handleSubmit = () => {
@@ -132,8 +134,7 @@ export default function Form({ product_id }) {
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select name={char} value={characteristics[char]} label="Perfect" onChange={handleSelectChange}>
-                      {console.log(characteristics[char])}
+                    <select name={char} value={characteristics[char]} onChange={handleSelectChange}>
                       {chars[char].map((elem, i) => (
                         <option
                           key={i}

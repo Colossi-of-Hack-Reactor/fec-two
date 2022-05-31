@@ -8,7 +8,8 @@ const Entry = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin: 50px 0 50px;
+  margin: 0 0 20px;
+
 `;
 
 const Footer = styled.div`

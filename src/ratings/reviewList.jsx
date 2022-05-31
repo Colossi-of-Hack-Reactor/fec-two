@@ -5,15 +5,15 @@ import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
 const Scroll = styled.div`
-  max-height: 500px;
-  overflow: hidden ${({ height }) => (height > 500 ? 'scroll' : 'hidden')};
+  max-height: 600px;
+  overflow: hidden ${({ height }) => (height > 600 ? 'scroll' : 'hidden')};
 `;
 
 const ReviewContainer = styled.div`
+  margin: 50px 50px 0 0;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 100%;
   justify-content: flex-start;
 `;
 
@@ -41,6 +41,10 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
   useEffect(() => {
     setHeight(elementRef.current.clientHeight);
   }, [reviews, filter]);
+
+  useEffect(() => {
+    setMore(2);
+  }, [product_id]);
 
   const showModal = () => {
     setShow(true);
