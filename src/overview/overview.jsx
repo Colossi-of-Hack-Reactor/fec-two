@@ -9,7 +9,8 @@ import ImageGallery from './imageGallery2.jsx';
 import {
   Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
   FeatsDiv, OverallDiv, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
-  CategoryDiv, ProductNameDiv, PriceDiv, SocialDiv, SocialImg,
+  CategoryDiv, ProductNameDiv, PriceDiv, SocialDiv, SocialImg, BagOutfitDiv,
+  BagButton, StarButton,
 } from './overviewStyled.js';
 import {
   EmptyStarLink, FullStarLink, FacebookLink, TwitterLink, PinterestLink, InstagramLink,
@@ -28,6 +29,7 @@ function Overview(props) {
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
   const { product_id, setLoading } = props;
   const selectRef = React.useRef();
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -74,7 +76,7 @@ function Overview(props) {
   }, [size]);
 
   return (
-    <OverallDiv>
+    <OverallDiv className="Overview">
       {styles[style] ? (
         <>
           <OverviewDiv>
@@ -122,10 +124,10 @@ function Overview(props) {
                 )}
               </PriceDiv>
               <StyleSelector setStyle={setStyle} styles={styles} style={style} />
-              <SelectSizeMsg vis={showSelectSizeMsg} data-testid="selectSizeMsg">
-                Please select a size.
-              </SelectSizeMsg>
               <SizeQuantityDiv>
+                <SelectSizeMsg vis={showSelectSizeMsg} data-testid="selectSizeMsg">
+                  Please select a size.
+                </SelectSizeMsg>
                 <SelectSpan>
                   <SizeSelector
                     size={size}
@@ -160,29 +162,35 @@ function Overview(props) {
               </SizeQuantityDiv>
               {
                 styles[style].skus.null ? (null) : (
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (size === 'Select') {
-                          if (selectRef.current) {
-                            selectRef.current.focus();
+                  <BagOutfitDiv>
+                    <SelectSpan>
+                      <BagButton
+                        type="button"
+                        onClick={() => {
+                          if (size === 'Select') {
+                            if (selectRef.current) {
+                              selectRef.current.focus();
+                            }
+                            setShowSelectSizeMsg(true);
+                            clearTimeout(timeoutID);
+                            timeoutID = setTimeout(() => setShowSelectSizeMsg(false), 3000);
                           }
-                          setShowSelectSizeMsg(true);
-                          clearTimeout(timeoutID);
-                          timeoutID = setTimeout(() => setShowSelectSizeMsg(false), 3000);
-                        }
-                      }}
-                    >
-                      Add to Bag
-                    </button>
-                  </div>
+                        }}
+                      >
+                        Add to Bag
+                      </BagButton>
+                    </SelectSpan>
+                    <SelectSpan>
+                      <StarButton
+                        src={isFavorite ? FullStarLink : EmptyStarLink}
+                        onClick={() => { setIsFavorite((a) => (!a)); }}
+                      />
+                      {/* <img src={EmptyStarLink} alt="empty star" />
+                      <img src={FullStarLink} alt="full star" /> */}
+                    </SelectSpan>
+                  </BagOutfitDiv>
                 )
               }
-              <div>
-                <img src={EmptyStarLink} alt="empty star" />
-                <img src={FullStarLink} alt="full star" />
-              </div>
               <SocialDiv>
                 <SocialImg src={FacebookLink} />
                 <SocialImg src={TwitterLink} />

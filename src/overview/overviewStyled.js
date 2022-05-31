@@ -39,10 +39,12 @@ const WordsDiv = styled.div`
 
 const SloDesDiv = styled.div`
   padding: 10px;
+  border-right: 1px solid #bbb;
 `;
 
 const FeatsDiv = styled.div`
   padding: 10px;
+  border-left: 1px solid #bbb;
 `;
 
 const OverallDiv = styled.div`
@@ -256,15 +258,22 @@ const SelectSizeMsg = styled.div`
   opacity: ${(props) => (props.vis ? 1 : 0)};
   color: red;
   transition: opacity .5s;
+  position: absolute;
+  top: -10px;
+  left: 10px;
 `;
 
 const SizeQuantityDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 `;
 
 const SelectSpan = styled.span`
-  padding: 10px;
+  margin: 10px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
 `;
 
 const CategoryDiv = styled.div`
@@ -285,12 +294,33 @@ const StyleNameDiv = styled.div`
 `;
 
 const SocialDiv = styled.div`
+  margin: 1px;
 `;
 
 const SocialImg = styled.img`
-  padding: 10px;
+  margin: 10px;
   height: 30px;
   width: 30px;
+`;
+
+const OverviewSelect = styled.select`
+  width: 100%;
+  height: 100%;
+`;
+
+const BagOutfitDiv = styled.div`
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  margin: 4px;
+`;
+
+const BagButton = styled.button`
+  width: 100%;
+  height: 100%;
+`;
+
+const StarButton = styled.img`
+  height: 100%;
 `;
 
 export {
@@ -300,4 +330,5 @@ export {
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
   ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan, CategoryDiv, ProductNameDiv,
   PriceDiv, StyleNameDiv, SocialDiv, SocialImg, ToggleFullscreenButton, ToggleFullscreenBG,
+  OverviewSelect, BagOutfitDiv, BagButton, StarButton,
 };
