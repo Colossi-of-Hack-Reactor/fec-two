@@ -5,7 +5,7 @@ const cors = require('cors');
 const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
-const bigBrotherAPI = require('./bigBrotherAPI');
+const interactionsAPI = require('./interactionsAPI');
 
 const app = express();
 
@@ -37,7 +37,7 @@ app.post('/reviews', ratingsAPI.addReview);
 app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
 app.put('/reviews/:review_id/report', ratingsAPI.putReviewReport);
 
-app.post('/interactions', bigBrotherAPI.postInteraction);
+app.post('/interactions', interactionsAPI.postInteraction);
 
 app.listen(process.env.PORT);
 // eslint-disable-next-line no-console
