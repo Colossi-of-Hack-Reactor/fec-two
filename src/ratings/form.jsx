@@ -84,6 +84,19 @@ export default function Form({ product_id, handleClose }) {
     handleClose();
   };
 
+  useEffect(() => {
+    setRating(5);
+    setSummary('');
+    setBody('');
+    setRecommend(true);
+    setName('');
+    setEmail('');
+    setPhotos([]);
+    setChar({
+      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
+    });
+  }, [product_id]);
+
   return (
     <div>
       <FormHeader>

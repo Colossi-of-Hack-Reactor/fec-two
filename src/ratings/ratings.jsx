@@ -77,7 +77,7 @@ export default function Ratings(props) {
   };
 
   return (
-    <GridContainer className="ratings">
+    <GridContainer className="Ratings">
       <div>
         <h3>RATINGS &amp; REVIEWS</h3>
         <RatingList meta={meta} handleFilterRating={handleFilterRating} />
