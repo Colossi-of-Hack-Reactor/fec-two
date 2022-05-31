@@ -4,7 +4,7 @@ import axios from "axios";
 const Modal = styled.div`
 border 2px solid;
 position: fixed;
-z-index: 1010;
+z-index: 16;
 margin-left: 25%;
 margin-top: 10%;
 left: 0;
@@ -20,7 +20,7 @@ opacity: 500;
 transition: all 5s ease-in-out;
 `;
 const ModalOverLay = styled.div`
-  z-index: 1000;
+  z-index: 15;
   position: fixed;
   top: 0;
   left: 0;

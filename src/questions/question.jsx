@@ -16,13 +16,12 @@ const QuestionLine = styled.div.attrs((props) => ({
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-
 const Question = function Question({
   info,
-  setQuestions,
   index,
   answersToDisplay,
   setAnswersToDisplay,
+  sorted,
 }) {
   const [answersNum, setAnswersNum] = useState(2);
 
