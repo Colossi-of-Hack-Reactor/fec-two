@@ -76,7 +76,18 @@ function Overview(props) {
   }, [size]);
 
   return (
-    <OverallDiv>
+    <OverallDiv
+      onClick={(e) => {
+        axios.post('/interactions', {
+          element: e.target.outerHTML,
+          widget: 'Overview',
+          time: Date(),
+        })
+          .catch((err) => {
+            console.log('axios post interactions error', err);
+          });
+      }}
+    >
       {styles[style] ? (
         <>
           <OverviewDiv>
