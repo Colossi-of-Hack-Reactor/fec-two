@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import Overview from './overview/overview.jsx';
 import Related from './related/related.jsx';
 import Questions from './questions/questions.jsx';
@@ -23,6 +24,39 @@ function App() {
   const [loading, setLoading] = useState(0);
   const [outfitsIdList, setOutfitsIdList] = useState([]);
   const [outfits, setOutfits] = useState({});
+
+  useEffect(() => {
+    function handleInteraction(e) {
+      let node = e.target;
+      let widget = 'Other';
+      while (node.parentNode !== null) {
+        if (/Overview/.test(node.className)) {
+          widget = 'Overview';
+          break;
+        } else if (/Related/.test(node.className)) {
+          widget = 'Related';
+          break;
+        } else if (/Questions/.test(node.className)) {
+          widget = 'Questions';
+          break;
+        } else if (/Ratings/.test(node.className)) {
+          widget = 'Ratings';
+          break;
+        }
+        node = node.parentNode;
+      }
+      axios.post('/interactions', {
+        element: e.target.outerHTML,
+        widget,
+        time: Date(),
+      })
+        .catch((err) => {
+          console.log('axios post interactions error', err);
+        });
+    }
+    window.addEventListener('click', handleInteraction);
+    return () => window.removeEventListener('click', handleInteraction);
+  }, []);
 
   return (
     <>
