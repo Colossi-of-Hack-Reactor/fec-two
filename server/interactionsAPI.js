@@ -6,7 +6,7 @@ const headers = {
 };
 
 exports.postInteraction = (req, res) => {
-  axios.post(`${baseURL}/interactions`, req.body, { headers, params: req.query })
+  axios.post(`${baseURL}/interactions`, req.body, { headers })
     .then((response) => {
       res.status(200).send(response.data);
     })
