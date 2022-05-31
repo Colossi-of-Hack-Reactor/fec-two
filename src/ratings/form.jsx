@@ -33,14 +33,19 @@ const CharContainer = styled.div`
 `;
 
 export default function Form({ product_id }) {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [recommend, setRecommend] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-  const [characteristics, setChar] = useState({});
+  const [characteristics, setChar] = useState(
+    {
+      Size: 'Perfect', Width: 'Perfect', Comfort: 'Perfect', Quality: 'Perfect', Length: 'Perfect', Fit: 'Perfect',
+    },
+  );
+  const [value, setValue] = useState('Perfect');
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -50,7 +55,7 @@ export default function Form({ product_id }) {
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
 
-  const changeRating = (newRating, name) => {
+  const changeRating = (newRating) => {
     setRating(newRating);
   };
 
@@ -61,8 +66,11 @@ export default function Form({ product_id }) {
     setRecommend(true);
   };
 
+  const handleSelectChange = (e) => {
+    setChar({ [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = () => {
-    // console.log({product_id, summary, name, content, email});
     axios.post('/reviews', {
       product_id, rating, summary, body, recommend, name, email, photos, characteristics,
     })
@@ -124,9 +132,14 @@ export default function Form({ product_id }) {
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select>
+                    <select name={char} value={characteristics[char]} label="Perfect" onChange={handleSelectChange}>
+                      {console.log(characteristics[char])}
                       {chars[char].map((elem, i) => (
-                        <option key={i} value={i + 1}>{elem}</option>
+                        <option
+                          key={i}
+                          value={i + 1}
+                          label={elem}
+                        />
                       ))}
                     </select>
                     {' '}
@@ -197,6 +210,8 @@ export default function Form({ product_id }) {
               <span> For privacy reasons, do not use your full name or email address </span>
               <label>
                 <input
+                  type="email"
+                  required
                   value={name}
                   maxLength="60"
                   width="100%"

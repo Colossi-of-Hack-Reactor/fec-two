@@ -37,6 +37,7 @@ export default function Ratings(props) {
     })
       .then((response) => {
         setReviews(response.data);
+        setFilter({});
         setLoading((a) => a - 1);
       })
       .catch((err) => {

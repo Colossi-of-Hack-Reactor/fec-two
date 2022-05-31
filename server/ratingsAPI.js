@@ -13,7 +13,7 @@ exports.getReviews = (req, res) => {
       res.status(200).send(response.data.results);
     })
     .catch((err) => {
-      console.log('axios get reviews error', err);
+      res.status(404).send(err);
     });
 };
 
@@ -23,7 +23,7 @@ exports.getRatingsByProductId = (req, res) => {
       res.status(200).send(response.data);
     })
     .catch((err) => {
-      console.log('axios get ratings by product id', err);
+      res.status(404).send(err);
     });
 };
 
@@ -43,7 +43,7 @@ exports.putReviewHelpful = (req, res) => {
       res.status(204).send(response.data);
     })
     .catch((err) => {
-      console.log('axios put review helpful error', err);
+      res.status(404).send(err);
     });
 };
 
@@ -53,6 +53,6 @@ exports.putReviewReport = (req, res) => {
       res.status(204).send(response.data);
     })
     .catch((err) => {
-      console.log('axios put review report error', err);
+      res.status(404).send(err);
     });
 };

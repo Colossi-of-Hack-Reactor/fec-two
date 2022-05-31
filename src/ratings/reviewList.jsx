@@ -42,8 +42,6 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
     setHeight(elementRef.current.clientHeight);
   }, [reviews, filter]);
 
-  // console.log(height);
-
   const showModal = () => {
     setShow(true);
   };
@@ -52,10 +50,18 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
     setShow(false);
   };
 
-  // // const sortReview = () => {
-  //   reviews.sort((a, b) => b[sort] - a[sort]);
-  // // };
+  // const sortReview = () => {
+  // reviews.sort((a, b) => b.date.localeCompare(a.date));
+  // };
+  useEffect(() => {
+    if (sort === 'newest') {
+      reviews.sort((a, b) => b.date.localeCompare(a.date));
+    } else if (sort === 'helpful') {
+      reviews.sort((a, b) => b.helpfulness - a.helpfulness);
+    }
+  }, [sort]);
 
+  console.log(sort);
   return (
     <div>
       <Scroll height={height}>

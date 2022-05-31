@@ -12,16 +12,16 @@ const Score = styled.div`
 `;
 
 const Container = styled.div`
-display: grid;
-grid-template-columns: 15% 85%;
-align-items: center;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: center;
 `;
 
 const Box = styled.label`
-text-decoration: underline;
-&:hover {
-  color: tomato;
-}
+  text-decoration: underline;
+  &:hover {
+    color: tomato;
+  }
 `;
 
 const CharsContainer = styled.div`
@@ -33,7 +33,7 @@ const CharsContainer = styled.div`
 `;
 
 const Chars = styled.div`
-display: grid;
+  display: grid;
   grid-template-rows: 30px 20px 20px;
 `;
 

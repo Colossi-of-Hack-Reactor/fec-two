@@ -4,16 +4,16 @@ import StarRatings from 'react-star-ratings';
 import styled from "styled-components";
 
 const Entry = styled.div`
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
-justify-content: space-evenly;
-margin: 50px 0 50px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 50px 0 50px;
 `;
 
 const Footer = styled.div`
-padding-top: 20px;
-font: small;
+  padding-top: 20px;
+  font: small;
 `;
 
 const Header = styled.div`
@@ -120,7 +120,7 @@ export default function ReviewListEntry({ review, filter }) {
           </Entry>
           <hr />
         </>
-      ) : (null)}
+        ) : (null)}
     </div>
   );
 }
