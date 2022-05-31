@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const Promise = require('bluebird');
+
 const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 const headers = {
   Authorization: process.env.GITHUBKEY,
@@ -18,7 +18,7 @@ exports.getReviews = (req, res) => {
 };
 
 exports.getRatingsByProductId = (req, res) => {
-  axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
+  axios.get(`${baseURL}/reviews/meta/`, { headers, params: req.query })
     .then((response) => {
       res.status(200).send(response.data);
     })

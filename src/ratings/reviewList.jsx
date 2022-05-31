@@ -5,8 +5,9 @@ import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
 const Scroll = styled.div`
-  max-height: 600px;
-  overflow: hidden ${({ height }) => (height > 600 ? 'scroll' : 'hidden')};
+  max-height: 700px;
+  overflow: hidden ${({ height }) => (height > 400 ? 'scroll' : 'hidden')};
+  margin-top: 30px;
 `;
 
 const ReviewContainer = styled.div`
@@ -32,11 +33,17 @@ const Button = styled.button`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-export default function ReviewList({ reviews, product_id, filter, sort }) {
+export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
   const [height, setHeight] = useState(0);
   const elementRef = React.useRef();
+  const showModal = () => {
+    setShow(true);
+  };
+  const hideModal = () => {
+    setShow(false);
+  };
 
   useEffect(() => {
     setHeight(elementRef.current.clientHeight);
@@ -46,26 +53,23 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
     setMore(2);
   }, [product_id]);
 
-  const showModal = () => {
-    setShow(true);
-  };
-
-  const hideModal = () => {
-    setShow(false);
-  };
-
-  // const sortReview = () => {
-  // reviews.sort((a, b) => b.date.localeCompare(a.date));
-  // };
   useEffect(() => {
+    const r = [...reviews];
     if (sort === 'newest') {
-      reviews.sort((a, b) => b.date.localeCompare(a.date));
+      r.sort((a, b) => b.date.localeCompare(a.date));
     } else if (sort === 'helpful') {
-      reviews.sort((a, b) => b.helpfulness - a.helpfulness);
+      r.sort((a, b) => b.helpfulness - a.helpfulness);
+    } else if (sort === 'relevant') {
+      r.sort((a, b) => {
+        if (b.date === a.date) {
+          return b.helpfulness - a.helpfulness;
+        }
+        return b.date.localeCompare(a.date);
+      });
     }
-  }, [sort]);
+    setReviews(r);
+  }, [product_id, sort]);
 
-  console.log(sort);
   return (
     <div>
       <Scroll height={height}>
@@ -91,7 +95,7 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
         <Button type="button" onClick={showModal}> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} />
+        <Form product_id={product_id} handleClose={hideModal} />
       </Popup>
     </div>
 

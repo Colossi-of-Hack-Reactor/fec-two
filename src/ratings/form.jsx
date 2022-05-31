@@ -32,7 +32,7 @@ const CharContainer = styled.div`
   gap: 15px 30px;
 `;
 
-export default function Form({ product_id }) {
+export default function Form({ product_id, handleClose }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -45,7 +45,6 @@ export default function Form({ product_id }) {
       Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
     },
   );
-  const [value, setValue] = useState('Perfect');
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -82,6 +81,7 @@ export default function Form({ product_id }) {
       .catch((err) => {
         console.log('axios post reviews error', err);
       });
+    handleClose();
   };
 
   return (

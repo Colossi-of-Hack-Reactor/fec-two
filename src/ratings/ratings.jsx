@@ -20,7 +20,7 @@ const Clear = styled.label`
 `;
 
 export default function Ratings(props) {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(25);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
   const [reviews, setReviews] = useState([]);
@@ -38,6 +38,7 @@ export default function Ratings(props) {
       .then((response) => {
         setReviews(response.data);
         setFilter({});
+        setSort('relevant');
         setLoading((a) => a - 1);
       })
       .catch((err) => {
@@ -76,7 +77,7 @@ export default function Ratings(props) {
   };
 
   return (
-    <GridContainer>
+    <GridContainer className="ratings">
       <div>
         <h3>RATINGS &amp; REVIEWS</h3>
         <RatingList meta={meta} handleFilterRating={handleFilterRating} />
@@ -101,7 +102,13 @@ export default function Ratings(props) {
           &nbsp;
           <Clear onClick={() => setFilter({})}>clear filter</Clear>
         </h3>
-        <ReviewList reviews={reviews} product_id={product_id} filter={filter} sort={sort} />
+        <ReviewList
+          reviews={reviews}
+          setReviews={setReviews}
+          product_id={product_id}
+          filter={filter}
+          sort={sort}
+        />
       </div>
     </GridContainer>
   );
