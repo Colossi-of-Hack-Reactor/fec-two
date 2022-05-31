@@ -29,7 +29,6 @@ const FormHolder = styled.form`
 const SearchBar = function SearchBar({ qainfo, setQainfo, setQuestionsToDisplay, sorted, setSorted }) {
   const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
-    console.log(qainfo);
     if (searchTerm.length >= 3) {
       const sortedInfo = [];
       for (let i = 0; i < qainfo.length; i += 1) {

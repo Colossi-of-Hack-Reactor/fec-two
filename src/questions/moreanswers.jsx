@@ -12,13 +12,12 @@ padding-left: 5px;
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-const MoreAnswers = function MoreAnswers({index, setNumOfAnswers, numOfAnswers}) {
+const MoreAnswers = function MoreAnswers({index, setNumOfAnswers, numOfAnswers, info}) {
   const onClick = function onClick() {
-    setNumOfAnswers(numOfAnswers + 2);
+    setNumOfAnswers(Object.keys(info).length);
   };
-  let key = index+1;
   // eslint-disable-next-line max-len
-  return <More key={key} onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 1}>ShowMoreAnswers</More>;
+  return <More onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 1}>Show More Answers</More>;
 };
 
 export default MoreAnswers;

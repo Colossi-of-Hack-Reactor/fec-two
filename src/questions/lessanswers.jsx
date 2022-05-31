@@ -1,0 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+const More2 = styled.div.attrs((props) => ({
+  row: props.row,
+}))`
+font-size: 10px;
+font-weight: 600;
+padding-left: 5px;
+  padding-top: 10px;
+  padding-bottom 3px;
+  grid-column-start: 2;
+  grid-row-start: auto;
+`;
+
+const LessAnswers = function LessAnswers({index, setNumOfAnswers, numOfAnswers, info}) {
+  const onClick = function onClick() {
+    setNumOfAnswers(2);
+  };
+  // eslint-disable-next-line max-len
+  return <More2 onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 4}>Show Less Answers</More2>;
+};
+
+export default LessAnswers;

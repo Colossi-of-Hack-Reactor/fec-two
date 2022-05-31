@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AnswerBlock from "./answerblock.jsx";
 import MoreAnswers from "./moreanswers.jsx";
+import LessAnswers from "./lessanswers.jsx";
 
 const AnswerGrid = styled.div`
+  max-height: 50vh;
+  overflow-y: scroll;
   width: 70%;
   display: grid;
   grid-template-columns: 16px 1fr;
@@ -24,14 +27,13 @@ const AnswerList = function AnswerList({
   setAnswersToDisplay,
 }) {
   const [numOfAnswers, setNumOfAnswers] = useState(answersToDisplay);
+  let addLess = false;
   const createAnswersArr = function (obj) {
     const result = Object.values(info);
     result.sort((a, b) => b.helpfulness - a.helpfulness);
     return result;
   };
-  // map answer block
   const sortedAnswers = createAnswersArr(info);
-  let key = answersToDisplay+1
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;
@@ -44,14 +46,26 @@ const AnswerList = function AnswerList({
     );
   }
   return (
-    <AnswerGrid key={Math.floor(Math.random() * 20000)}>
+    <AnswerGrid>
       {sortedAnswers.map((answer, index) => {
         if (index < numOfAnswers) {
-          return <AnswerBlock key={answer.id} info={answer} index={index} />;
+          if (index === numOfAnswers - 1 && numOfAnswers > 2) {
+            addLess = true;
+          }
+          return (
+            <AnswerBlock
+              setNumOfAnswers={setNumOfAnswers}
+              addLess={addLess}
+              key={answer.id}
+              info={answer}
+              index={index}
+            />
+          );
         }
         if (index === numOfAnswers) {
           return (
             <MoreAnswers
+              info={info}
               key={answer.id}
               index={index}
               numOfAnswers={numOfAnswers}
