@@ -5,15 +5,16 @@ import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
 const Scroll = styled.div`
-  max-height: 500px;
-  overflow: hidden ${({ height }) => (height > 500 ? 'scroll' : 'hidden')};
+  max-height: 700px;
+  overflow: hidden ${({ height }) => (height > 400 ? 'scroll' : 'hidden')};
+  margin-top: 30px;
 `;
 
 const ReviewContainer = styled.div`
+  margin: 50px 50px 0 0;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 100%;
   justify-content: flex-start;
 `;
 
@@ -32,29 +33,42 @@ const Button = styled.button`
   font-family: Arial, Helvetica, sans-serif;
 `;
 
-export default function ReviewList({ reviews, product_id, filter, sort }) {
+export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
   const [height, setHeight] = useState(0);
   const elementRef = React.useRef();
+  const showModal = () => {
+    setShow(true);
+  };
+  const hideModal = () => {
+    setShow(false);
+  };
 
   useEffect(() => {
     setHeight(elementRef.current.clientHeight);
   }, [reviews, filter]);
 
-  // console.log(height);
+  useEffect(() => {
+    setMore(2);
+  }, [product_id]);
 
-  const showModal = () => {
-    setShow(true);
-  };
-
-  const hideModal = () => {
-    setShow(false);
-  };
-
-  // // const sortReview = () => {
-  //   reviews.sort((a, b) => b[sort] - a[sort]);
-  // // };
+  useEffect(() => {
+    const r = [...reviews];
+    if (sort === 'newest') {
+      r.sort((a, b) => b.date.localeCompare(a.date));
+    } else if (sort === 'helpful') {
+      r.sort((a, b) => b.helpfulness - a.helpfulness);
+    } else if (sort === 'relevant') {
+      r.sort((a, b) => {
+        if (b.date === a.date) {
+          return b.helpfulness - a.helpfulness;
+        }
+        return b.date.localeCompare(a.date);
+      });
+    }
+    setReviews(r);
+  }, [product_id, sort]);
 
   return (
     <div>
@@ -81,7 +95,7 @@ export default function ReviewList({ reviews, product_id, filter, sort }) {
         <Button type="button" onClick={showModal}> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} />
+        <Form product_id={product_id} handleClose={hideModal} />
       </Popup>
     </div>
 

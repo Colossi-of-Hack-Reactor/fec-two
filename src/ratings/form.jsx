@@ -32,15 +32,19 @@ const CharContainer = styled.div`
   gap: 15px 30px;
 `;
 
-export default function Form({ product_id }) {
-  const [rating, setRating] = useState(0);
+export default function Form({ product_id, handleClose }) {
+  const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [recommend, setRecommend] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-  const [characteristics, setChar] = useState({});
+  const [characteristics, setChar] = useState(
+    {
+      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
+    },
+  );
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -50,7 +54,7 @@ export default function Form({ product_id }) {
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
 
-  const changeRating = (newRating, name) => {
+  const changeRating = (newRating) => {
     setRating(newRating);
   };
 
@@ -61,8 +65,13 @@ export default function Form({ product_id }) {
     setRecommend(true);
   };
 
+  const handleSelectChange = (e) => {
+    const cha = { ...characteristics };
+    cha[e.target.name] = e.target.value;
+    setChar(cha);
+  };
+
   const handleSubmit = () => {
-    // console.log({product_id, summary, name, content, email});
     axios.post('/reviews', {
       product_id, rating, summary, body, recommend, name, email, photos, characteristics,
     })
@@ -72,7 +81,21 @@ export default function Form({ product_id }) {
       .catch((err) => {
         console.log('axios post reviews error', err);
       });
+    handleClose();
   };
+
+  useEffect(() => {
+    setRating(5);
+    setSummary('');
+    setBody('');
+    setRecommend(true);
+    setName('');
+    setEmail('');
+    setPhotos([]);
+    setChar({
+      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
+    });
+  }, [product_id]);
 
   return (
     <div>
@@ -124,9 +147,13 @@ export default function Form({ product_id }) {
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select>
+                    <select name={char} value={characteristics[char]} onChange={handleSelectChange}>
                       {chars[char].map((elem, i) => (
-                        <option key={i} value={i + 1}>{elem}</option>
+                        <option
+                          key={i}
+                          value={i + 1}
+                          label={elem}
+                        />
                       ))}
                     </select>
                     {' '}
@@ -197,6 +224,8 @@ export default function Form({ product_id }) {
               <span> For privacy reasons, do not use your full name or email address </span>
               <label>
                 <input
+                  type="email"
+                  required
                   value={name}
                   maxLength="60"
                   width="100%"
