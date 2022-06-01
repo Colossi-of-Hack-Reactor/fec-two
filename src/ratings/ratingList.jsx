@@ -86,9 +86,9 @@ export default function RatingList({ meta, handleFilterRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <div>
+                <div key={i}>
                   <Container>
-                    <label key={i} onClick={() => handleFilterRating(rating)} data-testid="filterRating">
+                    <label onClick={() => handleFilterRating(rating)} data-testid="filterRating">
                       <Box>{rating} star</Box>
                     </label>
                     <Bar progress={meta.ratings[rating] / totalRating * 100} />
