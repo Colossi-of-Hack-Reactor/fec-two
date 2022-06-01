@@ -92,6 +92,7 @@ const WhiteBG = styled.span`
 const ImageContainer = styled.div`
   display: flex;
   position: relative;
+  min-height: 500px;
 `;
 
 const Thumbnail = styled.div`
@@ -127,12 +128,16 @@ const BigImageDiv = styled.div`
   height: 100%;
   width: 100%;
   visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
+  background-image: url(${(props) => (props.bg)});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const BigImage = styled.img`
   cursor: zoom-in;
-  max-height: 100%;
-  max-width: 100%;
+  object-fit: cover;
+  height: 872px;
 `;
 
 const ArrowContainer = styled.div`
