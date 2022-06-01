@@ -9,6 +9,7 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   display: ${({ show }) => (show ? 'block' : 'none')};
+  z-index: 17;
 `;
 
 const ModalMain = styled.div`
@@ -19,6 +20,7 @@ const ModalMain = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 17;
 `;
 
 const CloseButton = styled.label`
