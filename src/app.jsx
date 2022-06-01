@@ -24,6 +24,8 @@ function App() {
   const [loading, setLoading] = useState(0);
   const [outfitsIdList, setOutfitsIdList] = useState([]);
   const [outfits, setOutfits] = useState({});
+  const [reviews, setReviews] = useState([]);
+  const [meta, setMeta] = useState({});
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -93,6 +95,10 @@ function App() {
         product_id={product_id}
         setProduct_id={setProduct_id}
         setLoading={setLoading}
+        reviews={reviews}
+        setReviews={setReviews}
+        meta={meta}
+        setMeta={setMeta}
       />
     </>
   );

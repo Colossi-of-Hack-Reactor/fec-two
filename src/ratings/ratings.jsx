@@ -23,10 +23,8 @@ export default function Ratings(props) {
   const [count, setCount] = useState(25);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
-  const [reviews, setReviews] = useState([]);
-  const [meta, setMeta] = useState({});
   const [filter, setFilter] = useState({});
-  const { product_id, setProduct_id, setLoading } = props;
+  const { product_id, setLoading, reviews, setReviews, meta, setMeta } = props;
 
   useEffect(() => {
     setLoading((a) => a + 1);
