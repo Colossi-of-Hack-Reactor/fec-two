@@ -26,6 +26,7 @@ function App() {
   const [outfits, setOutfits] = useState({});
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
+  const ratingsRef = React.useRef();
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -68,6 +69,11 @@ function App() {
         product_id={product_id}
         setProduct_id={setProduct_id}
         setLoading={setLoading}
+        outfitsIdList={outfitsIdList}
+        setOutfitsIdList={setOutfitsIdList}
+        reviews={reviews}
+        meta={meta}
+        ratingsRef={ratingsRef}
       />
       <Related
         product_id={product_id}
@@ -99,6 +105,7 @@ function App() {
         setReviews={setReviews}
         meta={meta}
         setMeta={setMeta}
+        ratingsRef={ratingsRef}
       />
     </>
   );

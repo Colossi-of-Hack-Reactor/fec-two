@@ -323,6 +323,11 @@ const StarButton = styled.img`
   height: 100%;
 `;
 
+const ReviewsSpan = styled.span`
+  padding-left: 10px;
+  cursor: pointer;
+`;
+
 export {
   Product, Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv, FeatsDiv,
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
@@ -330,5 +335,5 @@ export {
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
   ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan, CategoryDiv, ProductNameDiv,
   PriceDiv, StyleNameDiv, SocialDiv, SocialImg, ToggleFullscreenButton, ToggleFullscreenBG,
-  OverviewSelect, BagOutfitDiv, BagButton, StarButton,
+  OverviewSelect, BagOutfitDiv, BagButton, StarButton, ReviewsSpan,
 };

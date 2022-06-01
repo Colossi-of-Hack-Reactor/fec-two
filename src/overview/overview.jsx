@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
+import StarRatings from 'react-star-ratings';
 import { PropTypes } from 'prop-types';
 import axios from 'axios';
 import QuantitySelector from './quantitySelector.jsx'
@@ -10,7 +11,7 @@ import {
   Sale, Original, OverviewDiv, ImageDiv, InfoDiv, WordsDiv, SloDesDiv,
   FeatsDiv, OverallDiv, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
   CategoryDiv, ProductNameDiv, PriceDiv, SocialDiv, SocialImg, BagOutfitDiv,
-  BagButton, StarButton,
+  BagButton, StarButton, ReviewsSpan,
 } from './overviewStyled.js';
 import {
   EmptyStarLink, FullStarLink, FacebookLink, TwitterLink, PinterestLink, InstagramLink,
@@ -26,10 +27,10 @@ function Overview(props) {
   const [quantity, setQuantity] = useState('1');
   const [image, setImage] = useState(0);
   const [thumb, setThumb] = useState(6);
+  const [score, setScore] = useState(1);
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
-  const { product_id, setLoading } = props;
+  const { product_id, setLoading, outfitsIdList, setOutfitsIdList, reviews, meta, ratingsRef } = props;
   const selectRef = React.useRef();
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -75,6 +76,19 @@ function Overview(props) {
     setQuantity('1');
   }, [size]);
 
+  useEffect(() => {
+    let totalScore = 0;
+    let totalRating = 0;
+    if (Object.keys(meta).length !== 0) {
+      for (const key in meta.ratings) {
+        totalScore += key * Number(meta.ratings[key]);
+        totalRating += Number(meta.ratings[key]);
+      }
+    }
+    const total = (totalScore / totalRating);
+    setScore(Math.ceil(4 * total) * 0.25);
+  }, [meta]);
+
   return (
     <OverallDiv className="Overview">
       {styles[style] ? (
@@ -91,12 +105,33 @@ function Overview(props) {
               />
             </ImageDiv>
             <InfoDiv>
-              <div>
-                Rating
-              </div>
-              <div>
-                Reviews
-              </div>
+              {reviews.length ? (
+                <>
+                  <StarRatings
+                    rating={score}
+                    starDimension="20px"
+                    starSpacing="5px"
+                    starRatedColor="DimGray"
+                    starEmptyColor="Gainsboro"
+                  />
+                  <ReviewsSpan
+                    onClick={() => {
+                      if (ratingsRef.current) {
+                        ratingsRef.current.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        });
+                      }
+                    }}
+                  >
+                    Read all
+                    {' '}
+                    {reviews.length}
+                    {' '}
+                    reviews
+                  </ReviewsSpan>
+                </>
+              ) : ''}
               <CategoryDiv data-testid="category">
                 {product.category}
               </CategoryDiv>
@@ -182,8 +217,16 @@ function Overview(props) {
                     </SelectSpan>
                     <SelectSpan>
                       <StarButton
-                        src={isFavorite ? FullStarLink : EmptyStarLink}
-                        onClick={() => { setIsFavorite((a) => (!a)); }}
+                        src={outfitsIdList.includes(product_id) ? FullStarLink : EmptyStarLink}
+                        onClick={() => {
+                          const newIdList = outfitsIdList.slice();
+                          if (newIdList.includes(product_id)) {
+                            newIdList.splice(newIdList.indexOf(product_id), 1);
+                          } else {
+                            newIdList.push(product_id);
+                          }
+                          setOutfitsIdList(newIdList);
+                        }}
                       />
                       {/* <img src={EmptyStarLink} alt="empty star" />
                       <img src={FullStarLink} alt="full star" /> */}
@@ -227,6 +270,11 @@ function Overview(props) {
 Overview.propTypes = {
   product_id: PropTypes.number.isRequired,
   setLoading: PropTypes.func.isRequired,
+  outfitsIdList: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setOutfitsIdList: PropTypes.func.isRequired,
+  reviews: PropTypes.arrayOf().isRequired,
+  meta: PropTypes.shape().isRequired,
+  ratingsRef: PropTypes.any,
 };
 
 export default Overview;
