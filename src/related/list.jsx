@@ -53,50 +53,44 @@ function List({
   useEffect(() => {
     const listEl = listRef.current.getBoundingClientRect();
     const cardSize = listEl.width / products.length;
-    const maxListSize = cardSize * products.length;
+    const maxListSize = cardSize * products.length + buttonWidth;
     const minListSize = cardSize;
-    const windowListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
-    const newListSize = (windowListSize > maxListSize ? maxListSize : windowListSize < minListSize ? minListSize : windowListSize)
-
-    // if (windowSize > listSize && slots === products.length - 1) {
-    //   setListSize(newListSize + buttonWidth);
-    //   setSlots(newListSize / cardSize);
-    //   // console .log('new list size', newListSize + 2 * buttonWidth);
-    //   // console.log('new slots ', newListSize / cardSize);
-    // } else if (windowSize < listSize) {
-    //   setListSize(newListSize + 2 * buttonWidth);
-    //   setSlots(newListSize / cardSize);
-    //   // console.log('new list size', newListSize + 2 * buttonWidth);
-    //   // console.log('new slots ', newListSize / cardSize);
-    // } else if (windowSize > listSize + cardSize) {
-    //   setListSize(newListSize + 2 * buttonWidth);
-    //   setSlots(newListSize / cardSize);
-    //   // console.log('new list size', newListSize + 2 * buttonWidth);
-    //   // console.log('new slots ', newListSize / cardSize);
-    // }
-
-    //console.log('list length', listEl.width)//, (cardSize * Math.floor((window.innerWidth - scrollBar - slack) / cardSize)), starterSlots > products.length ? products.length : starterSlots);
+    const newListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
+    const starterListSize = (newListSize > maxListSize ? maxListSize : newListSize < minListSize ? minListSize : newListSize)
+    if (window.innerWidth >= cardSize + buttonWidth) {
+      setRightListLim(20000);
+      setSlots(products.length);
+    } else if (newListSize < minListSize) {
+      setRightListLim(starterListSize + 2 * buttonWidth);
+      setSlot(1);
+      // console.log(starterListSize + 2 * buttonWidth, 1);
+    } else {
+      setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
+      // console.log(starterListSize + 2 * buttonWidth, 1);
+    }
+    setLeftListLim(starterListSize + 2 * buttonWidth);
+    // console.log(starterListSize + 2 * buttonWidth);
   }, [windowSize]);
 
   useEffect(() => {
     if (update) {
       const listEl = listRef.current.getBoundingClientRect();
       const cardSize = listEl.width / products.length;
-      const maxListSize = cardSize * products.length;
+      const maxListSize = cardSize * products.length + buttonWidth;
       const minListSize = cardSize;
       const newListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
       const starterListSize = (newListSize > maxListSize ? maxListSize : newListSize < minListSize ? minListSize : newListSize)
       setWindowSize(window.innerWidth - scrollBar);
-      // if(newListSize < minListSize) {
-      //   setRightListLim(starterListSize);
-      //   setLeftListLim(starterListSize);
-      // }
-
-      // setLefttSize(starterListSize + 2 * buttonWidth);
-      // const starterSlots = starterListSize / cardSize;
-      // setSlots(starterSlots);
-      // console.log(starterListSize + 2 * buttonWidth);
-      // console.log(starterSlots);
+      if (window.innerWidth >= cardSize + buttonWidth) {
+        setRightListLim(20000);
+        setSlots(products.length);
+      } else if (newListSize < minListSize) {
+        setRightListLim(starterListSize + 2 * buttonWidth);
+        setSlot(1);
+      } else {
+        setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
+      }
+      setLeftListLim(starterListSize + 2 * buttonWidth);
     }
     window.addEventListener('resize', determineArrowDisplay);
     return () => window.removeEventListener('resize', determineArrowDisplay);
@@ -114,7 +108,7 @@ function List({
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '50px auto 50px' }}>
-       {/* <LeftButton showLeftArrow={showLeftArrow} setLeftBlocks={setLeftBlocks} leftBlocks={leftBlocks} setRightBlocks={setRightBlocks} rightBlocks={rightBlocks} /> */}
+      {/* <LeftButton showLeftArrow={showLeftArrow} setLeftBlocks={setLeftBlocks} leftBlocks={leftBlocks} setRightBlocks={setRightBlocks} rightBlocks={rightBlocks} /> */}
       <div>
         {sectionHeader(product_id)}
         <CardList ref={listRef}>
@@ -164,7 +158,7 @@ function RightButton({ showRightArrow, setRightBlocks, rightBlocks }) {
 function LeftButton({ showLeftArrow, setLeftBlocks, leftBlocks, setRightBlocks, rightBlocks }) {
   return (
     <div>
-      {showLeftArrow && <button type="button" onClick={() => {setLeftBlocks(leftBlocks + 1 < 0 ? 0 : leftBlocks + 1)}}>Whats to the left</button>}
+      {showLeftArrow && <button type="button" onClick={() => { setLeftBlocks(leftBlocks + 1 < 0 ? 0 : leftBlocks + 1) }}>Whats to the left</button>}
     </div>
   );
 }
