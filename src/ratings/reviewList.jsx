@@ -71,7 +71,7 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
   }, [product_id, sort]);
 
   return (
-    <div>
+    <div data-testid="reviewList">
       <Scroll height={height}>
         <ReviewContainer ref={elementRef}>
           {reviews.map((review, i) => {
@@ -92,7 +92,7 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
           ? <Button type="button" onClick={() => setMore(more + 2)}> MORE REVIEWS </Button>
           : null}
         {' '}
-        <Button type="button" onClick={showModal}> ADD A REVIEW + </Button>
+        <Button type="button" onClick={showModal} data-testid="addReview"> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
         <Form product_id={product_id} handleClose={hideModal} />
