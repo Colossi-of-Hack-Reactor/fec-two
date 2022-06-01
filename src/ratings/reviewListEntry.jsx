@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import StarRatings from 'react-star-ratings';
 import styled from "styled-components";
+import ImgPopup from './imgModal.jsx';
 
 const Entry = styled.div`
   display: flex;
@@ -33,6 +34,13 @@ const Help = styled.label`
 export default function ReviewListEntry({ review, filter }) {
   const [yes, setYes] = useState(review.helpfulness);
   const [report, setReport] = useState(false);
+  const [show, setShow] = useState(false);
+  const showModal = () => {
+    setShow(true);
+  };
+  const hideModal = () => {
+    setShow(false);
+  };
 
   const handleClickYes = () => {
     axios.put(`/reviews/${review.review_id}/helpful`, {
@@ -75,8 +83,8 @@ export default function ReviewListEntry({ review, filter }) {
             </div>
             <div>
               {review.reviewer_name}
-              {', '}
-              {review.date.slice(0, 10)}
+              ,&nbsp;
+              {(new Date(review.date)).toString().slice(4, 16)}
             </div>
           </Header>
           <Entry>
@@ -96,12 +104,21 @@ export default function ReviewListEntry({ review, filter }) {
               {
                 review.photos.length !== 0
                   ? review.photos.map((photo, i) => (
-                    <img
-                      key={i}
-                      src={photo.url}
-                      width="100"
-                      alt="header img"
-                    />
+                    <div key={i}>
+                      <img
+                        src={photo.url}
+                        width="100"
+                        alt="header img"
+                        onClick={showModal}
+                      />
+                      <ImgPopup show={show} handleClose={hideModal}>
+                        <img
+                          src={photo.url}
+                          width="400"
+                          alt="header img"
+                        />
+                      </ImgPopup>
+                    </div>
                   )) : (null)
               }
             </div>
