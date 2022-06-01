@@ -42,7 +42,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        console.log('axios get reviews error', err);
+        // console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
   }, [count, page, product_id]);
@@ -61,7 +61,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        console.log('axios get /reviews/meta error', err);
+        // console.log('axios get /reviews/meta error', err);
         setLoading((a) => a - 1);
       });
   }, [product_id]);
@@ -88,7 +88,7 @@ export default function Ratings(props) {
           {' '}
           reviews, sort by
           {' '}
-          <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort">
             <option value="relevant">Relevant</option>
             <option value="helpful">Helpful</option>
             <option value="newest">Newest</option>
@@ -96,11 +96,15 @@ export default function Ratings(props) {
           &nbsp;&nbsp;&nbsp;
           filtered by
           {' '}
-          {Object.keys(filter).map((val, i) =>
-            <span key={i}>{val}{' '}star,</span>
-          )}
+          <label data-testid="filter">
+            {Object.keys(filter).map((val, i) =>
+              <span key={i}>{val}{' '}star,</span>
+            )}
+          </label>
           &nbsp;
-          <Clear onClick={() => setFilter({})}>clear filter</Clear>
+          <Clear>
+            <label onClick={() => setFilter({})}>clear filter</label>
+          </Clear>
         </h3>
         <ReviewList
           reviews={reviews}

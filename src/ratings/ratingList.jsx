@@ -71,7 +71,7 @@ export default function RatingList({ meta, handleFilterRating }) {
   recommend = recommend.toFixed(0);
 
   return (
-    <div>
+    <div data-testid="ratingList">
       {
         Object.keys(meta).length !== 0
           ? (
@@ -86,10 +86,14 @@ export default function RatingList({ meta, handleFilterRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <Container key={i} onClick={() => handleFilterRating(rating)}>
-                  <Box>{rating} star</Box>
-                  <Bar progress={meta.ratings[rating] / totalRating * 100} />
-                </Container>
+                <div>
+                  <Container>
+                    <label key={i} onClick={() => handleFilterRating(rating)} data-testid="filterRating">
+                      <Box>{rating} star</Box>
+                    </label>
+                    <Bar progress={meta.ratings[rating] / totalRating * 100} />
+                  </Container>
+                </div>
               ))}
               <div>
                 <CharsContainer>
@@ -102,7 +106,7 @@ export default function RatingList({ meta, handleFilterRating }) {
                             percentage={((meta.characteristics[char].value / 5) * 100).toFixed(0)}
                           />
                           <Char>
-                            {chars[char].map((elem, i) => (<span key={i}>{elem}</span>))}
+                            {chars[char].map((elem, i) => <span key={i}>{elem}</span>)}
                           </Char>
                         </Chars>
                       )) : (null)

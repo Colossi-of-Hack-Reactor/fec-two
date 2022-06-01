@@ -87,10 +87,10 @@ export default function ReviewListEntry({ review, filter }) {
               <p>{review.body}</p>
             </div>
             <div>
-            {review.recommend ?
-              <span>&#10003;&nbsp;I recommend this product</span>
-              : null}
-            {review.response ? <p>{review.response}</p> : null}
+              {review.recommend ?
+                <span>&#10003;&nbsp;I recommend this product</span>
+                : null}
+              {review.response ? <p>{review.response}</p> : null}
             </div>
             <div>
               {
@@ -108,20 +108,19 @@ export default function ReviewListEntry({ review, filter }) {
             <Footer>
               Helpful?
               &nbsp;
-              <Help onClick={handleClickYes}>Yes</Help>
+              <Help>
+                <span onClick={handleClickYes} data-testid="yes">Yes</span>
+              </Help>
               {' '}
               (
-              {yes}
-              )
-              &nbsp;&nbsp;
-              |
-              &nbsp;&nbsp;&nbsp;
+              <span data-testid="yesCount">{yes}</span>
+              )&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
               <Help onClick={handleClickReport}>Report</Help>
             </Footer>
           </Entry>
           <hr />
         </>
-        ) : (null)}
+      ) : (null)}
     </div>
   );
 }

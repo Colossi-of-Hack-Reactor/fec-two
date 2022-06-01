@@ -109,7 +109,7 @@ export default function Form({ product_id, handleClose }) {
       </FormHeader>
       <Scroll>
         <FormContainer>
-          <form>
+          <form data-testid="form">
             <FormItem>
               <h3>
                 <label>
@@ -122,7 +122,8 @@ export default function Form({ product_id, handleClose }) {
                 starRatedColor="rgb(230, 67, 47)"
                 changeRating={changeRating}
                 numberOfStars={5}
-                name='rating'
+                name="rating"
+                data-testid="rating"
               />
             </FormItem>
             <hr />
@@ -130,7 +131,7 @@ export default function Form({ product_id, handleClose }) {
               <label>
                 <span>Do you recommend this product?</span>
                 &nbsp;&nbsp;
-                <input name="status" type="checkbox" onChange={handleCheck} />
+                <input name="status" type="checkbox" onChange={handleCheck} data-testid="checkbox" />
                 {' '}
                 Yes
               </label>
@@ -147,13 +148,14 @@ export default function Form({ product_id, handleClose }) {
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select name={char} value={characteristics[char]} onChange={handleSelectChange}>
+                    <select name={char} value={characteristics[char]} onChange={handleSelectChange} data-testid="char">
                       {chars[char].map((elem, i) => (
                         <option
                           key={i}
                           value={i + 1}
-                          label={elem}
-                        />
+                          label={elem}>
+                          {elem}
+                        </option>
                       ))}
                     </select>
                     {' '}
@@ -176,6 +178,7 @@ export default function Form({ product_id, handleClose }) {
                   cols="70"
                   placeholder="Example: Best purchase ever!"
                   onChange={(e) => setSummary(e.target.value)}
+                  data-testid="summary"
                 />
               </label>
             </FormItem>
@@ -197,6 +200,7 @@ export default function Form({ product_id, handleClose }) {
                   required
                   autoComplete="off"
                   onChange={(e) => setBody(e.target.value)}
+                  data-testid="body"
                 />
               </label>
             </FormItem>
@@ -224,13 +228,12 @@ export default function Form({ product_id, handleClose }) {
               <span> For privacy reasons, do not use your full name or email address </span>
               <label>
                 <input
-                  type="email"
-                  required
                   value={name}
                   maxLength="60"
                   width="100%"
                   placeholder="Example: jackson11!"
                   onChange={(e) => setName(e.target.value)}
+                  data-testid="name"
                 />
               </label>
             </FormItem>
@@ -244,16 +247,19 @@ export default function Form({ product_id, handleClose }) {
               <span> For authentication reasons, you will not be emailed </span>
               <label>
                 <input
+                  type="email"
+                  required
                   value={email}
                   maxLength="60"
                   placeholder="Example: jackson11@email.com"
                   onChange={(e) => setEmail(e.target.value)}
+                  data-testid="email"
                 />
               </label>
             </FormItem>
             <hr />
             <FormItem>
-              <button type="button" onClick={handleSubmit}>
+              <button type="button" onClick={handleSubmit} data-testid="submit">
                 <span>Submit review</span>
               </button>
             </FormItem>
