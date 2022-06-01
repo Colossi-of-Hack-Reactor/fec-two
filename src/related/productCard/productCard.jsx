@@ -8,7 +8,7 @@ import {
 } from '../css/cssProductCard';
 
 const ProductCard = function ProductCard({
-  product, cards, defaultIndex, rating = 0, outfits, setProduct_id, setOutfits, outfitsIdList, setOutfitsIdList,
+  product, cards, defaultIndex, rating = 0, outfits, setProduct_id, setOutfits, outfitsIdList, setOutfitsIdList, setUpdate,
 }) {
   let [index, setIndex] = useState(defaultIndex);
   const [inOutfits, setInOutfits] = useState(false);
@@ -17,7 +17,8 @@ const ProductCard = function ProductCard({
       setInOutfits(true);
     }
     setIndex(newIndex || defaultIndex);
-  }, ([index]));
+    setUpdate(true);
+  }, ([]));
 
   const totalStyles = cards.length;
 

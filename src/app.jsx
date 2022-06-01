@@ -78,14 +78,6 @@ function App() {
         setOutfits={setOutfits}
         setOutfitsIdList={setOutfitsIdList}
       />
-      <Related
-        setProduct_id={setProduct_id}
-        outfitsIdList={outfitsIdList}
-        outfits={outfits}
-        setLoading={setLoading}
-        setOutfits={setOutfits}
-        setOutfitsIdList={setOutfitsIdList}
-      />
       <Questions
         product_id={product_id}
         setProduct_id={setProduct_id}
