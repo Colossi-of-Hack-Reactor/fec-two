@@ -16,15 +16,14 @@ const AddAnswerDiv = styled.div.attrs((props) => ({
 
 const AddAnswer = function AddAnswer({ info, index }) {
   const [showAddAnswer, setShowAddAnswer] = useState(false);
-  const showAnswerModal = function showAnswerModal() {
-    setShowAddAnswer(true);
-  };
+
   return (
     <>
       <AddAnswerDiv
+        data-testid="addAnswer"
         onClick={(e) => {
           e.preventDefault();
-          showAnswerModal();
+          setShowAddAnswer(true);
         }}
         row={index + 1}
       >

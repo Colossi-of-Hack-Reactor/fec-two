@@ -29,6 +29,7 @@ const QAButtons = function QAButtons({
   return (
     <Wrap>
       <MoreQ
+        data-testid="moreQ"
         type="button"
         onClick={(e) => {
           e.preventDefault();
@@ -39,6 +40,7 @@ const QAButtons = function QAButtons({
         More Answered Questions
       </MoreQ>
       <AddQuestion
+        data-testid="addQuestion"
         type="button"
         onClick={(e) => {
           e.preventDefault();
@@ -47,8 +49,18 @@ const QAButtons = function QAButtons({
       >
         Add a Question +
       </AddQuestion>
-      <ShowLessQuestions showLess={showLess} setShowLess={setShowLess} setQuestionsToDisplay={setQuestionsToDisplay} />
-      <QuestionModal product_id={product_id} showQ={showQ} qainfo={qainfo} setShowQ={setShowQ} />
+      <ShowLessQuestions
+        data-testid="ShowLess"
+        showLess={showLess}
+        setShowLess={setShowLess}
+        setQuestionsToDisplay={setQuestionsToDisplay}
+      />
+      <QuestionModal
+        product_id={product_id}
+        showQ={showQ}
+        qainfo={qainfo}
+        setShowQ={setShowQ}
+      />
     </Wrap>
   );
 };

@@ -26,10 +26,9 @@ const FormHolder = styled.form`
   overflow: hidden;
 `;
 
-const SearchBar = function SearchBar({ qainfo, setQainfo, setQuestionsToDisplay, sorted, setSorted }) {
+const SearchBar = function SearchBar({ qainfo, setQuestionsToDisplay, setSorted }) {
   const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
-    console.log(qainfo);
     if (searchTerm.length >= 3) {
       const sortedInfo = [];
       for (let i = 0; i < qainfo.length; i += 1) {
@@ -45,15 +44,9 @@ const SearchBar = function SearchBar({ qainfo, setQainfo, setQuestionsToDisplay,
   const handleChange = function handleChange(input) {
     setSearchTerm(input);
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(searchTerm);
-  };
   return (
     <div className="questionSearch">
-      <FormHolder onSubmit={handleSubmit}>
+      <FormHolder data-testid="searchbar">
         <Title className="searchbartitle">QUESTIONS & ANSWERS </Title>
         <Container>
           <SearchInput
