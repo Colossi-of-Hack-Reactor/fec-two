@@ -71,7 +71,7 @@ const AnswerModal = function AnswerModal({ show, questionID, setShow }) {
   }
   return (
     <>
-      <Modal>
+      <Modal data-testid="answerModal">
         <Title>Add An Answer</Title>
         <AnswerForm
           onSubmit={(event) => {

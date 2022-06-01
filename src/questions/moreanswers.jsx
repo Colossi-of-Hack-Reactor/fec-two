@@ -12,7 +12,7 @@ padding-left: 5px;
   grid-row-end: ${(props) => props.row + 1};
 `;
 
-const MoreAnswers = function MoreAnswers({index, setNumOfAnswers, numOfAnswers, info}) {
+const MoreAnswers = function MoreAnswers({index, setNumOfAnswers, info}) {
   const onClick = function onClick() {
     setNumOfAnswers(Object.keys(info).length);
   };

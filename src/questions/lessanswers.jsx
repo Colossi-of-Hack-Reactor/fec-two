@@ -14,11 +14,9 @@ padding-left: 5px;
 `;
 
 const LessAnswers = function LessAnswers({index, setNumOfAnswers, numOfAnswers, info}) {
-  const onClick = function onClick() {
-    setNumOfAnswers(2);
-  };
+
   // eslint-disable-next-line max-len
-  return <More2 onClick={(e) => { e.preventDefault(); onClick(); }} row={index * 2 + 4}>Show Less Answers</More2>;
+  return <More2 data-testid="ShowLess" onClick={(e) => { e.preventDefault(); setNumOfAnswers(2); }} row={index * 2 + 4}>Show Less Answers</More2>;
 };
 
 export default LessAnswers;

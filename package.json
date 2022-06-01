@@ -10,6 +10,7 @@
     "build": "webpack --mode=production",
     "dev": "webpack serve --open",
     "test": "jest",
+    "testquestions": "jest questions.test.js",
     "testrelated": "jest related.test.js",
     "server": "nodemon --watch server ./server/"
   },

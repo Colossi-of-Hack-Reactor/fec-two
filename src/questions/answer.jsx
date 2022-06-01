@@ -21,19 +21,12 @@ font-weight: 200;
 padding-bottom 6px;
 grid-column-start: 2;
 `;
-const AnswerList = function AnswerList({
-  info,
-  answersToDisplay,
-  setAnswersToDisplay,
-}) {
+const AnswerList = function AnswerList({ info, answersToDisplay }) {
   const [numOfAnswers, setNumOfAnswers] = useState(answersToDisplay);
   let addLess = false;
-  const createAnswersArr = function (obj) {
-    const result = Object.values(info);
-    result.sort((a, b) => b.helpfulness - a.helpfulness);
-    return result;
-  };
-  const sortedAnswers = createAnswersArr(info);
+  const result = Object.values(info);
+
+  const sortedAnswers = result.sort((a, b) => b.helpfulness - a.helpfulness);
   let noAnswers = false;
   if (Object.keys(info).length === 0) {
     noAnswers = true;

@@ -41,7 +41,7 @@ const QAList = function QAList(props) {
       });
   }, [product_id]);
   return (
-    <>
+    <div className="mainQA">
       <SearchBar
         qainfo={qainfo}
         setQainfo={setQainfo}
@@ -72,7 +72,7 @@ const QAList = function QAList(props) {
           product_id={product_id}
         />
       </Qbox>
-    </>
+    </div>
   );
 };
 

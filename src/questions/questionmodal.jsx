@@ -71,7 +71,7 @@ const QuestionModal = function QuestionModal({
   }
   return (
     <>
-      <Modal>
+      <Modal data-testid="questionModal">
         <Title>Ask A Question</Title>
         <AnswerForm
           onSubmit={(event) => {
@@ -82,6 +82,7 @@ const QuestionModal = function QuestionModal({
           <label>
             Enter your name:
             <input
+              data-testid="nameInput"
               type="text"
               onChange={(event) => {
                 event.preventDefault();
@@ -118,7 +119,7 @@ const QuestionModal = function QuestionModal({
           </label>
           <br />
           <input type="submit" value="Submit" />
-          <button type="button" onClick={(e) => { e.preventDefault();setShowQ(false); }}>Cancel</button>
+          <button data-testid="cancelQM" type="button" onClick={(e) => { e.preventDefault();setShowQ(false); }}>Cancel</button>
         </AnswerForm>
       </Modal>
       <ModalOverLay />
