@@ -52,7 +52,7 @@ const AnswerModal = function AnswerModal({ show, questionID, setShow }) {
 
   const handleSubmit = function handleSubmit() {
     axios
-      .post(`http://localhost:3001/qa/questions/${questionID}/answers`, {
+      .post(`/qa/questions/${questionID}/answers`, {
         body,
         name,
         email,

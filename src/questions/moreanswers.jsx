@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const More = styled.div`
+&:hover {
+  cursor: pointer;
+};
+  height: fit-content;
 font-size: 10px;
 font-weight: 600;
 padding-left: 5px;

@@ -20,6 +20,7 @@ const Word2 = styled.div`
   padding-right: 3px;
 `;
 const Votes2 = styled.div`
+
   font-size: 12px;
   font-weight: 100;
   grid-column-start: 3;

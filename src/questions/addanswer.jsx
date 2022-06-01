@@ -4,14 +4,17 @@ import AnswerModal from "./answermodal.jsx";
 const AddAnswerDiv = styled.div.attrs((props) => ({
   row: props.row,
 }))`
+&:hover {
+  cursor: pointer;
+};
+  height: fit-content;
   text-align: right;
   padding-top: 10px;
   font-size: 12px;
   font-weight: 200;
   grid-column-start: 3;
-  grid-column-end: 4;
   grid-row-start: ${(props) => props.row};
-  grid-row-end: ${(props) => props.row + 1};
+
 `;
 
 const AddAnswer = function AddAnswer({ info, index }) {

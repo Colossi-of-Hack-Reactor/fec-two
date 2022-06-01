@@ -25,7 +25,7 @@ const QAList = function QAList(props) {
   useEffect(() => {
     setLoading((a) => a + 1);
     axios
-      .get(`http://localhost:3001/qa?questionID=${product_id}`)
+      .get(`/qa?questionID=${product_id}`)
       .then((res) => {
         let results = res.data.results;
         results.sort((a, b) => b.question_helpfulness - a.question_helpfulness);

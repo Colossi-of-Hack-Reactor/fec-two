@@ -3,6 +3,10 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Vote2 = styled.div`
+&:hover {
+  cursor: pointer;
+};
+  height: fit-content;
   font-size: 12px;
   font-weight: 100;
   padding-right: 3px;
@@ -24,7 +28,7 @@ const AnswerVote = function AnswerVote({ info, setHelpfulness, helpfulness }) {
 
   const onVoteClick = () => {
     axios
-      .put(`http://localhost:3001/qa/answers/${info.id}/helpful`)
+      .put(`/qa/answers/${info.id}/helpful`)
       .then(() => {
         setHelpfulness(helpfulness + 1);
         setVoted(true);
