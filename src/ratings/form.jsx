@@ -32,6 +32,23 @@ const CharContainer = styled.div`
   gap: 15px 30px;
 `;
 
+const PhotoContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+`;
+
+const Label = styled.label`
+  cursor: pointer;
+  background-color: WhiteSmoke;
+  color: DimGray;
+  padding: 18px 25px;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+`;
+
 export default function Form({ product_id, handleClose }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
@@ -69,6 +86,25 @@ export default function Form({ product_id, handleClose }) {
     const cha = { ...characteristics };
     cha[e.target.name] = e.target.value;
     setChar(cha);
+  };
+
+  const handleImgChange = (e) => {
+    const images = [...photos];
+    const imgUrl = URL.createObjectURL(e.target.files[0]);
+    if (!images.includes(imgUrl)) {
+      images.push(imgUrl);
+    }
+    setPhotos(images);
+  };
+
+  const handleDelete = (e) => {
+    const images = [...photos];
+    const imgUrl = e.target.src;
+    if (images.includes(imgUrl)) {
+      const i = images.indexOf(imgUrl);
+      images.splice(i, 1);
+    }
+    setPhotos(images);
   };
 
   const handleSubmit = () => {
@@ -211,12 +247,13 @@ export default function Form({ product_id, handleClose }) {
                   <span>Upload your photos</span>
                 </label>
               </h3>
-              <button type="button">
-                <input
-                  type="file"
-                  accept="image/*,video/*"
-                />
-              </button>
+              <PhotoContainer>
+                {photos.map((url, i) => <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} />)}
+                <Label htmlFor="upload-photo">
+                  +
+                  <input style={{ display: 'none' }} type="file" id="upload-photo" name="photo" accept="image/*,video/*" onChange={handleImgChange} />
+                </Label>
+              </PhotoContainer>
             </FormItem>
             <hr />
             <FormItem>
@@ -244,8 +281,7 @@ export default function Form({ product_id, handleClose }) {
                   <span>Your email</span>
                 </label>
               </h3>
-              <span> For authentication reasons, you will not be emailed </span>
-              <label>
+              <div>
                 <input
                   type="email"
                   required
@@ -255,13 +291,17 @@ export default function Form({ product_id, handleClose }) {
                   onChange={(e) => setEmail(e.target.value)}
                   data-testid="email"
                 />
-              </label>
+              </div>
+              <div>
+              <span> For authentication reasons, you will not be emailed </span>
+              </div>
             </FormItem>
             <hr />
             <FormItem>
               <button type="button" onClick={handleSubmit} data-testid="submit">
                 <span>Submit review</span>
               </button>
+
             </FormItem>
           </form>
         </FormContainer>
