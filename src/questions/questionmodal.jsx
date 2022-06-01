@@ -52,7 +52,7 @@ const QuestionModal = function QuestionModal({
   const handleSubmit = function handleSubmit() {
     console.log("submitted: ", name, email, body);
     axios
-      .post("http://localhost:3001/qa/questions/", {
+      .post("/qa/questions/", {
         body,
         name,
         email,

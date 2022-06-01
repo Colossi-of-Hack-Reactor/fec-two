@@ -10,6 +10,10 @@ const Vote = styled.div`
   grid-column-start: 2;
   text-decoration: underline;
   text-align: right;
+  &:hover {
+    cursor: pointer;
+  };
+    height: fit-content;
 `;
 const Voted = styled.div`
   padding-top: 10px;
@@ -24,7 +28,7 @@ const HelpfulVote = function HelpfulVote({ info, addHelpful, helpfulness }) {
   const [voted, setVoted] = useState(false);
   const onVoteClick = () => {
     axios
-      .put(`http://localhost:3001/qa/questions/${info.question_id}/helpful`)
+      .put(`/qa/questions/${info.question_id}/helpful`)
       .then(() => {
         addHelpful(helpfulness + 1);
         setVoted(true);

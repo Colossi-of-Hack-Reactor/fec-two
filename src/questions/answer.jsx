@@ -6,7 +6,7 @@ import LessAnswers from "./lessanswers.jsx";
 
 const AnswerGrid = styled.div`
   max-height: 50vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 70%;
   display: grid;
   grid-template-columns: 16px 1fr;

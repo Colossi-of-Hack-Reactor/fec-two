@@ -32,7 +32,7 @@ const SearchBar = function SearchBar({ qainfo, setQuestionsToDisplay, setSorted 
     if (searchTerm.length >= 3) {
       const sortedInfo = [];
       for (let i = 0; i < qainfo.length; i += 1) {
-        if (qainfo[i].question_body.includes(searchTerm)) {
+        if (qainfo[i].question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
           sortedInfo.push(qainfo[i]);
         }
       }
