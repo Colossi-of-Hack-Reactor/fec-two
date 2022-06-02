@@ -6,8 +6,7 @@ const SlimDiv = styled.div`
   border: 1px solid #E6E6E6;
   border-radius: 10px;
   padding: 20px;
-  height: 450px;
-  width: 200;
+  min-height: 450px;
 `;
 
 const ActionBut = styled.button`
