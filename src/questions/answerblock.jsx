@@ -7,7 +7,7 @@ const AMark = styled.div.attrs((props) => ({
   row: props.row,
 }))`
   padding-top: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   grid-column-start: 1;
   grid-row-start: ${(props) => props.row}; ;
@@ -17,7 +17,7 @@ const AnswerLine = styled.div.attrs((props) => ({
 }))`
 padding-left: 2px;
   padding-top: 12px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 200;
   padding-bottom 6px;
   grid-column-start: 2;

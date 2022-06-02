@@ -10,7 +10,7 @@ const AddAnswerDiv = styled.div.attrs((props) => ({
   height: fit-content;
   text-align: right;
   padding-top: 10px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 200;
   grid-column-start: 3;
   grid-row-start: ${(props) => props.row};

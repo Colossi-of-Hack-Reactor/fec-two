@@ -20,14 +20,14 @@ const SlashOne = styled.div`
 grid-column-start: 2;
 padding-left: 8px;
 padding-right: 8px;
-font-size: 12px;
+font-size: 14px;
   font-weight: 200;
 `;
 const SlashTwo = styled.div`
 grid-column-start: 4;
 padding-left: 8px;
 padding-right: 8px;
-font-size: 12px;
+font-size: 14px;
   font-weight: 200;
 `;
 const AnswerInfo = function AnswerInfo({row, info}) {
