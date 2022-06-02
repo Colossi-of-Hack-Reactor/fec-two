@@ -13,12 +13,12 @@ const FormContainer = styled.div`
 
 const FormItem = styled.div`
   margin-top: 25px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const Scroll = styled.div`
   width: 100%;
-  height: 800px;
+  height: 700px;
   overflow: scroll;
 `;
 
@@ -49,6 +49,37 @@ const Label = styled.label`
   border-radius: 5px;
 `;
 
+const Summary = styled.textarea`
+  width: 99%;
+  height: 60px;
+`;
+
+const Body = styled.textarea`
+  width: 99%;
+  height: 100px;
+`;
+
+const Input = styled.input`
+  width: 99%;
+  height: 24px;
+`;
+
+const Button = styled.button`
+  background-color: WhiteSmoke;
+  border: none;
+  color: DimGray;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: Arial, Helvetica Neue Thin, sans-serif;
+  cursor: pointer;
+`;
+
+const Right = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px
+`;
+
 export default function Form({ product_id, handleClose }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
@@ -75,11 +106,12 @@ export default function Form({ product_id, handleClose }) {
     setRating(newRating);
   };
 
-  const handleCheck = () => {
-    if (recommend === true) {
+  const handleCheckRecommend = (e) => {
+    if (e.target.value === 'yes') {
+      setRecommend(true);
+    } else if (e.target.value === 'no') {
       setRecommend(false);
     }
-    setRecommend(true);
   };
 
   const handleSelectChange = (e) => {
@@ -167,9 +199,11 @@ export default function Form({ product_id, handleClose }) {
               <label>
                 <span>Do you recommend this product?</span>
                 &nbsp;&nbsp;
-                <input name="status" type="checkbox" onChange={handleCheck} data-testid="checkbox" />
-                {' '}
+                <input name="recommend" type="radio" value="yes" onChange={handleCheckRecommend} checked="checked" data-testid="checkbox" />
                 Yes
+                &nbsp;&nbsp;
+                <input name="recommend" type="radio" value="no" onChange={handleCheckRecommend} />
+                No
               </label>
             </FormItem>
             <hr />
@@ -206,17 +240,15 @@ export default function Form({ product_id, handleClose }) {
                   <span>Review summary</span>
                 </label>
               </h3>
-              <label>
-                <textarea
-                  value={summary}
-                  maxLength="60"
-                  rows="2"
-                  cols="70"
-                  placeholder="Example: Best purchase ever!"
-                  onChange={(e) => setSummary(e.target.value)}
-                  data-testid="summary"
-                />
-              </label>
+              <Summary
+                value={summary}
+                maxLength="60"
+                placeholder="Example: Best purchase ever!"
+                required
+                autoComplete="off"
+                onChange={(e) => setSummary(e.target.value)}
+                data-testid="summary"
+              />
             </FormItem>
             <hr />
             <FormItem>
@@ -225,20 +257,16 @@ export default function Form({ product_id, handleClose }) {
                   <span>Review body</span>
                 </label>
               </h3>
-              <label>
-                <textarea
-                  maxLength="1000"
-                  minLength="50"
-                  rows="10"
-                  cols="70"
-                  value={body}
-                  placeholder="Why did you like the product or not?"
-                  required
-                  autoComplete="off"
-                  onChange={(e) => setBody(e.target.value)}
-                  data-testid="body"
-                />
-              </label>
+              <Body
+                maxLength="1000"
+                minLength="50"
+                value={body}
+                placeholder="Why did you like the product or not?"
+                required
+                autoComplete="off"
+                onChange={(e) => setBody(e.target.value)}
+                data-testid="body"
+              />
             </FormItem>
             <hr />
             <FormItem>
@@ -248,7 +276,7 @@ export default function Form({ product_id, handleClose }) {
                 </label>
               </h3>
               <PhotoContainer>
-                {photos.map((url, i) => <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} />)}
+                {photos.map((url, i) => <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} style={{ cursor: "not-allowed" }} />)}
                 <Label htmlFor="upload-photo">
                   +
                   <input style={{ display: 'none' }} type="file" id="upload-photo" name="photo" accept="image/*,video/*" onChange={handleImgChange} />
@@ -262,9 +290,8 @@ export default function Form({ product_id, handleClose }) {
                   <span>What is your name?</span>
                 </label>
               </h3>
-              <span> For privacy reasons, do not use your full name or email address </span>
               <label>
-                <input
+                <Input
                   value={name}
                   maxLength="60"
                   width="100%"
@@ -273,6 +300,9 @@ export default function Form({ product_id, handleClose }) {
                   data-testid="name"
                 />
               </label>
+              <Right>
+                <small> For privacy reasons, do not use your full name or email address </small>
+              </Right>
             </FormItem>
             <hr />
             <FormItem>
@@ -282,7 +312,7 @@ export default function Form({ product_id, handleClose }) {
                 </label>
               </h3>
               <div>
-                <input
+                <Input
                   type="email"
                   required
                   value={email}
@@ -292,16 +322,16 @@ export default function Form({ product_id, handleClose }) {
                   data-testid="email"
                 />
               </div>
-              <div>
-              <span> For authentication reasons, you will not be emailed </span>
-              </div>
+              <Right>
+                <small> For authentication reasons, you will not be emailed </small>
+              </Right>
             </FormItem>
-            <hr />
             <FormItem>
-              <button type="button" onClick={handleSubmit} data-testid="submit">
-                <span>Submit review</span>
-              </button>
-
+              <Right>
+                <Button type="button" onClick={handleSubmit} data-testid="submit">
+                  Submit review
+                </Button>
+              </Right>
             </FormItem>
           </form>
         </FormContainer>
