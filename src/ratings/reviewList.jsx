@@ -30,7 +30,7 @@ const Button = styled.button`
   color: DimGray;
   padding: 26px 6px;
   font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica Neue Thin, sans-serif;
 `;
 
 export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
@@ -40,9 +40,11 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
   const elementRef = React.useRef();
   const showModal = () => {
     setShow(true);
+    document.documentElement.style.overflow = 'hidden';
   };
   const hideModal = () => {
     setShow(false);
+    document.documentElement.style.overflow = 'scroll';
   };
 
   useEffect(() => {
