@@ -33,7 +33,7 @@ const Button = styled.button`
   font-family: Arial, Helvetica Neue Thin, sans-serif;
 `;
 
-export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
+export default function ReviewList({ reviews, setReviews, product_id, filter, sort, meta}) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
   const [height, setHeight] = useState(0);
@@ -97,7 +97,7 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
         <Button type="button" onClick={showModal} data-testid="addReview"> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} handleClose={hideModal} />
+        <Form product_id={product_id} meta={meta} handleClose={hideModal} />
       </Popup>
     </div>
 

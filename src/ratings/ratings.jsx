@@ -6,15 +6,14 @@ import RatingList from './ratingList.jsx';
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 300px 60%;
   gap: 100px;
-  margin: 150px;
 `;
 
 const Clear = styled.label`
   color: blue;
   &:hover {
-    color: tomato;
+    color: rgb(230, 67, 47);
     text-decoration: underline;
   }
 `;
@@ -40,7 +39,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        // console.log('axios get reviews error', err);
+        console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
   }, [count, page, product_id]);
@@ -59,7 +58,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        // console.log('axios get /reviews/meta error', err);
+        console.log('axios get /reviews/meta error', err);
         setLoading((a) => a - 1);
       });
   }, [product_id]);
@@ -110,6 +109,7 @@ export default function Ratings(props) {
           product_id={product_id}
           filter={filter}
           sort={sort}
+          meta={meta}
         />
       </div>
     </GridContainer>

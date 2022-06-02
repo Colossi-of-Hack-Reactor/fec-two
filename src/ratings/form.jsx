@@ -80,7 +80,7 @@ const Right = styled.div`
   margin-top: 8px
 `;
 
-export default function Form({ product_id, handleClose }) {
+export default function Form({ product_id, handleClose, meta }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -88,11 +88,7 @@ export default function Form({ product_id, handleClose }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-  const [characteristics, setChar] = useState(
-    {
-      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
-    },
-  );
+  const [characteristics, setChar] = useState({});
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -100,6 +96,9 @@ export default function Form({ product_id, handleClose }) {
     Quality: ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'],
     Length: ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
+  };
+  const defaultChar = {
+    Size: 3, Width: 3, Comfort: 5, Quality: 5, Length: 3, Fit: 3,
   };
 
   const changeRating = (newRating) => {
@@ -160,10 +159,17 @@ export default function Form({ product_id, handleClose }) {
     setName('');
     setEmail('');
     setPhotos([]);
-    setChar({
-      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
-    });
-  }, [product_id]);
+    if (meta.characteristics) {
+      Object.keys(meta.characteristics).forEach((char) => {
+          meta.characteristics[char]['value'] = defaultChar[char];
+      });
+      setChar(meta.characteristics);
+    } else {
+      setChar({});
+    }
+  }, [product_id, meta]);
+
+  console.log(characteristics);
 
   return (
     <div>
@@ -214,7 +220,7 @@ export default function Form({ product_id, handleClose }) {
                 </label>
               </h3>
               <CharContainer>
-                {Object.keys(chars).map((char, i) => (
+                {meta.characteristics ? Object.keys(meta.characteristics).map((char, i) => (
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
@@ -230,7 +236,7 @@ export default function Form({ product_id, handleClose }) {
                     </select>
                     {' '}
                   </div>
-                ))}
+                )) : null}
               </CharContainer>
             </FormItem>
             <hr />
