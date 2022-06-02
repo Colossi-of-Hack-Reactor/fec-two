@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import StarRatings from 'react-star-ratings';
+import AlertPopup from './alertModal.jsx';
 
 const FormContainer = styled.div`
-  margin-left: 10%;
-  margin-right: 10%;
+  margin: 0 10% 10%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,7 +19,7 @@ const FormItem = styled.div`
 const Scroll = styled.div`
   width: 100%;
   height: 700px;
-  overflow: scroll;
+  overflow: hidden scroll;
 `;
 
 const FormHeader = styled.h2`
@@ -70,7 +70,7 @@ const Button = styled.button`
   color: DimGray;
   padding: 10px 14px;
   font-size: 14px;
-  font-family: Arial, Helvetica Neue Thin, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 `;
 
@@ -78,6 +78,12 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 8px
+`;
+
+const Alert = styled.label`
+  padding: 50px;
+  background-color: black;
+  color: white;
 `;
 
 export default function Form({ product_id, handleClose, meta }) {
@@ -89,6 +95,9 @@ export default function Form({ product_id, handleClose, meta }) {
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
   const [characteristics, setChar] = useState({});
+  const [charId, setCharId] = useState({});
+  const [submit, setSubmit] = useState(false);
+  const defaultChar = { Size: 3, Width: 3, Comfort: 5, Quality: 5, Length: 3, Fit: 3 };
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -97,8 +106,15 @@ export default function Form({ product_id, handleClose, meta }) {
     Length: ['Runs Short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
-  const defaultChar = {
-    Size: 3, Width: 3, Comfort: 5, Quality: 5, Length: 3, Fit: 3,
+
+  const [show, setShow] = useState(false);
+
+  const showModal = () => {
+    setShow(true);
+    document.documentElement.style.overflow = 'hidden';
+  };
+  const hideModal = () => {
+    setShow(false);
   };
 
   const changeRating = (newRating) => {
@@ -111,12 +127,6 @@ export default function Form({ product_id, handleClose, meta }) {
     } else if (e.target.value === 'no') {
       setRecommend(false);
     }
-  };
-
-  const handleSelectChange = (e) => {
-    const cha = { ...characteristics };
-    cha[e.target.name] = e.target.value;
-    setChar(cha);
   };
 
   const handleImgChange = (e) => {
@@ -138,20 +148,13 @@ export default function Form({ product_id, handleClose, meta }) {
     setPhotos(images);
   };
 
-  const handleSubmit = () => {
-    axios.post('/reviews', {
-      product_id, rating, summary, body, recommend, name, email, photos, characteristics,
-    })
-      .then(() => {
-        console.log('Added a review! ');
-      })
-      .catch((err) => {
-        console.log('axios post reviews error', err);
-      });
-    handleClose();
+  const handleSelectChange = (e) => {
+    const cha = { ...characteristics };
+    cha[e.target.name] = Number(e.target.value);
+    setChar(cha);
   };
 
-  useEffect(() => {
+  const handleResetForm = () => {
     setRating(5);
     setSummary('');
     setBody('');
@@ -159,17 +162,44 @@ export default function Form({ product_id, handleClose, meta }) {
     setName('');
     setEmail('');
     setPhotos([]);
+    const charStorage = {};
     if (meta.characteristics) {
       Object.keys(meta.characteristics).forEach((char) => {
-          meta.characteristics[char]['value'] = defaultChar[char];
+        charStorage[meta.characteristics[char].id] = defaultChar[char];
+        charId[char] = meta.characteristics[char].id;
       });
-      setChar(meta.characteristics);
-    } else {
-      setChar({});
+      setChar(charStorage);
+      setCharId(charId);
     }
+  };
+
+  const handleSubmit = () => {
+    showModal();
+    axios.post('/reviews', {
+      product_id, rating, summary, body, recommend, name, email, photos, characteristics,
+    })
+      .then(() => {
+        console.log('Added a review! ');
+        handleClose();
+        setSubmit(true);
+      })
+      .catch((err) => {
+        console.log('axios post reviews error', err);
+        setShow(true);
+      });
+  };
+
+  useEffect(() => {
+    handleResetForm();
+    setSubmit(false);
   }, [product_id, meta]);
 
-  console.log(characteristics);
+  useEffect(() => {
+    if (submit === true) {
+      handleResetForm();
+      setSubmit(false);
+    }
+  }, [submit]);
 
   return (
     <div>
@@ -224,16 +254,13 @@ export default function Form({ product_id, handleClose, meta }) {
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select name={char} value={characteristics[char]} onChange={handleSelectChange} data-testid="char">
-                      {chars[char].map((elem, i) => (
-                        <option
-                          key={i}
-                          value={i + 1}
-                          label={elem}>
-                          {elem}
-                        </option>
-                      ))}
-                    </select>
+                    {characteristics[charId[char]] ? (
+                      <select name={charId[char]} value={characteristics[charId[char]]} onChange={handleSelectChange} data-testid="char">
+                        {chars[char].map((elem, i) => (
+                          <option key={i} value={i + 1} label={elem}>{elem}</option>
+                        ))}
+                      </select>
+                    ) : null}
                     {' '}
                   </div>
                 )) : null}
@@ -282,7 +309,9 @@ export default function Form({ product_id, handleClose, meta }) {
                 </label>
               </h3>
               <PhotoContainer>
-                {photos.map((url, i) => <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} style={{ cursor: "not-allowed" }} />)}
+                {photos.map((url, i) =>
+                  <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} style={{ cursor: "not-allowed" }} />
+                )}
                 <Label htmlFor="upload-photo">
                   +
                   <input style={{ display: 'none' }} type="file" id="upload-photo" name="photo" accept="image/*,video/*" onChange={handleImgChange} />
@@ -338,6 +367,9 @@ export default function Form({ product_id, handleClose, meta }) {
                   Submit review
                 </Button>
               </Right>
+              <AlertPopup show={show} handleClose={hideModal}>
+                <Alert>Please complete the form!</Alert>
+              </AlertPopup>
             </FormItem>
           </form>
         </FormContainer>

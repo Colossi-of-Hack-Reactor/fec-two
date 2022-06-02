@@ -46,6 +46,24 @@ export default function Ratings(props) {
 
   useEffect(() => {
     setLoading((a) => a + 1);
+    axios.get('/reviews/', {
+      params: {
+        count, page, sort, product_id
+      },
+    })
+      .then((response) => {
+        setReviews(response.data);
+        setFilter({});
+        setLoading((a) => a - 1);
+      })
+      .catch((err) => {
+        console.log('axios get sort reviews error', err);
+        setLoading((a) => a - 1);
+      });
+  }, [sort]);
+
+  useEffect(() => {
+    setLoading((a) => a + 1);
     axios.get('/reviews/meta', {
       params: {
         product_id
@@ -105,7 +123,6 @@ export default function Ratings(props) {
         </h3>
         <ReviewList
           reviews={reviews}
-          setReviews={setReviews}
           product_id={product_id}
           filter={filter}
           sort={sort}

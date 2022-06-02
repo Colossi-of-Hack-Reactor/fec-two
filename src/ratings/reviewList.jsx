@@ -33,7 +33,7 @@ const Button = styled.button`
   font-family: Arial, Helvetica Neue Thin, sans-serif;
 `;
 
-export default function ReviewList({ reviews, setReviews, product_id, filter, sort, meta}) {
+export default function ReviewList({ reviews, product_id, filter, sort, meta}) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
   const [height, setHeight] = useState(0);
@@ -53,23 +53,6 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
 
   useEffect(() => {
     setMore(2);
-  }, [product_id]);
-
-  useEffect(() => {
-    const r = [...reviews];
-    if (sort === 'newest') {
-      r.sort((a, b) => b.date.localeCompare(a.date));
-    } else if (sort === 'helpful') {
-      r.sort((a, b) => b.helpfulness - a.helpfulness);
-    } else if (sort === 'relevant') {
-      r.sort((a, b) => {
-        if (b.date === a.date) {
-          return b.helpfulness - a.helpfulness;
-        }
-        return b.date.localeCompare(a.date);
-      });
-    }
-    setReviews(r);
   }, [product_id, sort]);
 
   return (
