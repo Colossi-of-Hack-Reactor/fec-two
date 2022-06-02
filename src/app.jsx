@@ -106,7 +106,7 @@ function App() {
       <Header>
         <HeaderDiv>
           <CompanyName>
-            City of Colossi
+            Colossus of Clothes
           </CompanyName>
           <ShoppingBagDiv onClick={() => setShowCart((a) => !a)}>
             <ShoppingBagSVG />
