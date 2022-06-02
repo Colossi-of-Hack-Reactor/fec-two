@@ -163,12 +163,8 @@ function App() {
       />
       <Related
         product_id={product_id}
-        outfitsIdList={outfitsIdList}
-        outfits={outfits}
         setProduct_id={setProduct_id}
         setLoading={setLoading}
-        setOutfits={setOutfits}
-        setOutfitsIdList={setOutfitsIdList}
       />
       <Questions
         product_id={product_id}

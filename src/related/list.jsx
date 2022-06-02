@@ -10,29 +10,21 @@ import { PropTypes } from 'prop-types';
 import CardList from './css/cssList';
 import ProductCard from './productCard/productCard.jsx';
 import { updateListCards, populateAltCards } from './helpersList';
-
-
-//product dipslya -> [o+ shift, max - 1 + shift]
-// shift + (max - 1) = products.length - 1 -> right button = false
-// shift + (max - 1) < products.length - 1 -> right button = true
-// shift > 0 -> ;left button = true
-// shift = 0 -> left button = false
-// scrensize < max * cardwidth -> max - 1
-// screensize > max * cardwidth -> max + 1
-// maxSlots = screensize / card width - button left - button right
+import { SlimDiv } from './css/cssProductCard';
 function List({
-  product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList,
+  product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList, related
 }) {
   const [products, setProducts] = useState([]);
   const [update, setUpdate] = useState(false);
   const [windowSize, setWindowSize] = useState(0);
   const [leftListLim, setLeftListLim] = useState(0);
-  const [rightListLim, setRightListLim] = useState(0)
+  const [rightListLim, setRightListLim] = useState(0);
   const [slots, setSlots] = useState(0);
   const [leftOfListBorder, setLeftOfListBorder] = useState(false);
   const [shift, setShift] = useState(0);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(true);
+  const [mListSize, setMaxListSize] = useState(0);
 
   const cardBody = 200;
   const windowPadding = 8;
@@ -42,53 +34,60 @@ function List({
   const cardMarging = 20;
   const cardBorder = 2;
   const cardPadding = 20;
-  const buttonWidth = 50;
+  const buttonWidth = 70;
   const slack = 50;
   let altCards = [];
   let defaultIndex;
   const listRef = useRef();
   const determineArrowDisplay = _.debounce((event) => {
-    setWindowSize(window.innerWidth - scrollBar);
+    !isNaN(window.innerWidth) && setWindowSize(window.innerWidth - scrollBar);
   }, 500);
-  useEffect(() => {
-    const listEl = listRef.current.getBoundingClientRect();
-    const cardSize = listEl.width / products.length;
-    const maxListSize = cardSize * products.length + buttonWidth;
-    const minListSize = cardSize;
-    const newListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
-    const starterListSize = (newListSize > maxListSize ? maxListSize : newListSize < minListSize ? minListSize : newListSize)
-    if (window.innerWidth >= cardSize + buttonWidth) {
-      setRightListLim(20000);
-      setSlots(products.length);
-    } else if (newListSize < minListSize) {
-      setRightListLim(starterListSize + 2 * buttonWidth);
-      setSlot(1);
-      // console.log(starterListSize + 2 * buttonWidth, 1);
-    } else {
-      setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
-      // console.log(starterListSize + 2 * buttonWidth, 1);
-    }
-    setLeftListLim(starterListSize + 2 * buttonWidth);
-    // console.log(starterListSize + 2 * buttonWidth);
-  }, [windowSize]);
 
+  useEffect(() => {
+    if (update) {
+      const cardSize = mListSize / products.length;
+      const minListSize = cardSize;
+      const newListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
+      const starterListSize = (newListSize > mListSize ? mListSize : newListSize < minListSize ? minListSize : newListSize);
+      if (window.innerWidth >= mListSize + buttonWidth) {
+        setRightListLim(20000);
+        setLeftListLim(starterListSize + 2 * buttonWidth);
+        setSlots(products.length);
+      } else if (newListSize < minListSize) {
+        setRightListLim(starterListSize + 2 * buttonWidth);
+        setLeftListLim(minListSize + 2 * buttonWidth);
+        setSlots(1);
+      } else if (windowSize > rightListLim) {
+        setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
+        setLeftListLim(starterListSize + 2 * buttonWidth);
+        setSlots(starterListSize / cardSize);
+        //setShift(products.length - starterListSize / cardSize);
+      } else if (windowSize < leftListLim) {
+        setRightListLim(newListSize + cardSize + 2 * buttonWidth);
+        setLeftListLim(newListSize + 2 * buttonWidth);
+        setSlots(newListSize / cardSize);
+      }
+    }
+  }, [windowSize]);
   useEffect(() => {
     if (update) {
       const listEl = listRef.current.getBoundingClientRect();
       const cardSize = listEl.width / products.length;
-      const maxListSize = cardSize * products.length + buttonWidth;
+      const maxListSize = cardSize * products.length;
+      setMaxListSize(maxListSize);
       const minListSize = cardSize;
       const newListSize = (cardSize * Math.floor((window.innerWidth - scrollBar - 2 * buttonWidth) / cardSize));
-      const starterListSize = (newListSize > maxListSize ? maxListSize : newListSize < minListSize ? minListSize : newListSize)
+      const starterListSize = (newListSize > maxListSize ? maxListSize : newListSize < minListSize ? minListSize : newListSize);
       setWindowSize(window.innerWidth - scrollBar);
-      if (window.innerWidth >= cardSize + buttonWidth) {
+      if (window.innerWidth - scrollBar >= maxListSize + buttonWidth) {
         setRightListLim(20000);
         setSlots(products.length);
       } else if (newListSize < minListSize) {
         setRightListLim(starterListSize + 2 * buttonWidth);
-        setSlot(1);
+        setSlots(1);
       } else {
         setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
+        setSlots(starterListSize / cardSize);
       }
       setLeftListLim(starterListSize + 2 * buttonWidth);
     }
@@ -97,8 +96,22 @@ function List({
   }, [update]);
 
   useEffect(() => {
-    updateListCards(product_id, setProducts);
+    updateListCards(product_id, setProducts, related);
   }, [product_id]);
+  useEffect(() => {
+    if (shift > 0) {
+      setShowLeftArrow(true);
+    } else {
+      setShowLeftArrow(false);
+    }
+    if (slots + shift === products.length) {
+      setShowRightArrow(false);
+    } else if (slots + shift < products.length) {
+      setShowRightArrow(true);
+    } else if (slots === products.length) {
+      setShift(0);
+    }
+  }, [slots, shift]);
 
   const sectionHeader = (id) => (id !== undefined ? <h3>List Products</h3> : <h3>Your Outfits</h3>);
 
@@ -108,22 +121,34 @@ function List({
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '50px auto 50px' }}>
-      {/* <LeftButton showLeftArrow={showLeftArrow} setLeftBlocks={setLeftBlocks} leftBlocks={leftBlocks} setRightBlocks={setRightBlocks} rightBlocks={rightBlocks} /> */}
+      <LeftButton showLeftArrow={showLeftArrow} shift={shift} setShift={setShift} />
       <div>
         {sectionHeader(product_id)}
         <CardList ref={listRef}>
-          {product_id !== undefined ? products.slice(0, products.length).map((product) => {
+          {related ? products.slice(0 + shift, (slots || products.length) + shift).map((product) => {
             altCards = [];
             defaultIndex = populateAltCards(product, altCards);
             return cardElement(product, altCards, defaultIndex, product.id);
-          }) : outfitsIdList.slice(0, outfitsIdList.length).map((id) => {
-            console.log(outfits);
-            const outfit = outfits[id];
-            return cardElement(outfit.product, outfit.cards, outfit.defaultIndex, outfit.product.id);
-          })}
+          }) : (
+            <div style={{ display: 'flex', maxWidth: '285' }}>
+              <div>
+                {products.map((product) => {
+                  altCards = [];
+                  defaultIndex = populateAltCards(product, altCards);
+                  return cardElement(product, altCards, defaultIndex, product.id);
+                })}
+              </div>
+              {
+                outfitsIdList.slice(0 + shift, (slots - 1 || outfitsIdList.length) + shift).map((id) => {
+                  const outfit = outfits[id];
+                  return cardElement(outfit.product, outfit.cards, outfit.defaultIndex, outfit.product.id);
+                })
+              }
+            </div>
+          )}
         </CardList>
       </div>
-      {/* <RightButton showRightArrow={showRightArrow} setRightBlocks={setRightBlocks} rightBlocks={rightBlocks} /> */}
+      <RightButton showRightArrow={showRightArrow} shift={shift} setShift={setShift} />
     </div>
   );
 }
@@ -143,22 +168,17 @@ List.defaultProps = {
 
 export default List;
 
-// function LeftButton({showLeftButton, setRightBlocks, rigthBlocks}) {
-//   return (
-//     <div>{showLeftButton ? <button onClick={setRightBlocks(rigthBlocks - 1)}> Go Left</button> : <button></button>}</div>
-//   )
-// }
-function RightButton({ showRightArrow, setRightBlocks, rightBlocks }) {
+function RightButton({ showRightArrow, shift, setShift }) {
   return (
-    <div>
-      {showRightArrow && <button type="button" onClick={() => setRightBlocks(rightBlocks + 1)}>Whats to the rigth</button>}
+    <div style={{ alignSelf: 'center' }}>
+      {showRightArrow && <button type="button" onClick={() => setShift(shift + 1)}>Whats to the rigth</button>}
     </div>
   );
 }
-function LeftButton({ showLeftArrow, setLeftBlocks, leftBlocks, setRightBlocks, rightBlocks }) {
+function LeftButton({ showLeftArrow, shift, setShift }) {
   return (
-    <div>
-      {showLeftArrow && <button type="button" onClick={() => { setLeftBlocks(leftBlocks + 1 < 0 ? 0 : leftBlocks + 1) }}>Whats to the left</button>}
+    <div style={{ alignSelf: 'center' }}>
+      {showLeftArrow && <button type="button" onClick={() => setShift(shift - 1)}>Whats to the left?</button>}
     </div>
   );
 }

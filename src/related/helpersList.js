@@ -33,15 +33,18 @@ const compileOutfits = (productList, setProducts) => (Promise.allSettled(product
   .catch((err) => console.log('FAILURE', err))
 );
 
-const updateListCards = (product_id, setProducts) => {
-  if (product_id !== undefined) {
+const updateListCards = (product_id, setProducts, related) => {
+  if (related) {
     axios.get(`/products/${product_id}/related`)
       .then((res) => res.data)
       .then((relatedIds) => {
+        //relatedIds.push(product_id);
         const uniqIdsList = relatedIds.filter((id, i) => relatedIds.indexOf(id) === i);
         compileOutfits(uniqIdsList, setProducts);
       })
       .catch((err) => console.log('FAILURE', err));
+  } else {
+    compileOutfits([product_id], setProducts);
   }
 };
 

@@ -53,13 +53,23 @@ const ProductCard = function ProductCard({
     });
     return altText;
   };
-  const someNum = (prodRating) => (Math.floor(((prodRating - (prodRating % 0.25)) / 5) * 200));
-  const findASale = (altProds) => {
+  const someNum = (prodRating, setIndex) => (Math.floor(((prodRating - (prodRating % 0.25)) / 5) * 200));
+  const findASaleOrAPic = (altProds) => {
     altProds.forEach((prod, i) => {
       index = prod.sale_price ? i : index;
     });
+    index = index ? index : 0;
+    console.log(index)
+    if (!altProds[index].sale_price) {
+      for (let i = 0; i < altProds.length; i += 1) {
+        if (altProds[i].photos[0].thumbnail_url !== undefined) {
+          index = i;
+          break;
+        }
+      }
+    }
   };
-  findASale(cards);
+  findASaleOrAPic(cards); // for test only
 
   return (
     <div style={{ margin: '20px' }}>
@@ -71,6 +81,7 @@ const ProductCard = function ProductCard({
           {(index !== undefined && cards[index].sale_price) && <li style={{ color: "red" }}>{`$${cards[index].sale_price}`}</li>}
           {(index !== undefined && cards[index].sale_price) && <li><del>{`$${product.default_price}`}</del></li>}
           {((index !== undefined && !cards[index].sale_price) || index === undefined) && <li>{`$${product.default_price}`}</li>}
+          {(index !== undefined && !cards[index].sale_price) && <li><br/></li>}
           <li>
             <div style={{ width: '200px', height: '40px', backgroundColor: 'black' }}>
               <div style={{ width: `${someNum(rating).toString()}px`, height: '40px', backgroundColor: 'yellow' }}>
