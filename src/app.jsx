@@ -7,6 +7,7 @@ import Related from './related/related.jsx';
 import Questions from './questions/questions.jsx';
 import Ratings from './ratings/ratings.jsx';
 import ShoppingBag from './shoppingBag.jsx';
+import Search from './search/search.jsx';
 import { ShoppingBagSVG } from './overview/overviewAssets.js';
 
 const Loading = styled.div`
@@ -146,6 +147,7 @@ function App() {
             ) : ''}
           </ShoppingBagDiv>
         </HeaderDiv>
+        <Search setProduct_id={setProduct_id} />
       </Header>
       <Overview
         product_id={product_id}
