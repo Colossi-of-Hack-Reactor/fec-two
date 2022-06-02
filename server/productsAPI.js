@@ -36,18 +36,20 @@ const addProduct = function(product) {
 const saleSchema = new mongoose.Schema({
   product_id: Number,
   style_id: Number,
-  name: String,
+  product_name: String,
+  style_name: String,
   original_price: String,
   sale_price: String,
 });
 
-const Sales = mongoose.model('Sales', saleSchema);
+const Sales = mongoose.model('Sales2', saleSchema);
 
 const addSales = function(sale) {
   return Sales.create({
     product_id: sale.product_id,
     style_id: sale.style_id,
-    name: sale.name,
+    product_name: sale.product_name,
+    style_name: sale.style_name,
     original_price: sale.original_price,
     sale_price: sale.sale_price,
   });
@@ -90,15 +92,21 @@ exports.getStyles = (req, res) => {
     .then((response) => {
       const pid = response.data.product_id;
       const styles = response.data.results;
+      let productName;
       for (let i = 0; i < styles.length; i++) {
         if (styles[i].sale_price) {
-          addSales({
-            product_id: pid,
-            style_id: styles[i].style_id,
-            name: styles[i].name,
-            original_price: styles[i].original_price,
-            sale_price: styles[i].sale_price,
-          })
+          Product.find({id: pid}, 'name')
+            .then((data) => {
+              productName = data[0].name;
+              return addSales({
+                product_id: pid,
+                style_id: styles[i].style_id,
+                product_name: productName,
+                style_name: styles[i].name,
+                original_price: styles[i].original_price,
+                sale_price: styles[i].sale_price,
+              })
+            })
             .then(() => {
               console.log(pid);
             })

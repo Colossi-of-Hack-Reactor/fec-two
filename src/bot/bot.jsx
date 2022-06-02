@@ -11,6 +11,7 @@ function Bot() {
         const styles = response.data;
         for (let i = 0; i < styles.length; i++) {
           if (styles[i].sale_price) {
+
             console.log(styles[i]);
           }
         }
@@ -18,7 +19,7 @@ function Bot() {
       .then(() => {
         setTimeout(() => {
           setPid((p) => (p + 1));
-        }, 500);
+        }, 400);
       })
       .catch((err) => {
         console.log('axios get products error', err);
