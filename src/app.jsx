@@ -6,17 +6,78 @@ import Overview from './overview/overview.jsx';
 import Related from './related/related.jsx';
 import Questions from './questions/questions.jsx';
 import Ratings from './ratings/ratings.jsx';
+import ShoppingBag from './shoppingBag.jsx';
+import { ShoppingBagSVG } from './overview/overviewAssets.js';
 
 const Loading = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    cursor: wait;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  cursor: wait;
+`;
+
+const Header = styled.div`
+  position: fixed;
+  background-color: black;
+  color: #e9ecef;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+`;
+
+const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  width: 100%;
+`;
+
+const CompanyName = styled.h1`
+
+`;
+
+const ShoppingBagDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  svg {
+    fill: #e9ecef;
+    height: 30px;
+    width: 30px;
+  }
+`;
+
+const Promos = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+`;
+
+const Badge = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 20px;
+  width: 20px;
+  background-color: #e9ecef;
+  color: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {
@@ -26,7 +87,10 @@ function App() {
   const [outfits, setOutfits] = useState({});
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
+  const [product, setProduct] = useState({});
   const ratingsRef = React.useRef();
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -64,7 +128,25 @@ function App() {
   return (
     <>
       {loading ? <Loading className="loading" data-testid="loading" /> : ''}
-      <h1>Hello World</h1>
+      <Header>
+        <HeaderDiv>
+          <CompanyName>
+            Colossus of Clothes
+          </CompanyName>
+          <Promos>
+            <div>Free express shipping on $200+ orders for rewards members!</div>
+            <div>Sign up now!</div>
+          </Promos>
+          <ShoppingBagDiv onClick={() => setShowCart((a) => !a)}>
+            <ShoppingBagSVG />
+            {cart.length ? (
+              <Badge>
+                <h6>{cart.length}</h6>
+              </Badge>
+            ) : ''}
+          </ShoppingBagDiv>
+        </HeaderDiv>
+      </Header>
       <Overview
         product_id={product_id}
         setProduct_id={setProduct_id}
@@ -74,6 +156,10 @@ function App() {
         reviews={reviews}
         meta={meta}
         ratingsRef={ratingsRef}
+        product={product}
+        setProduct={setProduct}
+        cart={cart}
+        setCart={setCart}
       />
       <Related
         product_id={product_id}
@@ -98,7 +184,9 @@ function App() {
         meta={meta}
         setMeta={setMeta}
         ratingsRef={ratingsRef}
+        product={product}
       />
+      <ShoppingBag show={showCart} cart={cart} setCart={setCart} />
     </>
   );
 }

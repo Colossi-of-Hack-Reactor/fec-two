@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import ExpandedView from './expandedView.jsx';
 import Thumbnails from './thumbnails.jsx';
 import {
-  ImageContainer, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, BigArrowDiv, BigImage,
+  ImageContainer, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, BigArrowDiv,
 } from './overviewStyled.js';
 import { LeftArrowLink, RightArrowLink, noImageLink } from './overviewAssets.js';
 
@@ -23,15 +23,10 @@ function ImageGallery(props) {
         <BigImageDiv
           vis={i === image}
           key={i}
-        >
-          <BigImage
-            src={p.url || noImageLink}
-            onClick={() => setZoom(true)}
-            vis={i === image}
-            key={i}
-            data-testid={`bigImg-${i}`}
-          />
-        </BigImageDiv>
+          bg={p.url || noImageLink}
+          data-testid={`bigImg-${i}`}
+          onClick={() => setZoom(true)}
+        />
       ))}
       <Thumbnails
         style={style}

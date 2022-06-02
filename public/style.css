@@ -1,0 +1,19 @@
+body {
+  max-width: 1000px;
+  margin: auto;
+  font-family: Baskervville, serif;
+  background-color: #e9ecef;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  font-family: 'Helvetica Neue', serif;
+}
+
+h1 { font-size: 42px;}
+h2 { font-size: 36px;}
+h3 { font-size: 30px;}
+h4 { font-size: 23px;}
+h5 { font-size: 16px;}
+h6 { font-size: 10px;}

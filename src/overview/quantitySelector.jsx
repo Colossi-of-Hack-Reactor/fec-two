@@ -4,7 +4,7 @@ import { OverviewSelect } from './overviewStyled.js';
 
 function QuantitySelector(props) {
   const {
-    setQuantity, size, style, styles,
+    quantity, setQuantity, size, style, styles,
   } = props;
 
   return (
@@ -15,6 +15,7 @@ function QuantitySelector(props) {
       }}
       disabled={size === 'Select'}
       data-testid="qtySelect"
+      value={quantity}
     >
       {size === 'Select' || styles[style].skus[size] === undefined ? <option>-</option>
         : Array(Math.min(15, styles[style].skus[size].quantity))

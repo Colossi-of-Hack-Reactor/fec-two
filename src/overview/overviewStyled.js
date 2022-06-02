@@ -29,7 +29,6 @@ const ImageDiv = styled.div`
 const InfoDiv = styled.div`
   padding: 10px;
   width: min-content;
-  min-width: 300px;
 `;
 
 const WordsDiv = styled.div`
@@ -48,7 +47,7 @@ const FeatsDiv = styled.div`
 `;
 
 const OverallDiv = styled.div`
-  max-width: 1000px;
+  padding-top: 120px;
 `;
 
 const StyleDiv = styled.div`
@@ -92,6 +91,7 @@ const WhiteBG = styled.span`
 const ImageContainer = styled.div`
   display: flex;
   position: relative;
+  min-height: 500px;
 `;
 
 const Thumbnail = styled.div`
@@ -127,12 +127,16 @@ const BigImageDiv = styled.div`
   height: 100%;
   width: 100%;
   visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
+  background-image: url(${(props) => (props.bg)});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const BigImage = styled.img`
   cursor: zoom-in;
-  max-height: 100%;
-  max-width: 100%;
+  object-fit: cover;
+  height: 872px;
 `;
 
 const ArrowContainer = styled.div`
@@ -278,15 +282,16 @@ const SelectSpan = styled.span`
 
 const CategoryDiv = styled.div`
   text-transform: uppercase;
-
+  font-size: 14px;
 `;
 
 const ProductNameDiv = styled.div`
-
+  font-size: 28px;
+  font-weight: 700;
 `;
 
 const PriceDiv = styled.div`
-
+  font-size: 22px;
 `;
 
 const StyleNameDiv = styled.div`
