@@ -12,9 +12,9 @@ import ProductCard from './productCard/productCard.jsx';
 import { updateListCards, populateAltCards } from './helpersList';
 import { SlimDiv } from './css/cssProductCard';
 function List({
-  product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList, setProducts, products, related
+  product_id, outfitsIdList, outfits, setProduct_id, setOutfits, setOutfitsIdList, related
 }) {
-
+  const [products, setProducts] = useState([]);
   const [update, setUpdate] = useState(false);
   const [windowSize, setWindowSize] = useState(0);
   const [leftListLim, setLeftListLim] = useState(0);
@@ -34,7 +34,7 @@ function List({
   const cardMarging = 20;
   const cardBorder = 2;
   const cardPadding = 20;
-  const buttonWidth = 50;
+  const buttonWidth = 70;
   const slack = 50;
   let altCards = [];
   let defaultIndex;
@@ -53,7 +53,6 @@ function List({
         setRightListLim(20000);
         setLeftListLim(starterListSize + 2 * buttonWidth);
         setSlots(products.length);
-
       } else if (newListSize < minListSize) {
         setRightListLim(starterListSize + 2 * buttonWidth);
         setLeftListLim(minListSize + 2 * buttonWidth);
@@ -62,6 +61,7 @@ function List({
         setRightListLim(starterListSize + cardSize + 2 * buttonWidth);
         setLeftListLim(starterListSize + 2 * buttonWidth);
         setSlots(starterListSize / cardSize);
+        //setShift(products.length - starterListSize / cardSize);
       } else if (windowSize < leftListLim) {
         setRightListLim(newListSize + cardSize + 2 * buttonWidth);
         setLeftListLim(newListSize + 2 * buttonWidth);

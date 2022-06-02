@@ -23,8 +23,6 @@ function Related({
           setLoading={setLoading}
           setOutfits={setOutfits}
           setOutfitsIdList={setOutfitsIdList}
-          products={productsRelated}
-          setProducts={setProductsRelated}
           related={true}
         />
       </div>
@@ -37,8 +35,6 @@ function Related({
           setLoading={setLoading}
           setOutfits={setOutfits}
           setOutfitsIdList={setOutfitsIdList}
-          products={productsOutfits}
-          setProducts={setProductsOutfits}
           related={false}
         />
       </div>
