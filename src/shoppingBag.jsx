@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { ShoppingBagSVG } from './overview/overviewAssets.js';
-import { Sale } from './overview/overviewStyled.js';
 import BagItem from './bagItem.jsx';
 
 const SidePanel = styled.div`
@@ -33,26 +31,6 @@ const Total = styled.span`
   padding-right: 8px;
 `;
 
-const ProductName = styled.span`
-  font-size: 22px;
-  padding-bottom: 4px;
-`;
-
-const Details = styled.span`
-  font-size: 14px;
-`;
-
-const Price = styled.span`
-  align-self: flex-end;
-`;
-
-const Remove = styled.span`
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 4px;
-`;
-
 function ShoppingBag(props) {
   const { show, cart, setCart } = props;
 
@@ -69,7 +47,7 @@ function ShoppingBag(props) {
     <SidePanel show={show}>
       <div>
         <Header>
-          <h2>Your Bag</h2>
+          <h3>Your Bag</h3>
         </Header>
         {cart.map((p, i) => (
           <BagItem key={p.sku} p={p} i={i} cart={cart} setCart={setCart} />

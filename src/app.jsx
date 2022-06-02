@@ -48,11 +48,36 @@ const ShoppingBagDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+  position: relative;
   svg {
     fill: #e9ecef;
     height: 30px;
     width: 30px;
   }
+`;
+
+const Promos = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+`;
+
+const Badge = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 20px;
+  width: 20px;
+  background-color: #e9ecef;
+  color: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {
@@ -108,8 +133,17 @@ function App() {
           <CompanyName>
             Colossus of Clothes
           </CompanyName>
+          <Promos>
+            <div>Free express shipping on $200+ orders for rewards members!</div>
+            <div>Sign up now!</div>
+          </Promos>
           <ShoppingBagDiv onClick={() => setShowCart((a) => !a)}>
             <ShoppingBagSVG />
+            {cart.length ? (
+              <Badge>
+                <h6>{cart.length}</h6>
+              </Badge>
+            ) : ''}
           </ShoppingBagDiv>
         </HeaderDiv>
       </Header>
