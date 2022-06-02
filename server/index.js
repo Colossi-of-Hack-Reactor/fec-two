@@ -15,7 +15,11 @@ app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-// app.use(express.static(path.join(__dirname, '../public/')));
+app.use(express.static(path.join(__dirname, '../public/')));
+
+app.get('/', (req, res) => {
+  res.render(path.join(__dirname, '../public/index.html'));
+});
 
 app.get('/products', productsAPI.getProducts);
 app.get('/products/:product_id', productsAPI.getProduct);

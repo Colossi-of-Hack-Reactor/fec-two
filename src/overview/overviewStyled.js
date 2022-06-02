@@ -29,7 +29,6 @@ const ImageDiv = styled.div`
 const InfoDiv = styled.div`
   padding: 10px;
   width: min-content;
-  min-width: 300px;
 `;
 
 const WordsDiv = styled.div`
@@ -48,7 +47,7 @@ const FeatsDiv = styled.div`
 `;
 
 const OverallDiv = styled.div`
-  max-width: 1000px;
+  padding-top: 120px;
 `;
 
 const StyleDiv = styled.div`
@@ -283,15 +282,16 @@ const SelectSpan = styled.span`
 
 const CategoryDiv = styled.div`
   text-transform: uppercase;
-
+  font-size: 14px;
 `;
 
 const ProductNameDiv = styled.div`
-
+  font-size: 28px;
+  font-weight: 700;
 `;
 
 const PriceDiv = styled.div`
-
+  font-size: 22px;
 `;
 
 const StyleNameDiv = styled.div`

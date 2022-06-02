@@ -29,10 +29,6 @@ module.exports = {
     compress: true,
     // [port] what port on our local machine to run the dev server
     port: 3000,
-    proxy: {
-      context: ['/products', '/reviews', '/qa', '/cart', '/interactions'],
-      target: 'http://localhost:3001',
-    },
   },
 
   // [module] will allow us to set any external modules we have added to webpack
@@ -43,14 +39,18 @@ module.exports = {
       {
         test: /\.(jsx|js)$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        loader: 'babel-loader',
       },
       // Second rule is to check for css files and load them with the following loaders
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
-      }
-    ]
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
+    ],
   },
 
-}
+};
