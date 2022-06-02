@@ -6,7 +6,7 @@ const More = styled.div`
   cursor: pointer;
 };
   height: fit-content;
-font-size: 10px;
+font-size: 14px;
 font-weight: 600;
 padding-left: 5px;
   padding-top: 10px;

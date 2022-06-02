@@ -8,7 +8,7 @@ const NameDiv3 = styled.div`
 };
   height: fit-content;
 grid-column-start: 5;
-font-size: 12px;
+font-size: 14px;
 font-weight: 200;
 `;
 

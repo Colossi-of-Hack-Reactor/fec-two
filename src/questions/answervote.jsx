@@ -7,7 +7,7 @@ const Vote2 = styled.div`
   cursor: pointer;
 };
   height: fit-content;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 100;
   padding-right: 3px;
   grid-column-start: 2;
@@ -15,7 +15,7 @@ const Vote2 = styled.div`
   text-decoration: underline;
 `;
 const Voted = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 200;
   padding-right: 3px;
   grid-column-start: 2;

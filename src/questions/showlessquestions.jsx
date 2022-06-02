@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const ShowLessButton = styled.button`
-  font-size: 12px;
+  font-size: 14px;
   padding-top: 2%;
   padding-bottom: 2%;
   margin-left: 4%;
