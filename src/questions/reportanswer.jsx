@@ -3,6 +3,10 @@ import styled from "styled-components";
 import axios from "axios";
 
 const NameDiv3 = styled.div`
+&:hover {
+  cursor: pointer;
+};
+  height: fit-content;
 grid-column-start: 5;
 font-size: 12px;
 font-weight: 200;
@@ -11,7 +15,7 @@ font-weight: 200;
 const ReportAnswer = function ReportAnswer({ info }) {
   const [ReportedState, setReportedState] = useState(false);
   const onReportClick = () => {
-    axios.put(`http://localhost:3001/qa/answers/${info.id}/report`)
+    axios.put(`/qa/answers/${info.id}/report`)
       .then(() => {
         setReportedState(true);
       })

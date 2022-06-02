@@ -26,22 +26,27 @@ const FormHolder = styled.form`
   overflow: hidden;
 `;
 
-const SearchBar = function SearchBar(props) {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = function SearchBar({ qainfo, setQuestionsToDisplay, setSorted }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+    if (searchTerm.length >= 3) {
+      const sortedInfo = [];
+      for (let i = 0; i < qainfo.length; i += 1) {
+        if (qainfo[i].question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
+          sortedInfo.push(qainfo[i]);
+        }
+      }
+      setQuestionsToDisplay(sortedInfo.length);
+      setSorted(() => sortedInfo);
+    } else { setSorted(qainfo); setQuestionsToDisplay(4)}
+  }, [searchTerm]);
 
   const handleChange = function handleChange(input) {
     setSearchTerm(input);
   };
-
-  const handleSubmit = (event) => {
-    // 👇️ prevent page refresh
-    event.preventDefault();
-
-    console.log(searchTerm);
-  };
   return (
     <div className="questionSearch">
-      <FormHolder onSubmit={handleSubmit}>
+      <FormHolder data-testid="searchbar">
         <Title className="searchbartitle">QUESTIONS & ANSWERS </Title>
         <Container>
           <SearchInput

@@ -12,16 +12,16 @@ const Score = styled.div`
 `;
 
 const Container = styled.div`
-display: grid;
-grid-template-columns: 15% 85%;
-align-items: center;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: center;
 `;
 
 const Box = styled.label`
-text-decoration: underline;
-&:hover {
-  color: tomato;
-}
+  text-decoration: underline;
+  &:hover {
+    color: tomato;
+  }
 `;
 
 const CharsContainer = styled.div`
@@ -33,7 +33,7 @@ const CharsContainer = styled.div`
 `;
 
 const Chars = styled.div`
-display: grid;
+  display: grid;
   grid-template-rows: 30px 20px 20px;
 `;
 
@@ -71,7 +71,7 @@ export default function RatingList({ meta, handleFilterRating }) {
   recommend = recommend.toFixed(0);
 
   return (
-    <div>
+    <div data-testid="ratingList">
       {
         Object.keys(meta).length !== 0
           ? (
@@ -86,10 +86,14 @@ export default function RatingList({ meta, handleFilterRating }) {
               />
               <h4>{recommend}% of reviews recommend this product</h4>
               {starRange.map((rating, i) => (
-                <Container key={i} onClick={() => handleFilterRating(rating)}>
-                  <Box>{rating} star</Box>
-                  <Bar progress={meta.ratings[rating] / totalRating * 100} />
-                </Container>
+                <div key={i}>
+                  <Container>
+                    <label onClick={() => handleFilterRating(rating)} data-testid="filterRating">
+                      <Box>{rating} star</Box>
+                    </label>
+                    <Bar progress={meta.ratings[rating] / totalRating * 100} />
+                  </Container>
+                </div>
               ))}
               <div>
                 <CharsContainer>
@@ -102,7 +106,7 @@ export default function RatingList({ meta, handleFilterRating }) {
                             percentage={((meta.characteristics[char].value / 5) * 100).toFixed(0)}
                           />
                           <Char>
-                            {chars[char].map((elem, i) => (<span key={i}>{elem}</span>))}
+                            {chars[char].map((elem, i) => <span key={i}>{elem}</span>)}
                           </Char>
                         </Chars>
                       )) : (null)

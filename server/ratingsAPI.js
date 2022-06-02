@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
-const Promise = require('bluebird');
+
 const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 const headers = {
   Authorization: process.env.GITHUBKEY,
@@ -13,12 +13,12 @@ exports.getReviews = (req, res) => {
       res.status(200).send(response.data.results);
     })
     .catch((err) => {
-      console.log('axios get reviews error', err);
+      res.status(404).send(err);
     });
 };
 
 exports.getRatingsByProductId = (req, res) => {
-  axios.get(`${baseURL}/reviews/meta`, { headers, params: req.query })
+  axios.get(`${baseURL}/reviews/meta/`, { headers, params: req.query })
     .then((response) => {
       res.status(200).send(response.data);
     })
@@ -43,7 +43,7 @@ exports.putReviewHelpful = (req, res) => {
       res.status(204).send(response.data);
     })
     .catch((err) => {
-      console.log('axios put review helpful error', err);
+      res.status(404).send(err);
     });
 };
 
@@ -53,6 +53,6 @@ exports.putReviewReport = (req, res) => {
       res.status(204).send(response.data);
     })
     .catch((err) => {
-      console.log('axios put review report error', err);
+      res.status(404).send(err);
     });
 };

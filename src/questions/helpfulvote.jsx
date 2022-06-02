@@ -10,29 +10,46 @@ const Vote = styled.div`
   grid-column-start: 2;
   text-decoration: underline;
   text-align: right;
+  &:hover {
+    cursor: pointer;
+  };
+    height: fit-content;
+`;
+const Voted = styled.div`
+  padding-top: 10px;
+  padding-right: 3px;
+  font-size: 12px;
+  font-weight: 200;
+  grid-column-start: 2;
+  text-align: right;
 `;
 
-const HelpfulVote = function HelpfulVote({ info, addHelpful, helpfulness}) {
+const HelpfulVote = function HelpfulVote({ info, addHelpful, helpfulness }) {
+  const [voted, setVoted] = useState(false);
   const onVoteClick = () => {
-    axios.put(`http://localhost:3001/qa/questions/${info.question_id}/helpful`)
+    axios
+      .put(`/qa/questions/${info.question_id}/helpful`)
       .then(() => {
-        addHelpful(helpfulness + 1)
+        addHelpful(helpfulness + 1);
+        setVoted(true);
       })
       .catch((err) => {
         console.log("Error sending helpful vote", err);
       });
   };
-
-  return (
-    <Vote
-      onClick={(event) => {
-        event.preventDefault();
-        onVoteClick();
-      }}
-    >
-      Yes
-    </Vote>
-  );
+  if (!voted) {
+    return (
+      <Vote
+        onClick={(event) => {
+          event.preventDefault();
+          onVoteClick();
+        }}
+      >
+        Yes
+      </Vote>
+    );
+  }
+  return <Voted>Voted</Voted>;
 };
 
 export default HelpfulVote;

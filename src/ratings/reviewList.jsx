@@ -4,18 +4,18 @@ import ReviewListEntry from './reviewListEntry.jsx';
 import Form from "./form.jsx";
 import Popup from './modal.jsx'
 
-const Button = styled.button`
-  background-color: white;
-  color: DimGray;
-  padding: 26px 6px;
-  font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+const Scroll = styled.div`
+  max-height: 700px;
+  overflow: hidden ${({ height }) => (height > 400 ? 'scroll' : 'hidden')};
+  margin-top: 30px;
 `;
 
 const ReviewContainer = styled.div`
-  margin-top: 30px;
-  display: grid;
+  margin: 50px 50px 0 0;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
+  justify-content: flex-start;
 `;
 
 const ButtonContainer = styled.div`
@@ -25,46 +25,77 @@ const ButtonContainer = styled.div`
   gap: 20px;
 `;
 
-export default function ReviewList({ reviews, product_id, filter, sort }) {
+const Button = styled.button`
+  background-color: white;
+  color: DimGray;
+  padding: 26px 6px;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
-
+  const [height, setHeight] = useState(0);
+  const elementRef = React.useRef();
   const showModal = () => {
     setShow(true);
   };
-
   const hideModal = () => {
     setShow(false);
   };
 
-  // // const sortReview = () => {
-  //   reviews.sort((a, b) => b[sort] - a[sort]);
-  // // };
+  useEffect(() => {
+    setHeight(elementRef.current.clientHeight);
+  }, [reviews, filter]);
+
+  useEffect(() => {
+    setMore(2);
+  }, [product_id]);
+
+  useEffect(() => {
+    const r = [...reviews];
+    if (sort === 'newest') {
+      r.sort((a, b) => b.date.localeCompare(a.date));
+    } else if (sort === 'helpful') {
+      r.sort((a, b) => b.helpfulness - a.helpfulness);
+    } else if (sort === 'relevant') {
+      r.sort((a, b) => {
+        if (b.date === a.date) {
+          return b.helpfulness - a.helpfulness;
+        }
+        return b.date.localeCompare(a.date);
+      });
+    }
+    setReviews(r);
+  }, [product_id, sort]);
 
   return (
-    <div>
-      <ReviewContainer>
-        {reviews.map((review, i) => {
-          if (i < more) {
-            return (
-              <ReviewListEntry
-                key={review.review_id}
-                review={review}
-                filter={filter}
-              />
-            );
-          }
-        })}
-      </ReviewContainer>
+    <div data-testid="reviewList">
+      <Scroll height={height}>
+        <ReviewContainer ref={elementRef}>
+          {reviews.map((review, i) => {
+            if (i < more) {
+              return (
+                <ReviewListEntry
+                  key={review.review_id}
+                  review={review}
+                  filter={filter}
+                />
+              );
+            }
+          })}
+        </ReviewContainer>
+      </Scroll>
       <ButtonContainer>
         {more < reviews.length
           ? <Button type="button" onClick={() => setMore(more + 2)}> MORE REVIEWS </Button>
           : null}
         {' '}
-        <Button type="button" onClick={showModal}> ADD A REVIEW + </Button>
+        <Button type="button" onClick={showModal} data-testid="addReview"> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} />
+        <Form product_id={product_id} handleClose={hideModal} />
       </Popup>
     </div>
 

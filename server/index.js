@@ -5,6 +5,7 @@ const cors = require('cors');
 const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
+const interactionsAPI = require('./interactionsAPI');
 
 const app = express();
 
@@ -14,7 +15,11 @@ app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-// app.use(express.static(path.join(__dirname, '../public/')));
+app.use(express.static(path.join(__dirname, '../public/')));
+
+app.get('/', (req, res) => {
+  res.render(path.join(__dirname, '../public/index.html'));
+});
 
 app.get('/products', productsAPI.getProducts);
 app.get('/products/:product_id', productsAPI.getProduct);
@@ -26,6 +31,8 @@ app.get('/qa', questionsAPI.getQuestionsRoute);
 app.put('/qa/questions/:question_id/helpful', questionsAPI.putHelpful);
 app.put('/qa/answers/:answer_id/helpful', questionsAPI.putAnswerHelpful);
 app.put('/qa/answers/:answer_id/report', questionsAPI.putAnswerReport);
+app.post('/qa/questions/:question_id/answers', questionsAPI.addAnswer);
+app.post('/qa/questions/', questionsAPI.postQuestion);
 
 /* API for Ratings */
 app.get('/reviews/', ratingsAPI.getReviews);
@@ -33,6 +40,8 @@ app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
 app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
 app.put('/reviews/:review_id/report', ratingsAPI.putReviewReport);
+
+app.post('/interactions', interactionsAPI.postInteraction);
 
 app.listen(process.env.PORT);
 // eslint-disable-next-line no-console

@@ -20,13 +20,11 @@ const Clear = styled.label`
 `;
 
 export default function Ratings(props) {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(25);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
-  const [reviews, setReviews] = useState([]);
-  const [meta, setMeta] = useState({});
   const [filter, setFilter] = useState({});
-  const { product_id, setProduct_id, setLoading } = props;
+  const { product_id, setLoading, reviews, setReviews, meta, setMeta, ratingsRef } = props;
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -37,10 +35,12 @@ export default function Ratings(props) {
     })
       .then((response) => {
         setReviews(response.data);
+        setFilter({});
+        setSort('relevant');
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        console.log('axios get reviews error', err);
+        // console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
   }, [count, page, product_id]);
@@ -59,7 +59,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        console.log('axios get /reviews/meta error', err);
+        // console.log('axios get /reviews/meta error', err);
         setLoading((a) => a - 1);
       });
   }, [product_id]);
@@ -74,12 +74,8 @@ export default function Ratings(props) {
     setFilter(f);
   };
 
-  const handleSort = (e) => {
-    setSort(e.target.value);
-  };
-
   return (
-    <GridContainer>
+    <GridContainer className="Ratings" ref={ratingsRef}>
       <div>
         <h3>RATINGS &amp; REVIEWS</h3>
         <RatingList meta={meta} handleFilterRating={handleFilterRating} />
@@ -90,7 +86,7 @@ export default function Ratings(props) {
           {' '}
           reviews, sort by
           {' '}
-          <select onChange={handleSort}>
+          <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort">
             <option value="relevant">Relevant</option>
             <option value="helpful">Helpful</option>
             <option value="newest">Newest</option>
@@ -98,13 +94,23 @@ export default function Ratings(props) {
           &nbsp;&nbsp;&nbsp;
           filtered by
           {' '}
-          {Object.keys(filter).map((val, i) =>
-            <span key={i}>{val}{' '}star,</span>
-          )}
+          <label data-testid="filter">
+            {Object.keys(filter).map((val, i) =>
+              <span key={i}>{val}{' '}star,</span>
+            )}
+          </label>
           &nbsp;
-          <Clear onClick={() => setFilter({})}>clear filter</Clear>
+          <Clear>
+            <label onClick={() => setFilter({})}>clear filter</label>
+          </Clear>
         </h3>
-        <ReviewList reviews={reviews} product_id={product_id} filter={filter} sort={sort} />
+        <ReviewList
+          reviews={reviews}
+          setReviews={setReviews}
+          product_id={product_id}
+          filter={filter}
+          sort={sort}
+        />
       </div>
     </GridContainer>
   );

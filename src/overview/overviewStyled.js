@@ -29,7 +29,6 @@ const ImageDiv = styled.div`
 const InfoDiv = styled.div`
   padding: 10px;
   width: min-content;
-  min-width: 300px;
 `;
 
 const WordsDiv = styled.div`
@@ -39,14 +38,16 @@ const WordsDiv = styled.div`
 
 const SloDesDiv = styled.div`
   padding: 10px;
+  border-right: 1px solid #bbb;
 `;
 
 const FeatsDiv = styled.div`
   padding: 10px;
+  border-left: 1px solid #bbb;
 `;
 
 const OverallDiv = styled.div`
-  max-width: 1000px;
+  padding-top: 120px;
 `;
 
 const StyleDiv = styled.div`
@@ -90,6 +91,7 @@ const WhiteBG = styled.span`
 const ImageContainer = styled.div`
   display: flex;
   position: relative;
+  min-height: 500px;
 `;
 
 const Thumbnail = styled.div`
@@ -125,12 +127,16 @@ const BigImageDiv = styled.div`
   height: 100%;
   width: 100%;
   visibility: ${(props) => (props.vis ? 'visible' : 'hidden')};
+  background-image: url(${(props) => (props.bg)});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 const BigImage = styled.img`
   cursor: zoom-in;
-  max-height: 100%;
-  max-width: 100%;
+  object-fit: cover;
+  height: 872px;
 `;
 
 const ArrowContainer = styled.div`
@@ -229,19 +235,102 @@ const ExpandedWhiteBG = styled.span`
   z-index: 11;
 `;
 
+const ToggleFullscreenButton = styled.img`
+  height: 25px;
+  width: 25px;
+  z-index: 12;
+  opacity: .75;
+  cursor: pointer;
+`;
+
+const ToggleFullscreenBG = styled.span`
+  position: absolute;
+  background-color: rgba(255, 255, 255, .4);
+  bottom: 5%;
+  right: 5%;
+  height: 42px;
+  width: 42px;
+  z-index: 11;
+  border: 4px solid rgba(0, 0, 0, .75);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SelectSizeMsg = styled.div`
   opacity: ${(props) => (props.vis ? 1 : 0)};
   color: red;
   transition: opacity .5s;
+  position: absolute;
+  top: -10px;
+  left: 10px;
 `;
 
 const SizeQuantityDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 `;
 
 const SelectSpan = styled.span`
-  padding: 10px;
+  margin: 10px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+`;
+
+const CategoryDiv = styled.div`
+  text-transform: uppercase;
+  font-size: 14px;
+`;
+
+const ProductNameDiv = styled.div`
+  font-size: 28px;
+  font-weight: 700;
+`;
+
+const PriceDiv = styled.div`
+  font-size: 22px;
+`;
+
+const StyleNameDiv = styled.div`
+  text-transform: uppercase;
+`;
+
+const SocialDiv = styled.div`
+  margin: 1px;
+`;
+
+const SocialImg = styled.img`
+  margin: 10px;
+  height: 30px;
+  width: 30px;
+`;
+
+const OverviewSelect = styled.select`
+  width: 100%;
+  height: 100%;
+`;
+
+const BagOutfitDiv = styled.div`
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  margin: 4px;
+`;
+
+const BagButton = styled.button`
+  width: 100%;
+  height: 100%;
+`;
+
+const StarButton = styled.img`
+  height: 100%;
+`;
+
+const ReviewsSpan = styled.span`
+  padding-left: 10px;
+  cursor: pointer;
 `;
 
 export {
@@ -249,5 +338,7 @@ export {
   OverallDiv, StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, ImageContainer, Thumbnail,
   ThumbnailDiv, ThumbnailImg, BigImageDiv, ArrowContainer, Arrow, ArrowDiv, ArrowDivV,
   BigArrowDiv, BigImage, FullScreenDiv, ExpandedThumbnailDiv, ThumbnailIcon, CloseButton,
-  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan,
+  ExpandedWhiteBG, SelectSizeMsg, SizeQuantityDiv, SelectSpan, CategoryDiv, ProductNameDiv,
+  PriceDiv, StyleNameDiv, SocialDiv, SocialImg, ToggleFullscreenButton, ToggleFullscreenBG,
+  OverviewSelect, BagOutfitDiv, BagButton, StarButton, ReviewsSpan,
 };

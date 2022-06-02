@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import {
-  StyleDiv, StyleGrid, StyleImage, Check, WhiteBG,
+  StyleDiv, StyleGrid, StyleImage, Check, WhiteBG, StyleNameDiv,
 } from './overviewStyled.js';
 import { CheckMarkLink } from './overviewAssets.js';
 
@@ -11,12 +11,11 @@ function StyleSelector(props) {
   if (styles[style].photos[0].url !== null) {
     return (
       <>
-        <span>
-          Style:
-          {' '}
+        <StyleNameDiv data-testid="style">
+          <b>STYLE &gt; </b>
           {styles[style].name}
-        </span>
-        <StyleGrid>
+        </StyleNameDiv>
+        <StyleGrid data-testid="styleGrid">
           {styles.map((s, i) => (
             <StyleDiv key={s.style_id}>
               <StyleImage

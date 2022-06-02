@@ -14,7 +14,7 @@ const Modal = styled.div`
 const ModalMain = styled.div`
   position: fixed;
   background: white;
-  width: 60%;
+  width: auto;
   height: auto;
   top: 50%;
   left: 50%;
@@ -27,10 +27,10 @@ const CloseButton = styled.label`
   right: 20px;
   position: absolute;
   cursor: pointer;
-  background-color: white;
+  background-color: transparent;
 `;
 
-function Popup({ handleClose, show, children }) {
+function ImgPopup({ handleClose, show, children }) {
   return (
     <Modal show={show}>
       <div>
@@ -43,4 +43,4 @@ function Popup({ handleClose, show, children }) {
   );
 }
 
-export default Popup;
+export default ImgPopup;
