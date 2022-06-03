@@ -6,7 +6,7 @@ import RatingList from './ratingList.jsx';
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 300px 60%;
+  grid-template-columns: 300px 70%;
   gap: 100px;
   margin: 200px 0;
 `;
@@ -18,6 +18,10 @@ const Select = styled.select`
   text-decoration: underline;
   font-size: 20px;
   width: 100px;
+  &:hover {
+    color: rgb(230, 67, 47);
+    cursor: pointer;
+  }
 `;
 
 const Header = styled.div`

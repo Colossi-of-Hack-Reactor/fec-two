@@ -11,6 +11,7 @@ const Parentdiv = styled.div`
   &:hover {
     border: 2px solid rgb(230, 67, 47);
     background-color: #ffe6de;
+    cursor: pointer;
   }
 `;
 
