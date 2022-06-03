@@ -8,14 +8,22 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 300px 60%;
   gap: 100px;
+  margin: 200px 0;
 `;
 
-const Clear = styled.label`
-  color: blue;
-  &:hover {
-    color: rgb(230, 67, 47);
-    text-decoration: underline;
-  }
+const Select = styled.select`
+  border: 0;
+  outline: 0;
+  background: #e9ecef;
+  text-decoration: underline;
+  font-size: 20px;
+  width: 100px;
+`;
+
+const Header = styled.div`
+  font-family: Arial, Helvetica Neue;
+  font-size: 20px;
+  margin: 100px 0 10px;
 `;
 
 export default function Ratings(props) {
@@ -23,7 +31,7 @@ export default function Ratings(props) {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('relevant');
   const [filter, setFilter] = useState({});
-  const { product_id, setLoading, reviews, setReviews, meta, setMeta, ratingsRef } = props;
+  const { product_id, setLoading, reviews, setReviews, meta, setMeta, ratingsRef, product } = props;
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -94,39 +102,29 @@ export default function Ratings(props) {
   return (
     <GridContainer className="Ratings" ref={ratingsRef}>
       <div>
-        <h3>RATINGS &amp; REVIEWS</h3>
-        <RatingList meta={meta} handleFilterRating={handleFilterRating} />
+        <h4>RATINGS &amp; REVIEWS</h4>
+        <RatingList meta={meta} filter={filter} handleFilterRating={handleFilterRating} setFilter={setFilter}/>
       </div>
       <div>
-        <h3>
+        <Header>
           {reviews.length}
           {' '}
-          reviews, sort by
+          reviews, sorted by
           {' '}
-          <select value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort">
-            <option value="relevant">Relevant</option>
-            <option value="helpful">Helpful</option>
-            <option value="newest">Newest</option>
-          </select>
+          <Select  value={sort} onChange={(e) => setSort(e.target.value)} data-testid="sort">
+            <option value="relevant">relevant</option>
+            <option value="helpful">helpful</option>
+            <option value="newest">newest</option>
+          </Select>
           &nbsp;&nbsp;&nbsp;
-          filtered by
-          {' '}
-          <label data-testid="filter">
-            {Object.keys(filter).map((val, i) =>
-              <span key={i}>{val}{' '}star,</span>
-            )}
-          </label>
-          &nbsp;
-          <Clear>
-            <label onClick={() => setFilter({})}>clear filter</label>
-          </Clear>
-        </h3>
+        </Header>
         <ReviewList
           reviews={reviews}
           product_id={product_id}
           filter={filter}
           sort={sort}
           meta={meta}
+          product={product}
         />
       </div>
     </GridContainer>

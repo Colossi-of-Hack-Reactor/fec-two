@@ -14,7 +14,7 @@ const Triangle = styled.div`
   border-right-width: 7px;
   border-bottom-width: 0px;
   border-left-width: 7px;
-  border-top-color: DimGray;
+  border-top-color: black;
   border-right-color: transparent;
   border-bottom-color: transparent;
   border-left-color: transparent;
@@ -24,7 +24,6 @@ const Box = styled.div`
   height: 10px;
   width: 19%;
   background-color: WhiteSmoke;
-  // margin: 50px;
 `;
 
 const Container = styled.div`

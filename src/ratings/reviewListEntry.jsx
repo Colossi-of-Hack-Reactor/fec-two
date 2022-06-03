@@ -8,20 +8,30 @@ const Entry = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin: 0 0 20px;
-
-`;
-
-const Footer = styled.div`
-  padding-top: 20px;
-  font: small;
+  justify-content: flex-end;
 `;
 
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin: 40px 0 20px;
+`;
+
+const Title = styled.label`
+  font-family: Arial, Helvetica Neue;
+  font-size: 20px;
+`;
+
+const Small = styled.span`
+  font-family: Arial, Helvetica Neue;
+  font-size: 13px;
+`;
+
+const Text = styled.label`
+  font-family: Arial, Helvetica Neue;
+  font-size: 16px;
+  margin-bottom: 20px;
 `;
 
 const Help = styled.label`
@@ -29,6 +39,20 @@ const Help = styled.label`
   &:hover {
     color: rgb(230, 67, 47);
   }
+`;
+
+const Footer = styled.div`
+  padding-top: 15px;
+  font-family: Arial, Helvetica Neue;
+  font-size: 13px;
+`;
+
+const PhotoContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-top: 10px;
 `;
 
 export default function ReviewListEntry({ review, filter }) {
@@ -73,8 +97,9 @@ export default function ReviewListEntry({ review, filter }) {
       {report === false
         && (filter[review.rating] !== undefined || Object.keys(filter).length === 0) ? (
         <>
-          <Header>
-            <div>
+          <hr />
+          <Entry>
+            <Header>
               <StarRatings
                 rating={review.rating}
                 starDimension="15px"
@@ -82,47 +107,49 @@ export default function ReviewListEntry({ review, filter }) {
                 starRatedColor="DimGray"
                 starEmptyColor="Gainsboro"
               />
-            </div>
+              <div>
+                <Small>
+                  {review.reviewer_name.charAt(0).toUpperCase() + review.reviewer_name.slice(1)}
+                  ,&nbsp;
+                  {(new Date(review.date)).toString().slice(4, 16)}
+                </Small>
+              </div>
+            </Header>
             <div>
-              {review.reviewer_name.charAt(0).toUpperCase() + review.reviewer_name.slice(1)}
-              ,&nbsp;
-              {(new Date(review.date)).toString().slice(4, 16)}
-            </div>
-          </Header>
-          <Entry>
-            <div>
-              <h3>{review.summary}</h3>
+              <Title>{review.summary}</Title>
             </div>
             <div>
               <p>{review.body}</p>
             </div>
             <div>
               {review.recommend ?
-                <span>&#10003;&nbsp;I recommend this product</span>
+                <Text>&#10003;&nbsp;I recommend this product</Text>
                 : null}
-              {review.response ? <p>{review.response}</p> : null}
             </div>
             <div>
               {
-                review.photos.length !== 0
-                  ? review.photos.map((photo, i) => (
-                    <div key={i}>
-                      <img
-                        src={photo.url}
-                        width="100"
-                        alt="header img"
-                        onClick={showModal}
-                        style={{ cursor: "zoom-in" }}
-                      />
-                      <ImgPopup show={show} handleClose={hideModal}>
+                review.photos.length !== 0 ? (
+                  <PhotoContainer>
+                    {review.photos.map((photo, i) => (
+                      <div key={i}>
                         <img
                           src={photo.url}
-                          width="400"
+                          width="100"
                           alt="header img"
+                          onClick={showModal}
+                          style={{ cursor: "zoom-in" }}
                         />
-                      </ImgPopup>
-                    </div>
-                  )) : (null)
+                        <ImgPopup show={show} handleClose={hideModal}>
+                          <img
+                            src={photo.url}
+                            width="400"
+                            alt="header img"
+                          />
+                        </ImgPopup>
+                      </div>
+                    ))}
+                  </PhotoContainer>
+                ) : (null)
               }
             </div>
             <Footer>
@@ -140,7 +167,6 @@ export default function ReviewListEntry({ review, filter }) {
               </Help>
             </Footer>
           </Entry>
-          <hr />
         </>
       ) : (null)}
     </div>
