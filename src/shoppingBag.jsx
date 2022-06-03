@@ -25,7 +25,7 @@ const Header = styled.span`
 `;
 
 const Total = styled.span`
-  font-size: 24px;
+  font-size: 20px;
   display: flex;
   justify-content: flex-end;
   padding-right: 8px;
@@ -34,6 +34,21 @@ const Total = styled.span`
 
 const AnotherDiv = styled.div`
   position: relative;
+`;
+
+const BottomDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CheckoutButton = styled.button`
+  color: #e9ecef;
+  background-color: black;
+  font-family: 'Helvetica Neue', serif;
+  font-size: 16px;
+  margin: 8px;
+  padding: 8px;
+  ${(props) => (props.show ? '' : 'display: none;')}
 `;
 
 let closeTimeout = null;
@@ -70,7 +85,13 @@ function ShoppingBag(props) {
           <BagItem key={p.sku} p={p} i={i} cart={cart} setCart={setCart} />
         ))}
       </AnotherDiv>
-      <Total>Total: ${total.toFixed(2)}</Total>
+      <BottomDiv>
+        <Total>Total: ${total.toFixed(2)}</Total>
+        <CheckoutButton show={total > 0}>
+          Check Out
+        </CheckoutButton>
+
+      </BottomDiv>
     </SidePanel>
   );
 }

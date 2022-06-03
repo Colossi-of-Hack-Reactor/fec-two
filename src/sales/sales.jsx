@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const SalesBanner = styled.div`
-  position: fixed;
+  position: absolute;
   background-color: #333;
   color: white;
   width: 100%;
   height: 22px;
-  top: 0;
+  top: ${(props) => (props.show ? '0' : '-25px')};
   left: 0;
   z-index: 6;
   display: flex;
   justify-content: center;
-  ${(props) => (props.show ? '' : 'display: none;')}
+  transition: top 0.5s;
+
+`;
+
+const SalesDiv = styled.div`
+
+  width: 95%;
 `;
 
 const SaleSpan = styled.span`
@@ -75,14 +81,16 @@ function Sales(props) {
 
   return (
     <SalesBanner show={showBanner}>
-      <SalesClick onClick={() => { setFromSale(true); setStyleID(randomSale.style_id); setProduct_id(randomSale.product_id); }}>
-        <SaleSpan>On Sale!</SaleSpan>
-        <SaleSpan>{randomSale.product_name}</SaleSpan>
-        <SaleSpan>-</SaleSpan>
-        <SaleSpan>{randomSale.style_name}</SaleSpan>
-        <SalePrice>${randomSale.sale_price}</SalePrice>
-        <OriginalPrice>${randomSale.original_price}</OriginalPrice>
-      </SalesClick>
+      <SalesDiv>
+        <SalesClick onClick={() => { setFromSale(true); setStyleID(randomSale.style_id); setProduct_id(randomSale.product_id); }}>
+          <SaleSpan>On Sale!</SaleSpan>
+          <SaleSpan>{randomSale.product_name}</SaleSpan>
+          <SaleSpan>-</SaleSpan>
+          <SaleSpan>{randomSale.style_name}</SaleSpan>
+          <SalePrice>${randomSale.sale_price}</SalePrice>
+          <OriginalPrice>${randomSale.original_price}</OriginalPrice>
+        </SalesClick>
+      </SalesDiv>
     </SalesBanner>
   );
 }

@@ -29,7 +29,7 @@ const Header = styled.div`
   color: #e9ecef;
   width: 100%;
   height: 100px;
-  top: 22px;
+  top: 0;
   left: 0;
   z-index: 5;
   display: flex;
@@ -39,8 +39,7 @@ const Header = styled.div`
 const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 80vw;
-  width: 100%;
+  width: 95%;
 `;
 
 const CompanyName = styled.div`
@@ -85,6 +84,7 @@ const Badge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const SearchDiv = styled.div`
@@ -106,9 +106,6 @@ const SearchIcon = styled.img`
 const IconDiv = styled.div`
   display: flex;
 `;
-
-let fromSale = false;
-let styleID = null;
 
 function App() {
   const [product_id, setProduct_id] = useState(37311);
@@ -161,6 +158,13 @@ function App() {
     <>
       {loading ? <Loading className="loading" data-testid="loading" /> : ''}
       <Header>
+        <Sales
+          setProduct_id={setProduct_id}
+          fromSale={fromSale}
+          setFromSale={setFromSale}
+          styleID={styleID}
+          setStyleID={setStyleID}
+        />
         <HeaderDiv>
           <CompanyName>
             <h1>Colossus of Clothes</h1>
@@ -171,9 +175,9 @@ function App() {
           </Promos>
           <IconDiv>
             <ShoppingBagDiv>
-              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)}/>
+              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)} />
               {cart.length ? (
-                <Badge>
+                <Badge onClick={() => setShowCart((a) => !a)}>
                   <h6>{cart.length}</h6>
                 </Badge>
               ) : ''}
@@ -187,13 +191,6 @@ function App() {
           setProduct_id={setProduct_id}
           showSearch={showSearch}
           setShowSearch={setShowSearch}
-        />
-        <Sales
-          setProduct_id={setProduct_id}
-          fromSale={fromSale}
-          setFromSale={setFromSale}
-          styleID={styleID}
-          setStyleID={setStyleID}
         />
       </Header>
       <Overview
