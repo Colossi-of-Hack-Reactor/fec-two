@@ -30,7 +30,7 @@ function Overview(props) {
   const [showSelectSizeMsg, setShowSelectSizeMsg] = useState(false);
   const {
     product_id, setLoading, reviews, meta, ratingsRef, product, setProduct,
-    cart, setCart,
+    cart, setCart, fromSale, setFromSale, styleID, setStyleID,
   } = props;
   const selectRef = React.useRef();
   const [favorite, setFavorite] = useState(false);
@@ -53,7 +53,17 @@ function Overview(props) {
   }, [product_id]);
 
   useEffect(() => {
-    setStyle(0);
+    if (fromSale) {
+      for (let i = 0; i < styles.length; i++) {
+        if (styles[i].style_id === styleID) {
+          setStyle(i);
+          break;
+        }
+      }
+    } else {
+      setStyle(0);
+    }
+    setFromSale(false);
   }, [styles]);
 
   useEffect(() => {
@@ -141,7 +151,6 @@ function Overview(props) {
             <CategoryDiv data-testid="category">
               {product.category}
             </CategoryDiv>
-            <br />
             <PriceDiv data-testid="price">
               {styles[style].sale_price ? (
                 <>
@@ -269,8 +278,8 @@ function Overview(props) {
             </p>
           </SloDesDiv>
           <FeatsDiv data-testid="features">
-            {product.features.map((feat) => (
-              <p key={feat.feature}>
+            {product.features.map((feat, i) => (
+              <p key={feat.feature + i}>
                 {feat.feature}
                 {': '}
                 {feat.value}

@@ -6,6 +6,7 @@ const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
 const interactionsAPI = require('./interactionsAPI');
+const searchAPI = require('./searchAPI');
 
 const app = express();
 
@@ -42,6 +43,9 @@ app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
 app.put('/reviews/:review_id/report', ratingsAPI.putReviewReport);
 
 app.post('/interactions', interactionsAPI.postInteraction);
+
+app.get('/search/:term', searchAPI.search);
+app.get('/randomSale', searchAPI.randomSale);
 
 app.listen(process.env.PORT);
 // eslint-disable-next-line no-console

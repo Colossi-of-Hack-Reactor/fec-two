@@ -7,7 +7,9 @@ import Related from './related/related.jsx';
 import Questions from './questions/questions.jsx';
 import Ratings from './ratings/ratings.jsx';
 import ShoppingBag from './shoppingBag.jsx';
-import { ShoppingBagSVG } from './overview/overviewAssets.js';
+import Search from './search/search.jsx';
+import Sales from './sales/sales.jsx';
+import { ShoppingBagSVG, SearchLink } from './overview/overviewAssets.js';
 
 const Loading = styled.div`
   position: fixed;
@@ -26,6 +28,7 @@ const Header = styled.div`
   background-color: black;
   color: #e9ecef;
   width: 100%;
+  height: 100px;
   top: 0;
   left: 0;
   z-index: 5;
@@ -36,11 +39,14 @@ const Header = styled.div`
 const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 1000px;
-  width: 100%;
+  width: 95%;
 `;
 
-const CompanyName = styled.h1`
+const CompanyName = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 `;
 
@@ -48,9 +54,9 @@ const ShoppingBagDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  cursor: pointer;
   position: relative;
   svg {
+    cursor: pointer;
     fill: #e9ecef;
     height: 30px;
     width: 30px;
@@ -78,19 +84,43 @@ const Badge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+`;
+
+const SearchDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin-left: 16px;
+
+`;
+
+const SearchIcon = styled.img`
+
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+`;
+
+const IconDiv = styled.div`
+  display: flex;
 `;
 
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
   const [outfitsIdList, setOutfitsIdList] = useState([]);
-  const [outfits, setOutfits] = useState({});
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
   const [product, setProduct] = useState({});
   const ratingsRef = React.useRef();
+  const searchRef = React.useRef();
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [fromSale, setFromSale] = useState(false);
+  const [styleID, setStyleID] = useState(null);
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -129,23 +159,47 @@ function App() {
     <>
       {loading ? <Loading className="loading" data-testid="loading" /> : ''}
       <Header>
+        <Sales
+          setProduct_id={setProduct_id}
+          fromSale={fromSale}
+          setFromSale={setFromSale}
+          styleID={styleID}
+          setStyleID={setStyleID}
+        />
         <HeaderDiv>
           <CompanyName>
-            Colossus of Clothes
+            <h1>Colossus of Clothes</h1>
           </CompanyName>
           <Promos>
             <div>Free express shipping on $200+ orders for rewards members!</div>
             <div>Sign up now!</div>
           </Promos>
-          <ShoppingBagDiv onClick={() => setShowCart((a) => !a)}>
-            <ShoppingBagSVG />
-            {cart.length ? (
-              <Badge>
-                <h6>{cart.length}</h6>
-              </Badge>
-            ) : ''}
-          </ShoppingBagDiv>
+          <IconDiv>
+            <ShoppingBagDiv>
+              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)} />
+              {cart.length ? (
+                <Badge onClick={() => setShowCart((a) => !a)}>
+                  <h6>{cart.length}</h6>
+                </Badge>
+              ) : ''}
+            </ShoppingBagDiv>
+            <SearchDiv>
+              <SearchIcon src={SearchLink} onClick={
+                () => {
+                setShowSearch(true);
+                if (searchRef.current) {
+                  searchRef.current.focus();
+                }}
+                } />
+            </SearchDiv>
+          </IconDiv>
         </HeaderDiv>
+        <Search
+          setProduct_id={setProduct_id}
+          showSearch={showSearch}
+          setShowSearch={setShowSearch}
+          searchRef={searchRef}
+        />
       </Header>
       <Overview
         product_id={product_id}
@@ -160,6 +214,10 @@ function App() {
         setProduct={setProduct}
         cart={cart}
         setCart={setCart}
+        fromSale={fromSale}
+        setFromSale={setFromSale}
+        styleID={styleID}
+        setStyleID={setStyleID}
       />
       <Related
         product_id={product_id}
@@ -182,7 +240,7 @@ function App() {
         ratingsRef={ratingsRef}
         product={product}
       />
-      <ShoppingBag show={showCart} cart={cart} setCart={setCart} />
+      <ShoppingBag showCart={showCart} setShowCart={setShowCart} cart={cart} setCart={setCart} />
     </>
   );
 }
