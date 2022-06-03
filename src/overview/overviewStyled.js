@@ -28,7 +28,6 @@ const ImageDiv = styled.div`
 
 const InfoDiv = styled.div`
   padding: 10px;
-  width: min-content;
 `;
 
 const WordsDiv = styled.div`
@@ -55,26 +54,27 @@ const StyleDiv = styled.div`
   position: relative;
   align-items: center;
   justify-items: center;
-  padding: 8px;
+  padding: 5px;
 `;
 
 const StyleGrid = styled.div`
-  display: grid;
-  width: min-content;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
 const StyleImage = styled.img`
   cursor: pointer;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
 `;
 
 const Check = styled.img`
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   z-index: 2;
   opacity: .75;
 `;
@@ -83,8 +83,8 @@ const WhiteBG = styled.span`
   position: absolute;
   background-color: rgba(255, 255, 255, .4);
   border-radius: 50%;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   z-index: 1;
 `;
 
@@ -275,7 +275,7 @@ const SizeQuantityDiv = styled.div`
 
 const SelectSpan = styled.span`
   margin: 10px;
-  height: 50px;
+  height: 35px;
   display: flex;
   justify-content: center;
 `;
@@ -283,6 +283,7 @@ const SelectSpan = styled.span`
 const CategoryDiv = styled.div`
   text-transform: uppercase;
   font-size: 14px;
+  margin-bottom: 10px;
 `;
 
 const ProductNameDiv = styled.div`
@@ -311,6 +312,11 @@ const SocialImg = styled.img`
 const OverviewSelect = styled.select`
   width: 100%;
   height: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: #e9ecef;
+  font-family: 'Helvetica Neue', serif;
+  font-size: 16px;
 `;
 
 const BagOutfitDiv = styled.div`
@@ -322,6 +328,10 @@ const BagOutfitDiv = styled.div`
 const BagButton = styled.button`
   width: 100%;
   height: 100%;
+  color: #e9ecef;
+  background-color: black;
+  font-family: 'Helvetica Neue', serif;
+  font-size: 16px;
 `;
 
 const StarButton = styled.img`

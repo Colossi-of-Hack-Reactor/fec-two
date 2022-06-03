@@ -10,14 +10,13 @@ const SidePanel = styled.div`
   top: 0;
   right: 0;
   z-index: 6;
-  border-left: 2px solid black;
   background-color: #e9ecef;
   transform: translateX(${(props) => (props.show ? '0px' : '400px')});
   transition: .5s ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 0px 6px 6px rgba(0,0,0, .5);
+  box-shadow: 0px 0px 10px 10px rgba(0,0,0, .5);
 `;
 
 const Header = styled.span`
@@ -37,6 +36,8 @@ const AnotherDiv = styled.div`
   position: relative;
 `;
 
+let closeTimeout = null;
+
 function ShoppingBag(props) {
   const { showCart, setShowCart, cart, setCart } = props;
 
@@ -50,7 +51,17 @@ function ShoppingBag(props) {
   });
 
   return (
-    <SidePanel show={showCart}>
+    <SidePanel
+      show={showCart}
+      onMouseOver={() => {
+        clearTimeout(closeTimeout);
+      }}
+      onMouseOut={() => {
+        closeTimeout = setTimeout(() => {
+          setShowCart(false);
+        }, 1000);
+      }}
+    >
       <AnotherDiv>
         <Header>
           <h3>Your Bag</h3>

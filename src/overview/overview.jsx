@@ -141,7 +141,6 @@ function Overview(props) {
             <CategoryDiv data-testid="category">
               {product.category}
             </CategoryDiv>
-            <br />
             <PriceDiv data-testid="price">
               {styles[style].sale_price ? (
                 <>
