@@ -71,7 +71,6 @@ const ProductCard = function ProductCard({
     }
   };
   findASaleOrAPic(cards); // for test only
-
   return (
     <div style={{ marginLeft: '20px', marginRight: '20px', position: 'relative' }}>
       {product.id !== product_id ? (
