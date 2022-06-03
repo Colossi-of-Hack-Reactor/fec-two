@@ -115,8 +115,8 @@ function List({
 
   const sectionHeader = (id) => (id !== undefined ? <h3>List Products</h3> : <h3>Your Outfits</h3>);
 
-  const cardElement = (product, cards, defaultIndex, key) => (
-    <ProductCard product={product} cards={cards} defaultIndex={defaultIndex} key={key} rating={product.rating} outfits={outfits} outfitsIdList={outfitsIdList} setProduct_id={setProduct_id} setOutfits={setOutfits} setOutfitsIdList={setOutfitsIdList} setUpdate={setUpdate} />
+  const cardElement = (product, cards, defaultIndex, key, related, product_id) => (
+    <ProductCard product={product} cards={cards} defaultIndex={defaultIndex} key={key} rating={product.rating} outfits={outfits} outfitsIdList={outfitsIdList} setProduct_id={setProduct_id} setOutfits={setOutfits} setOutfitsIdList={setOutfitsIdList} setUpdate={setUpdate} related={related} product_id={product_id} />
   );
 
   return (
@@ -135,13 +135,13 @@ function List({
                 {products.map((product) => {
                   altCards = [];
                   defaultIndex = populateAltCards(product, altCards);
-                  return cardElement(product, altCards, defaultIndex, product.id);
+                  return cardElement(product, altCards, defaultIndex, product.id, related, product_id);
                 })}
               </div>
               {
                 outfitsIdList.slice(0 + shift, (slots - 1 || outfitsIdList.length) + shift).map((id) => {
                   const outfit = outfits[id];
-                  return cardElement(outfit.product, outfit.cards, outfit.defaultIndex, outfit.product.id);
+                  return cardElement(outfit.product, outfit.cards, outfit.defaultIndex, outfit.product.id, related, product_id);
                 })
               }
             </div>
@@ -170,15 +170,15 @@ export default List;
 
 function RightButton({ showRightArrow, shift, setShift }) {
   return (
-    <div style={{ alignSelf: 'center' }}>
-      {showRightArrow && <button type="button" onClick={() => setShift(shift + 1)}>Whats to the rigth</button>}
+    <div style={{ paddingTop: '250px' }}>
+      {showRightArrow && <img style={{ width:'50px', height: '50px'}} src="/assets/angle-circle-right.svg" type="button" onClick={() => setShift(shift + 1)}/>}
     </div>
   );
 }
 function LeftButton({ showLeftArrow, shift, setShift }) {
   return (
-    <div style={{ alignSelf: 'center' }}>
-      {showLeftArrow && <button type="button" onClick={() => setShift(shift - 1)}>Whats to the left?</button>}
+    <div style={{ paddingTop: '250px' }}>
+      {showLeftArrow && <img style={{ width:'50px', height: '50px'}} src="/assets/angle-circle-left.svg" type="button" onClick={() => setShift(shift - 1)}/>}
     </div>
   );
 }
