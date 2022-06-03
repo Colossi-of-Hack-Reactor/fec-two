@@ -39,3 +39,15 @@ exports.search = (req, res) => {
       res.status(404).send(err);
     });
 };
+
+exports.randomSale = (req, res) => {
+  const rand = Math.floor(Math.random() * 638);
+  Sales.findOne().skip(rand)
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).send(err);
+    });
+};

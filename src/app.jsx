@@ -8,6 +8,7 @@ import Questions from './questions/questions.jsx';
 import Ratings from './ratings/ratings.jsx';
 import ShoppingBag from './shoppingBag.jsx';
 import Search from './search/search.jsx';
+import Sales from './sales/sales.jsx';
 import { ShoppingBagSVG, SearchLink } from './overview/overviewAssets.js';
 
 const Loading = styled.div`
@@ -27,8 +28,8 @@ const Header = styled.div`
   background-color: black;
   color: #e9ecef;
   width: 100%;
-  height: 110px;
-  top: 0;
+  height: 100px;
+  top: 22px;
   left: 0;
   z-index: 5;
   display: flex;
@@ -42,7 +43,11 @@ const HeaderDiv = styled.div`
   width: 100%;
 `;
 
-const CompanyName = styled.h1`
+const CompanyName = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 `;
 
@@ -102,6 +107,9 @@ const IconDiv = styled.div`
   display: flex;
 `;
 
+let fromSale = false;
+let styleID = null;
+
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
@@ -113,6 +121,8 @@ function App() {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [fromSale, setFromSale] = useState(false);
+  const [styleID, setStyleID] = useState(null);
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -153,7 +163,7 @@ function App() {
       <Header>
         <HeaderDiv>
           <CompanyName>
-            Colossus of Clothes
+            <h1>Colossus of Clothes</h1>
           </CompanyName>
           <Promos>
             <div>Free express shipping on $200+ orders for rewards members!</div>
@@ -178,6 +188,13 @@ function App() {
           showSearch={showSearch}
           setShowSearch={setShowSearch}
         />
+        <Sales
+          setProduct_id={setProduct_id}
+          fromSale={fromSale}
+          setFromSale={setFromSale}
+          styleID={styleID}
+          setStyleID={setStyleID}
+        />
       </Header>
       <Overview
         product_id={product_id}
@@ -192,6 +209,10 @@ function App() {
         setProduct={setProduct}
         cart={cart}
         setCart={setCart}
+        fromSale={fromSale}
+        setFromSale={setFromSale}
+        styleID={styleID}
+        setStyleID={setStyleID}
       />
       <Related
         product_id={product_id}

@@ -45,6 +45,7 @@ app.put('/reviews/:review_id/report', ratingsAPI.putReviewReport);
 app.post('/interactions', interactionsAPI.postInteraction);
 
 app.get('/search/:term', searchAPI.search);
+app.get('/randomSale', searchAPI.randomSale);
 
 app.listen(process.env.PORT);
 // eslint-disable-next-line no-console

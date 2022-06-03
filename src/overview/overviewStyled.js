@@ -23,16 +23,18 @@ const OverviewDiv = styled.div`
 `;
 
 const ImageDiv = styled.div`
-  padding: 10px;
+  margin: 10px;
+  margin-right: 15px;
 `;
 
 const InfoDiv = styled.div`
-  padding: 10px;
+  margin: 10px;
+  margin-left: 15px;
 `;
 
 const WordsDiv = styled.div`
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 65% 35%;
 `;
 
 const SloDesDiv = styled.div`
@@ -46,7 +48,7 @@ const FeatsDiv = styled.div`
 `;
 
 const OverallDiv = styled.div`
-  padding-top: 135px;
+  padding-top: 140px;
 `;
 
 const StyleDiv = styled.div`
