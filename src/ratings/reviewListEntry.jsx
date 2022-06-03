@@ -27,7 +27,7 @@ const Header = styled.div`
 const Help = styled.label`
   text-decoration: underline;
   &:hover {
-    color: tomato;
+    color: rgb(230, 67, 47);
   }
 `;
 
@@ -37,9 +37,11 @@ export default function ReviewListEntry({ review, filter }) {
   const [show, setShow] = useState(false);
   const showModal = () => {
     setShow(true);
+    document.documentElement.style.overflow = 'hidden';
   };
   const hideModal = () => {
     setShow(false);
+    document.documentElement.style.overflow = 'scroll';
   };
 
   const handleClickYes = () => {
@@ -82,7 +84,7 @@ export default function ReviewListEntry({ review, filter }) {
               />
             </div>
             <div>
-              {review.reviewer_name}
+              {review.reviewer_name.charAt(0).toUpperCase() + review.reviewer_name.slice(1)}
               ,&nbsp;
               {(new Date(review.date)).toString().slice(4, 16)}
             </div>
@@ -110,6 +112,7 @@ export default function ReviewListEntry({ review, filter }) {
                         width="100"
                         alt="header img"
                         onClick={showModal}
+                        style={{ cursor: "zoom-in" }}
                       />
                       <ImgPopup show={show} handleClose={hideModal}>
                         <img
@@ -126,13 +129,15 @@ export default function ReviewListEntry({ review, filter }) {
               Helpful?
               &nbsp;
               <Help>
-                <span onClick={handleClickYes} data-testid="yes">Yes</span>
+                <span onClick={handleClickYes} data-testid="yes" style={{ cursor: "pointer" }}>Yes</span>
               </Help>
               {' '}
               (
               <span data-testid="yesCount">{yes}</span>
               )&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-              <Help onClick={handleClickReport}>Report</Help>
+              <Help>
+                <span onClick={handleClickReport} style={{ cursor: "pointer" }}>Report</span>
+              </Help>
             </Footer>
           </Entry>
           <hr />

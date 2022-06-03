@@ -6,15 +6,14 @@ import RatingList from './ratingList.jsx';
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 300px 60%;
   gap: 100px;
-  margin: 150px;
 `;
 
 const Clear = styled.label`
   color: blue;
   &:hover {
-    color: tomato;
+    color: rgb(230, 67, 47);
     text-decoration: underline;
   }
 `;
@@ -40,10 +39,28 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        // console.log('axios get reviews error', err);
+        console.log('axios get reviews error', err);
         setLoading((a) => a - 1);
       });
   }, [count, page, product_id]);
+
+  useEffect(() => {
+    setLoading((a) => a + 1);
+    axios.get('/reviews/', {
+      params: {
+        count, page, sort, product_id
+      },
+    })
+      .then((response) => {
+        setReviews(response.data);
+        setFilter({});
+        setLoading((a) => a - 1);
+      })
+      .catch((err) => {
+        console.log('axios get sort reviews error', err);
+        setLoading((a) => a - 1);
+      });
+  }, [sort]);
 
   useEffect(() => {
     setLoading((a) => a + 1);
@@ -59,7 +76,7 @@ export default function Ratings(props) {
         setLoading((a) => a - 1);
       })
       .catch((err) => {
-        // console.log('axios get /reviews/meta error', err);
+        console.log('axios get /reviews/meta error', err);
         setLoading((a) => a - 1);
       });
   }, [product_id]);
@@ -106,10 +123,10 @@ export default function Ratings(props) {
         </h3>
         <ReviewList
           reviews={reviews}
-          setReviews={setReviews}
           product_id={product_id}
           filter={filter}
           sort={sort}
+          meta={meta}
         />
       </div>
     </GridContainer>

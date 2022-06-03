@@ -30,19 +30,21 @@ const Button = styled.button`
   color: DimGray;
   padding: 26px 6px;
   font-size: 18px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica Neue Thin, sans-serif;
 `;
 
-export default function ReviewList({ reviews, setReviews, product_id, filter, sort }) {
+export default function ReviewList({ reviews, product_id, filter, sort, meta}) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
   const [height, setHeight] = useState(0);
   const elementRef = React.useRef();
   const showModal = () => {
     setShow(true);
+    document.documentElement.style.overflow = 'hidden';
   };
   const hideModal = () => {
     setShow(false);
+    document.documentElement.style.overflow = 'scroll';
   };
 
   useEffect(() => {
@@ -51,23 +53,6 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
 
   useEffect(() => {
     setMore(2);
-  }, [product_id]);
-
-  useEffect(() => {
-    const r = [...reviews];
-    if (sort === 'newest') {
-      r.sort((a, b) => b.date.localeCompare(a.date));
-    } else if (sort === 'helpful') {
-      r.sort((a, b) => b.helpfulness - a.helpfulness);
-    } else if (sort === 'relevant') {
-      r.sort((a, b) => {
-        if (b.date === a.date) {
-          return b.helpfulness - a.helpfulness;
-        }
-        return b.date.localeCompare(a.date);
-      });
-    }
-    setReviews(r);
   }, [product_id, sort]);
 
   return (
@@ -95,7 +80,7 @@ export default function ReviewList({ reviews, setReviews, product_id, filter, so
         <Button type="button" onClick={showModal} data-testid="addReview"> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} handleClose={hideModal} />
+        <Form product_id={product_id} meta={meta} handleClose={hideModal} />
       </Popup>
     </div>
 

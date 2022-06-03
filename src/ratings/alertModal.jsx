@@ -9,7 +9,7 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index: 17;
+  z-index: 18;
 `;
 
 const ModalMain = styled.div`
@@ -20,19 +20,20 @@ const ModalMain = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 17;
+  z-index: 18;
 `;
 
 const CloseButton = styled.label`
-  font-size: 30px;
-  top: 16px;
+  font-size: 20px;
+  top: 0px;
   right: 20px;
   position: absolute;
   cursor: pointer;
   background-color: transparent;
+  color: white;
 `;
 
-function ImgPopup({ handleClose, show, children }) {
+function AlertPopup({ handleClose, show, children }) {
   return (
     <Modal show={show}>
       <div>
@@ -45,4 +46,4 @@ function ImgPopup({ handleClose, show, children }) {
   );
 }
 
-export default ImgPopup;
+export default AlertPopup;

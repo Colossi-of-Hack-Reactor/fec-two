@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import StarRatings from 'react-star-ratings';
+import AlertPopup from './alertModal.jsx';
 
 const FormContainer = styled.div`
-  margin-left: 10%;
-  margin-right: 10%;
+  margin: 0 10% 10%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -13,13 +13,13 @@ const FormContainer = styled.div`
 
 const FormItem = styled.div`
   margin-top: 25px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const Scroll = styled.div`
   width: 100%;
-  height: 800px;
-  overflow: scroll;
+  height: 700px;
+  overflow: hidden scroll;
 `;
 
 const FormHeader = styled.h2`
@@ -32,7 +32,61 @@ const CharContainer = styled.div`
   gap: 15px 30px;
 `;
 
-export default function Form({ product_id, handleClose }) {
+const PhotoContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+`;
+
+const Label = styled.label`
+  cursor: pointer;
+  background-color: WhiteSmoke;
+  color: DimGray;
+  padding: 18px 25px;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+`;
+
+const Summary = styled.textarea`
+  width: 99%;
+  height: 60px;
+`;
+
+const Body = styled.textarea`
+  width: 99%;
+  height: 100px;
+`;
+
+const Input = styled.input`
+  width: 99%;
+  height: 24px;
+`;
+
+const Button = styled.button`
+  background-color: WhiteSmoke;
+  border: none;
+  color: DimGray;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+`;
+
+const Right = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px
+`;
+
+const Alert = styled.label`
+  padding: 50px;
+  background-color: black;
+  color: white;
+`;
+
+export default function Form({ product_id, handleClose, meta }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -40,11 +94,10 @@ export default function Form({ product_id, handleClose }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-  const [characteristics, setChar] = useState(
-    {
-      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
-    },
-  );
+  const [characteristics, setChar] = useState({});
+  const [charId, setCharId] = useState({});
+  const [submit, setSubmit] = useState(false);
+  const defaultChar = { Size: 3, Width: 3, Comfort: 5, Quality: 5, Length: 3, Fit: 3 };
   const chars = {
     Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -54,37 +107,54 @@ export default function Form({ product_id, handleClose }) {
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs long'],
   };
 
+  const [show, setShow] = useState(false);
+
+  const showModal = () => {
+    setShow(true);
+    document.documentElement.style.overflow = 'hidden';
+  };
+  const hideModal = () => {
+    setShow(false);
+  };
+
   const changeRating = (newRating) => {
     setRating(newRating);
   };
 
-  const handleCheck = () => {
-    if (recommend === true) {
+  const handleCheckRecommend = (e) => {
+    if (e.target.value === 'yes') {
+      setRecommend(true);
+    } else if (e.target.value === 'no') {
       setRecommend(false);
     }
-    setRecommend(true);
+  };
+
+  const handleImgChange = (e) => {
+    const images = [...photos];
+    const imgUrl = URL.createObjectURL(e.target.files[0]);
+    if (!images.includes(imgUrl)) {
+      images.push(imgUrl);
+    }
+    setPhotos(images);
+  };
+
+  const handleDelete = (e) => {
+    const images = [...photos];
+    const imgUrl = e.target.src;
+    if (images.includes(imgUrl)) {
+      const i = images.indexOf(imgUrl);
+      images.splice(i, 1);
+    }
+    setPhotos(images);
   };
 
   const handleSelectChange = (e) => {
     const cha = { ...characteristics };
-    cha[e.target.name] = e.target.value;
+    cha[e.target.name] = Number(e.target.value);
     setChar(cha);
   };
 
-  const handleSubmit = () => {
-    axios.post('/reviews', {
-      product_id, rating, summary, body, recommend, name, email, photos, characteristics,
-    })
-      .then(() => {
-        console.log('Added a review! ');
-      })
-      .catch((err) => {
-        console.log('axios post reviews error', err);
-      });
-    handleClose();
-  };
-
-  useEffect(() => {
+  const handleResetForm = () => {
     setRating(5);
     setSummary('');
     setBody('');
@@ -92,10 +162,44 @@ export default function Form({ product_id, handleClose }) {
     setName('');
     setEmail('');
     setPhotos([]);
-    setChar({
-      Size: '3', Width: '3', Comfort: '5', Quality: '5', Length: '3', Fit: '3',
-    });
-  }, [product_id]);
+    const charStorage = {};
+    if (meta.characteristics) {
+      Object.keys(meta.characteristics).forEach((char) => {
+        charStorage[meta.characteristics[char].id] = defaultChar[char];
+        charId[char] = meta.characteristics[char].id;
+      });
+      setChar(charStorage);
+      setCharId(charId);
+    }
+  };
+
+  const handleSubmit = () => {
+    showModal();
+    axios.post('/reviews', {
+      product_id, rating, summary, body, recommend, name, email, photos, characteristics,
+    })
+      .then(() => {
+        console.log('Added a review! ');
+        handleClose();
+        setSubmit(true);
+      })
+      .catch((err) => {
+        console.log('axios post reviews error', err);
+        setShow(true);
+      });
+  };
+
+  useEffect(() => {
+    handleResetForm();
+    setSubmit(false);
+  }, [product_id, meta]);
+
+  useEffect(() => {
+    if (submit === true) {
+      handleResetForm();
+      setSubmit(false);
+    }
+  }, [submit]);
 
   return (
     <div>
@@ -131,9 +235,11 @@ export default function Form({ product_id, handleClose }) {
               <label>
                 <span>Do you recommend this product?</span>
                 &nbsp;&nbsp;
-                <input name="status" type="checkbox" onChange={handleCheck} data-testid="checkbox" />
-                {' '}
+                <input name="recommend" type="radio" value="yes" onChange={handleCheckRecommend} checked="checked" data-testid="checkbox" />
                 Yes
+                &nbsp;&nbsp;
+                <input name="recommend" type="radio" value="no" onChange={handleCheckRecommend} />
+                No
               </label>
             </FormItem>
             <hr />
@@ -144,23 +250,20 @@ export default function Form({ product_id, handleClose }) {
                 </label>
               </h3>
               <CharContainer>
-                {Object.keys(chars).map((char, i) => (
+                {meta.characteristics ? Object.keys(meta.characteristics).map((char, i) => (
                   <div key={i}>
                     <span>{char}</span>
                     &nbsp;
-                    <select name={char} value={characteristics[char]} onChange={handleSelectChange} data-testid="char">
-                      {chars[char].map((elem, i) => (
-                        <option
-                          key={i}
-                          value={i + 1}
-                          label={elem}>
-                          {elem}
-                        </option>
-                      ))}
-                    </select>
+                    {characteristics[charId[char]] ? (
+                      <select name={charId[char]} value={characteristics[charId[char]]} onChange={handleSelectChange} data-testid="char">
+                        {chars[char].map((elem, i) => (
+                          <option key={i} value={i + 1} label={elem}>{elem}</option>
+                        ))}
+                      </select>
+                    ) : null}
                     {' '}
                   </div>
-                ))}
+                )) : null}
               </CharContainer>
             </FormItem>
             <hr />
@@ -170,17 +273,15 @@ export default function Form({ product_id, handleClose }) {
                   <span>Review summary</span>
                 </label>
               </h3>
-              <label>
-                <textarea
-                  value={summary}
-                  maxLength="60"
-                  rows="2"
-                  cols="70"
-                  placeholder="Example: Best purchase ever!"
-                  onChange={(e) => setSummary(e.target.value)}
-                  data-testid="summary"
-                />
-              </label>
+              <Summary
+                value={summary}
+                maxLength="60"
+                placeholder="Example: Best purchase ever!"
+                required
+                autoComplete="off"
+                onChange={(e) => setSummary(e.target.value)}
+                data-testid="summary"
+              />
             </FormItem>
             <hr />
             <FormItem>
@@ -189,20 +290,16 @@ export default function Form({ product_id, handleClose }) {
                   <span>Review body</span>
                 </label>
               </h3>
-              <label>
-                <textarea
-                  maxLength="1000"
-                  minLength="50"
-                  rows="10"
-                  cols="70"
-                  value={body}
-                  placeholder="Why did you like the product or not?"
-                  required
-                  autoComplete="off"
-                  onChange={(e) => setBody(e.target.value)}
-                  data-testid="body"
-                />
-              </label>
+              <Body
+                maxLength="1000"
+                minLength="50"
+                value={body}
+                placeholder="Why did you like the product or not?"
+                required
+                autoComplete="off"
+                onChange={(e) => setBody(e.target.value)}
+                data-testid="body"
+              />
             </FormItem>
             <hr />
             <FormItem>
@@ -211,12 +308,15 @@ export default function Form({ product_id, handleClose }) {
                   <span>Upload your photos</span>
                 </label>
               </h3>
-              <button type="button">
-                <input
-                  type="file"
-                  accept="image/*,video/*"
-                />
-              </button>
+              <PhotoContainer>
+                {photos.map((url, i) =>
+                  <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} style={{ cursor: "not-allowed" }} />
+                )}
+                <Label htmlFor="upload-photo">
+                  +
+                  <input style={{ display: 'none' }} type="file" id="upload-photo" name="photo" accept="image/*,video/*" onChange={handleImgChange} />
+                </Label>
+              </PhotoContainer>
             </FormItem>
             <hr />
             <FormItem>
@@ -225,9 +325,8 @@ export default function Form({ product_id, handleClose }) {
                   <span>What is your name?</span>
                 </label>
               </h3>
-              <span> For privacy reasons, do not use your full name or email address </span>
               <label>
-                <input
+                <Input
                   value={name}
                   maxLength="60"
                   width="100%"
@@ -236,6 +335,9 @@ export default function Form({ product_id, handleClose }) {
                   data-testid="name"
                 />
               </label>
+              <Right>
+                <small> For privacy reasons, do not use your full name or email address </small>
+              </Right>
             </FormItem>
             <hr />
             <FormItem>
@@ -244,9 +346,8 @@ export default function Form({ product_id, handleClose }) {
                   <span>Your email</span>
                 </label>
               </h3>
-              <span> For authentication reasons, you will not be emailed </span>
-              <label>
-                <input
+              <div>
+                <Input
                   type="email"
                   required
                   value={email}
@@ -255,13 +356,20 @@ export default function Form({ product_id, handleClose }) {
                   onChange={(e) => setEmail(e.target.value)}
                   data-testid="email"
                 />
-              </label>
+              </div>
+              <Right>
+                <small> For authentication reasons, you will not be emailed </small>
+              </Right>
             </FormItem>
-            <hr />
             <FormItem>
-              <button type="button" onClick={handleSubmit} data-testid="submit">
-                <span>Submit review</span>
-              </button>
+              <Right>
+                <Button type="button" onClick={handleSubmit} data-testid="submit">
+                  Submit review
+                </Button>
+              </Right>
+              <AlertPopup show={show} handleClose={hideModal}>
+                <Alert>Please complete the form!</Alert>
+              </AlertPopup>
             </FormItem>
           </form>
         </FormContainer>
