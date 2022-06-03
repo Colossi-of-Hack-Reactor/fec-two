@@ -9,16 +9,18 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   display: ${({ show }) => (show ? 'block' : 'none')};
+  z-index: 16;
 `;
 
 const ModalMain = styled.div`
   position: fixed;
-  background: white;
+  background: #f7f9fa;
   width: 60%;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 16;
 `;
 
 const CloseButton = styled.label`
@@ -27,7 +29,7 @@ const CloseButton = styled.label`
   right: 20px;
   position: absolute;
   cursor: pointer;
-  background-color: white;
+  background-color: #f7f9fa;
 `;
 
 function Popup({ handleClose, show, children }) {

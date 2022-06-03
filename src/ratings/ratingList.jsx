@@ -20,7 +20,7 @@ const Container = styled.div`
 const Box = styled.label`
   text-decoration: underline;
   &:hover {
-    color: tomato;
+    color: rgb(230, 67, 47);
   }
 `;
 
@@ -38,13 +38,44 @@ const Chars = styled.div`
 `;
 
 const Char = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 15px;
 `;
 
-export default function RatingList({ meta, handleFilterRating }) {
+const Span = styled.span`
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+`;
+
+const Clear = styled.div`
+  color: blue;
+  &:hover {
+    color: rgb(230, 67, 47);
+    text-decoration: underline;
+  }
+`;
+
+const FilterTag = styled.div`
+  padding: 5px 7px;
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  font-family: Arial, Helvetica Neue Thin, sans-serif;
+  border: none;
+  box-shadow: 0px 0px 3px 3px rgba(0,0,0, .2);
+  margin: 20px 0;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px
+`;
+
+export default function RatingList({ meta, handleFilterRating, filter, setFilter }) {
   const starRange = [5, 4, 3, 2, 1];
   const chars = {
     Size: ['Too small', 'Perfect', 'Too wide'],
@@ -84,7 +115,19 @@ export default function RatingList({ meta, handleFilterRating }) {
                 starRatedColor="DimGray"
                 starEmptyColor="Gainsboro"
               />
-              <h4>{recommend}% of reviews recommend this product</h4>
+              <h5>{recommend}% of reviews recommend this product</h5>
+              {Object.keys(filter).length ? (
+                <TagContainer>
+                  {/* <div></div>filtered by */}
+                  {Object.keys(filter).map((val, i) =>
+                    <FilterTag key={i}>{val}{' '}star</FilterTag>)}
+                  <Clear>
+                    <FilterTag>
+                    <label onClick={() => setFilter({})}>clear filter</label>
+                    </FilterTag>
+                  </Clear>
+                </TagContainer>
+              ) : null}
               {starRange.map((rating, i) => (
                 <div key={i}>
                   <Container>
@@ -101,7 +144,7 @@ export default function RatingList({ meta, handleFilterRating }) {
                     meta.characteristics
                       ? Object.keys(meta.characteristics).map((char, i) => (
                         <Chars key={i}>
-                          <span>{char}</span>
+                          <Span>{char}</Span>
                           <ArrowDown
                             percentage={((meta.characteristics[char].value / 5) * 100).toFixed(0)}
                           />

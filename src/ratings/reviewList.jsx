@@ -6,37 +6,39 @@ import Popup from './modal.jsx'
 
 const Scroll = styled.div`
   max-height: 700px;
-  overflow: hidden ${({ height }) => (height > 400 ? 'scroll' : 'hidden')};
-  margin-top: 30px;
+  overflow: hidden ${({ scroll }) => (scroll ? 'scroll' : 'hidden')};
 `;
 
 const ReviewContainer = styled.div`
-  margin: 50px 50px 0 0;
+  margin: 0 50px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
   justify-content: flex-start;
 `;
 
 const ButtonContainer = styled.div`
   display: grid;
   grid-template-columns: 200px 200px;
-  margin-top: 30px;
-  gap: 20px;
+  margin-top: 70px;
+  gap: 30px;
 `;
 
 const Button = styled.button`
-  background-color: white;
-  color: DimGray;
+  background-color: WhiteSmoke;
+  color: Black;
   padding: 26px 6px;
   font-size: 18px;
   font-family: Arial, Helvetica Neue Thin, sans-serif;
+  border: none;
+  box-shadow: 0px 0px 6px 6px rgba(0,0,0, .2);
+  cursor: pointer;
 `;
 
-export default function ReviewList({ reviews, product_id, filter, sort, meta}) {
+export default function ReviewList({ reviews, product_id, filter, sort, meta, product}) {
   const [more, setMore] = useState(2);
   const [show, setShow] = useState(false);
-  const [height, setHeight] = useState(0);
+  const [scroll, setScroll] = useState(false);
   const elementRef = React.useRef();
   const showModal = () => {
     setShow(true);
@@ -48,16 +50,13 @@ export default function ReviewList({ reviews, product_id, filter, sort, meta}) {
   };
 
   useEffect(() => {
-    setHeight(elementRef.current.clientHeight);
-  }, [reviews, filter]);
-
-  useEffect(() => {
     setMore(2);
-  }, [product_id, sort]);
+    setScroll(false);
+  }, [product_id, sort, reviews]);
 
   return (
     <div data-testid="reviewList">
-      <Scroll height={height}>
+      <Scroll scroll={scroll}>
         <ReviewContainer ref={elementRef}>
           {reviews.map((review, i) => {
             if (i < more) {
@@ -74,15 +73,14 @@ export default function ReviewList({ reviews, product_id, filter, sort, meta}) {
       </Scroll>
       <ButtonContainer>
         {more < reviews.length
-          ? <Button type="button" onClick={() => setMore(more + 2)}> MORE REVIEWS </Button>
+          ? <Button type="button" onClick={() => {setMore(more + 2); setScroll(true); }}> MORE REVIEWS </Button>
           : null}
         {' '}
         <Button type="button" onClick={showModal} data-testid="addReview"> ADD A REVIEW + </Button>
       </ButtonContainer>
       <Popup show={show} handleClose={hideModal}>
-        <Form product_id={product_id} meta={meta} handleClose={hideModal} />
+        <Form product_id={product_id} meta={meta} product={product} handleClose={hideModal} />
       </Popup>
     </div>
-
   );
 }

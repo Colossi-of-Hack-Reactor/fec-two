@@ -12,8 +12,8 @@ const FormContainer = styled.div`
 `;
 
 const FormItem = styled.div`
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 15px;
+  margin-bottom: 20px;
 `;
 
 const Scroll = styled.div`
@@ -22,7 +22,7 @@ const Scroll = styled.div`
   overflow: hidden scroll;
 `;
 
-const FormHeader = styled.h2`
+const FormHeader = styled.h3`
   margin: 10% 10% 2%;
 `;
 
@@ -39,9 +39,9 @@ const PhotoContainer = styled.div`
   justify-content: flex-start;
 `;
 
-const Label = styled.label`
+const UploadLabel = styled.label`
   cursor: pointer;
-  background-color: WhiteSmoke;
+  background-color: #F0F0F0;
   color: DimGray;
   padding: 18px 25px;
   font-size: 24px;
@@ -65,12 +65,12 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  background-color: WhiteSmoke;
+  background-color: black;
   border: none;
-  color: DimGray;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif;
+  color: WhiteSmoke;
+  padding: 18px 18px;
+  font-size: 18px;
+  font-family: Arial, Helvetica Lighter, sans-serif;
   cursor: pointer;
 `;
 
@@ -86,7 +86,7 @@ const Alert = styled.label`
   color: white;
 `;
 
-export default function Form({ product_id, handleClose, meta }) {
+export default function Form({ product_id, handleClose, meta, product }) {
   const [rating, setRating] = useState(5);
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -205,21 +205,18 @@ export default function Form({ product_id, handleClose, meta }) {
     <div>
       <FormHeader>
         Write Your Review
-        <small>
-          &nbsp; - &nbsp;About the product
-          {' '}
-          {product_id}
-        </small>
+        &nbsp;
+        <small>About the{' '}{product.name}</small>
       </FormHeader>
       <Scroll>
         <FormContainer>
           <form data-testid="form">
             <FormItem>
-              <h3>
+              <h4>
                 <label>
-                  <span>Overall rating</span>
+                  <span>Overall rating *</span>
                 </label>
-              </h3>
+              </h4>
               <StarRatings
                 rating={rating}
                 starDimension="30px"
@@ -244,11 +241,11 @@ export default function Form({ product_id, handleClose, meta }) {
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4>
                 <label>
-                  <span>Characteristics</span>
+                  <span>Size & Fit *</span>
                 </label>
-              </h3>
+              </h4>
               <CharContainer>
                 {meta.characteristics ? Object.keys(meta.characteristics).map((char, i) => (
                   <div key={i}>
@@ -268,11 +265,11 @@ export default function Form({ product_id, handleClose, meta }) {
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4>
                 <label>
-                  <span>Review summary</span>
+                  <span>Review title *</span>
                 </label>
-              </h3>
+              </h4>
               <Summary
                 value={summary}
                 maxLength="60"
@@ -285,11 +282,11 @@ export default function Form({ product_id, handleClose, meta }) {
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4>
                 <label>
-                  <span>Review body</span>
+                  <span>Review *</span>
                 </label>
-              </h3>
+              </h4>
               <Body
                 maxLength="1000"
                 minLength="50"
@@ -303,28 +300,28 @@ export default function Form({ product_id, handleClose, meta }) {
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4>
                 <label>
                   <span>Upload your photos</span>
                 </label>
-              </h3>
+              </h4>
               <PhotoContainer>
                 {photos.map((url, i) =>
                   <img src={url} key={i} height="60px" width="60px" alt="preview" onClick={handleDelete} style={{ cursor: "not-allowed" }} />
                 )}
-                <Label htmlFor="upload-photo">
+                <UploadLabel htmlFor="upload-photo">
                   +
                   <input style={{ display: 'none' }} type="file" id="upload-photo" name="photo" accept="image/*,video/*" onChange={handleImgChange} />
-                </Label>
+                </UploadLabel>
               </PhotoContainer>
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4>
                 <label>
-                  <span>What is your name?</span>
+                  <span>What is your name? *</span>
                 </label>
-              </h3>
+              </h4>
               <label>
                 <Input
                   value={name}
@@ -341,11 +338,13 @@ export default function Form({ product_id, handleClose, meta }) {
             </FormItem>
             <hr />
             <FormItem>
-              <h3>
+              <h4
+              >
                 <label>
-                  <span>Your email</span>
+                  <span>Your email *</span>
                 </label>
-              </h3>
+              </h4
+              >
               <div>
                 <Input
                   type="email"

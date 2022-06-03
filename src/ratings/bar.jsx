@@ -7,8 +7,9 @@ const Parentdiv = styled.div`
   background-color: WhiteSmoke;
   margin-top: 15px;
   margin-bottom: 14px;
+  border: 2px solid transparent;
   &:hover {
-    border: 2px solid tomato;
+    border: 2px solid rgb(230, 67, 47);
     background-color: #ffe6de;
   }
 `;
@@ -16,7 +17,7 @@ const Parentdiv = styled.div`
 const Childdiv = styled.div`
   height: 100%;
   width: ${({progress}) => (progress)}%;
-  background-color: DimGray;
+  background-color: black;
   text-align: right;
 `;
 
