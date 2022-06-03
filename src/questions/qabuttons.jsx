@@ -4,18 +4,30 @@ import QuestionModal from "./questionmodal.jsx";
 import ShowLessQuestions from "./showlessquestions.jsx";
 
 const Wrap = styled.div`
-  margin-top: 3%;
+display: grid;
+grid-template-columns: 200px 200px 200px;
+margin-top: 70px;
+gap: 30px;
 `;
 const AddQuestion = styled.button`
-  font-size: 12px;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  margin-left: 4%;
+background-color: WhiteSmoke;
+color: Black;
+padding: 6px 6px;
+font-size: 18px;
+font-family: Arial, Helvetica Neue Thin, sans-serif;
+border: none;
+box-shadow: 0px 0px 6px 6px rgba(0,0,0, .2);
+cursor: pointer;
 `;
 const MoreQ = styled.button`
-  font-size: 12px;
-  padding-top: 2%;
-  padding-bottom: 2%;
+background-color: WhiteSmoke;
+color: Black;
+padding: 26px 6px;
+font-size: 18px;
+font-family: Arial, Helvetica Neue Thin, sans-serif;
+border: none;
+box-shadow: 0px 0px 6px 6px rgba(0,0,0, .2);
+cursor: pointer;
 `;
 
 const QAButtons = function QAButtons({

@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const ShowLessButton = styled.button`
-  font-size: 14px;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  margin-left: 4%;
+background-color: WhiteSmoke;
+color: Black;
+padding: 26px 6px;
+font-size: 18px;
+font-family: Arial, Helvetica Neue Thin, sans-serif;
+border: none;
+box-shadow: 0px 0px 6px 6px rgba(0,0,0, .2);
+cursor: pointer;
 `;
 
 const ShowLessQuestions = function ShowLessQuestions({
