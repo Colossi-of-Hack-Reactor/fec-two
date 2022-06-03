@@ -74,9 +74,10 @@ const ProductCard = function ProductCard({
   return (
     <div style={{ marginLeft: '20px', marginRight: '20px', position: 'relative' }}>
       {product.id !== product_id ? (
+        <div>
         <SlimDiv role="button" tabIndex="0" onKeyDown={(e) => detailedView(e)} onClick={(e) => detailedView(e)}>
           <UnisizeImg alt={imgAltText()} src={(index !== undefined && cards[index].photos[0].thumbnail_url) ? cards[index].photos[0].thumbnail_url : '/assets/android-chrome-192x192.png'} />
-          <ul style={{ padding: '0px', margin:'0px', listStyleType: 'none' }}>
+          <ul style={{ padding: '0px', margin: '0px', listStyleType: 'none' }}>
             <li>{product.name}</li>
             <li>{`(${product.category})`}</li>
             {(index !== undefined && cards[index].sale_price) && <li style={{ color: 'red' }}>{`$${cards[index].sale_price}`}</li>}
@@ -86,7 +87,7 @@ const ProductCard = function ProductCard({
             <li>
               <div style={{ width: '200px', height: '20px' }}>
                 <StarRatings
-                  style={{margin: '0px', padding: '0px'}}
+                  style={{ margin: '0px', padding: '0px' }}
                   alt={`the average customer rating for this product is ${ratingAltText(rating)}stars`}
                   rating={someNum(rating)}
                   starDimension="20px"
@@ -98,10 +99,16 @@ const ProductCard = function ProductCard({
               <div>{`(Average Rating: ${rating.toFixed(1)})`}</div>
             </li>
           </ul>
-          {!inOutfits ? <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '30px', height: '30px' }} /></LeftActionBut> : <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '30px', height: '30px' }} src='/assets/minus-round-line.svg' /></LeftActionBut>}
-      {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/three-stars.png" /></RightActionBut>}
+
         </SlimDiv>
-      ) : <SlimDiv>{!inOutfits ? <LeftActionBut style={{paddingLeft: '17px', paddingTop: '30px'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{paddingTop: '30px'}}>Add main product to outfits!</div></LeftActionBut> : <LeftActionBut style={{ justifySelf:'center'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" /></LeftActionBut>}</SlimDiv>}
+        {!inOutfits ? <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '30px', height: '30px' }} /></LeftActionBut> : <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '30px', height: '30px' }} src='/assets/minus-round-line.svg' /></LeftActionBut>}
+        {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/three-stars.png" /></RightActionBut>}</div>
+      ) : <SlimDiv>{!inOutfits ?
+        <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{ paddingTop: '30px' }}>Add main product to outfits!</div>
+        </LeftActionBut> :
+        <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{ paddingTop: '30px' }}>REMOVE main product from  outfits!</div>
+        </LeftActionBut>
+      }</SlimDiv>}
     </div>
   );
 };
