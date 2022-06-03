@@ -99,9 +99,9 @@ const ProductCard = function ProductCard({
             </li>
           </ul>
           {!inOutfits ? <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '30px', height: '30px' }} /></LeftActionBut> : <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '30px', height: '30px' }} src='/assets/minus-round-line.svg' /></LeftActionBut>}
-      {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/stars-color.png" /></RightActionBut>}
+      {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/three-stars.png" /></RightActionBut>}
         </SlimDiv>
-      ) : <SlimDiv>{!inOutfits ? <LeftActionBut style={{paddingLeft: '17px', paddingTop: '30px'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{paddingTop: '30px'}}>Add main product to outfits!</div> </LeftActionBut>: <LeftActionBut style={{ justifySelf:'center'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" /></LeftActionBut>}</SlimDiv>}
+      ) : <SlimDiv>{!inOutfits ? <LeftActionBut style={{paddingLeft: '17px', paddingTop: '30px'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{paddingTop: '30px'}}>Add main product to outfits!</div></LeftActionBut> : <LeftActionBut style={{ justifySelf:'center'}} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" /></LeftActionBut>}</SlimDiv>}
     </div>
   );
 };

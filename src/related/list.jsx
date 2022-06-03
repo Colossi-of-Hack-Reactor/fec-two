@@ -170,15 +170,15 @@ export default List;
 
 function RightButton({ showRightArrow, shift, setShift }) {
   return (
-    <div style={{ alignSelf: 'center' }}>
-      {showRightArrow && <button type="button" onClick={() => setShift(shift + 1)}>Whats to the rigth</button>}
+    <div style={{ paddingTop: '250px' }}>
+      {showRightArrow && <img style={{ width:'50px', height: '50px'}} src="/assets/angle-circle-right.svg" type="button" onClick={() => setShift(shift + 1)}/>}
     </div>
   );
 }
 function LeftButton({ showLeftArrow, shift, setShift }) {
   return (
-    <div style={{ alignSelf: 'center' }}>
-      {showLeftArrow && <button type="button" onClick={() => setShift(shift - 1)}>Whats to the left?</button>}
+    <div style={{ paddingTop: '250px' }}>
+      {showLeftArrow && <img style={{ width:'50px', height: '50px'}} src="/assets/angle-circle-left.svg" type="button" onClick={() => setShift(shift - 1)}/>}
     </div>
   );
 }
