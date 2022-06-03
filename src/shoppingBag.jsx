@@ -12,11 +12,12 @@ const SidePanel = styled.div`
   z-index: 6;
   border-left: 2px solid black;
   background-color: #e9ecef;
-  transform: translateX(${(props) => (props.show ? '0px' : '305px')});
+  transform: translateX(${(props) => (props.show ? '0px' : '400px')});
   transition: .5s ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0px 0px 6px 6px rgba(0,0,0, .5);
 `;
 
 const Header = styled.span`
@@ -29,10 +30,15 @@ const Total = styled.span`
   display: flex;
   justify-content: flex-end;
   padding-right: 8px;
+  padding-bottom: 8px;
+`;
+
+const AnotherDiv = styled.div`
+  position: relative;
 `;
 
 function ShoppingBag(props) {
-  const { show, cart, setCart } = props;
+  const { showCart, setShowCart, cart, setCart } = props;
 
   let total = 0;
   cart.forEach((p) => {
@@ -44,15 +50,15 @@ function ShoppingBag(props) {
   });
 
   return (
-    <SidePanel show={show}>
-      <div>
+    <SidePanel show={showCart}>
+      <AnotherDiv>
         <Header>
           <h3>Your Bag</h3>
         </Header>
         {cart.map((p, i) => (
           <BagItem key={p.sku} p={p} i={i} cart={cart} setCart={setCart} />
         ))}
-      </div>
+      </AnotherDiv>
       <Total>Total: ${total.toFixed(2)}</Total>
     </SidePanel>
   );

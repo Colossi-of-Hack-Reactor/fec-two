@@ -8,7 +8,7 @@ import Questions from './questions/questions.jsx';
 import Ratings from './ratings/ratings.jsx';
 import ShoppingBag from './shoppingBag.jsx';
 import Search from './search/search.jsx';
-import { ShoppingBagSVG } from './overview/overviewAssets.js';
+import { ShoppingBagSVG, SearchLink } from './overview/overviewAssets.js';
 
 const Loading = styled.div`
   position: fixed;
@@ -27,6 +27,7 @@ const Header = styled.div`
   background-color: black;
   color: #e9ecef;
   width: 100%;
+  height: 110px;
   top: 0;
   left: 0;
   z-index: 5;
@@ -37,7 +38,7 @@ const Header = styled.div`
 const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 1000px;
+  max-width: 80vw;
   width: 100%;
 `;
 
@@ -49,9 +50,9 @@ const ShoppingBagDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  cursor: pointer;
   position: relative;
   svg {
+    cursor: pointer;
     fill: #e9ecef;
     height: 30px;
     width: 30px;
@@ -81,17 +82,37 @@ const Badge = styled.div`
   align-items: center;
 `;
 
+const SearchDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin-left: 16px;
+
+`;
+
+const SearchIcon = styled.img`
+
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+`;
+
+const IconDiv = styled.div`
+  display: flex;
+`;
+
 function App() {
   const [product_id, setProduct_id] = useState(37311);
   const [loading, setLoading] = useState(0);
   const [outfitsIdList, setOutfitsIdList] = useState([]);
-  const [outfits, setOutfits] = useState({});
   const [reviews, setReviews] = useState([]);
   const [meta, setMeta] = useState({});
   const [product, setProduct] = useState({});
   const ratingsRef = React.useRef();
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     function handleInteraction(e) {
@@ -138,16 +159,25 @@ function App() {
             <div>Free express shipping on $200+ orders for rewards members!</div>
             <div>Sign up now!</div>
           </Promos>
-          <ShoppingBagDiv onClick={() => setShowCart((a) => !a)}>
-            <ShoppingBagSVG />
-            {cart.length ? (
-              <Badge>
-                <h6>{cart.length}</h6>
-              </Badge>
-            ) : ''}
-          </ShoppingBagDiv>
+          <IconDiv>
+            <ShoppingBagDiv>
+              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)}/>
+              {cart.length ? (
+                <Badge>
+                  <h6>{cart.length}</h6>
+                </Badge>
+              ) : ''}
+            </ShoppingBagDiv>
+            <SearchDiv>
+              <SearchIcon src={SearchLink} onClick={() => setShowSearch(true)} />
+            </SearchDiv>
+          </IconDiv>
         </HeaderDiv>
-        <Search setProduct_id={setProduct_id} />
+        <Search
+          setProduct_id={setProduct_id}
+          showSearch={showSearch}
+          setShowSearch={setShowSearch}
+        />
       </Header>
       <Overview
         product_id={product_id}
@@ -184,7 +214,7 @@ function App() {
         ratingsRef={ratingsRef}
         product={product}
       />
-      <ShoppingBag show={showCart} cart={cart} setCart={setCart} />
+      <ShoppingBag showCart={showCart} setShowCart={setShowCart} cart={cart} setCart={setCart} />
     </>
   );
 }

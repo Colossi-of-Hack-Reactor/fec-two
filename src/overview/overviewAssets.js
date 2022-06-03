@@ -1,4 +1,7 @@
 import ShoppingBagSVG from '../../public/assets/shopping-bag.svg';
+import CloseArrowSVG from '../../public/assets/arrow-end-right.svg';
+import SearchSVG from '../../public/assets/search-line.svg';
+
 const CloseMarkLink = '/assets/close-round-line.svg';
 const LeftArrowLink = '/assets/angle-circle-left.svg';
 const RightArrowLink = '/assets/angle-circle-right.svg';
@@ -17,10 +20,18 @@ const InstagramLink = '/assets/instagram-brands.svg';
 const ExpandLink = '/assets/expand.svg';
 const CollapseLink = '/assets/collapse.svg';
 const ShoppingBagLink = '/assets/shopping-bag.svg';
+const CloseArrowLink = '/assets/double-arrow-right.svg';
+const SearchLink = '/assets/search-line.svg';
+const CloseLink = '/assets/close-line-light.svg';
+
+// double-arrow-right
+// arrow-end-right
+//
 
 export {
   CloseMarkLink, LeftArrowLink, RightArrowLink, UpArrowLink, DownArrowLink,
   noImageLink, CheckMarkLink, PlusLink, MinusLink, EmptyStarLink, FullStarLink,
   FacebookLink, TwitterLink, PinterestLink, InstagramLink, ExpandLink, CollapseLink,
-  ShoppingBagLink, ShoppingBagSVG,
+  ShoppingBagLink, ShoppingBagSVG, CloseArrowSVG, CloseArrowLink, SearchLink, SearchSVG,
+  CloseLink,
 };

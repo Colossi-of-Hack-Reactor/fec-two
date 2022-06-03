@@ -47,7 +47,7 @@ const FeatsDiv = styled.div`
 `;
 
 const OverallDiv = styled.div`
-  padding-top: 120px;
+  padding-top: 135px;
 `;
 
 const StyleDiv = styled.div`
