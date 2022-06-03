@@ -115,6 +115,7 @@ function App() {
   const [meta, setMeta] = useState({});
   const [product, setProduct] = useState({});
   const ratingsRef = React.useRef();
+  const searchRef = React.useRef();
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -183,7 +184,13 @@ function App() {
               ) : ''}
             </ShoppingBagDiv>
             <SearchDiv>
-              <SearchIcon src={SearchLink} onClick={() => setShowSearch(true)} />
+              <SearchIcon src={SearchLink} onClick={
+                () => {
+                setShowSearch(true);
+                if (searchRef.current) {
+                  searchRef.current.focus();
+                }}
+                } />
             </SearchDiv>
           </IconDiv>
         </HeaderDiv>
@@ -191,6 +198,7 @@ function App() {
           setProduct_id={setProduct_id}
           showSearch={showSearch}
           setShowSearch={setShowSearch}
+          searchRef={searchRef}
         />
       </Header>
       <Overview

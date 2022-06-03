@@ -94,7 +94,7 @@ const Background = styled.div`
 function Search(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const { setProduct_id, showSearch, setShowSearch } = props;
+  const { setProduct_id, showSearch, setShowSearch, searchRef } = props;
 
   useEffect(() => {
     if (searchTerm.length >= 3) {
@@ -124,6 +124,7 @@ function Search(props) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search"
+            ref={searchRef}
           />
           <CloseDiv>
             <CloseSearch src={CloseLink} onClick={() => {setSearchTerm(''); setShowSearch(false)}}>
