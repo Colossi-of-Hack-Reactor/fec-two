@@ -85,8 +85,9 @@ const ProductCard = function ProductCard({
             {((index !== undefined && !cards[index].sale_price) || index === undefined) && <li>{`$${product.default_price}`}</li>}
             {(index !== undefined && !cards[index].sale_price) && <li><br /></li>}
             <li>
-              <div style={{ width: '200px', height: '40px' }}>
+              <div style={{ width: '200px', height: '20px' }}>
                 <StarRatings
+                  style={{margin: '0px', padding: '0px'}}
                   alt={`the average customer rating for this product is ${ratingAltText(rating)}stars`}
                   rating={someNum(rating)}
                   starDimension="20px"
