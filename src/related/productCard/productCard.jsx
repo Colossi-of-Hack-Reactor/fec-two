@@ -72,7 +72,7 @@ const ProductCard = function ProductCard({
   };
   findASaleOrAPic(cards); // for test only
   return (
-    <div style={{ marginLeft: '20px', marginRight: '20px', position: 'relative' }}>
+    <div style={{ cursor: 'pointer', marginLeft: '20px', marginRight: '20px', position: 'relative' }}>
       {product.id !== product_id ? (
         <div>
         <SlimDiv role="button" tabIndex="0" onKeyDown={(e) => detailedView(e)} onClick={(e) => detailedView(e)}>
