@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const compression = require('compression');
 const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
@@ -11,6 +12,7 @@ const searchAPI = require('./searchAPI');
 const app = express();
 
 app.use(express.json());
+app.use(compression());
 app.use(cors());
 app.use((req, res, next) => {
   console.log(req.method, req.url);
