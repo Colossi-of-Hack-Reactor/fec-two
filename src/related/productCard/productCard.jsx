@@ -101,14 +101,14 @@ const ProductCard = function ProductCard({
           </ul>
 
         </SlimDiv>
-        {!inOutfits ? <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '30px', height: '30px' }} /></LeftActionBut> : <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '30px', height: '30px' }} src='/assets/minus-round-line.svg' /></LeftActionBut>}
-        {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/three-stars.png" /></RightActionBut>}</div>
-      ) : <SlimDiv>{!inOutfits ?
-        <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{ paddingTop: '30px' }}>Add main product to outfits!</div>
-        </LeftActionBut> :
-        <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" style={{ width: '200px', height: '200px' }} /><div style={{ paddingTop: '30px' }}>REMOVE main product from  outfits!</div>
-        </LeftActionBut>
-      }</SlimDiv>}
+          {!inOutfits ? <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '30px', height: '30px' }} alt="add to outfit" /></LeftActionBut> : <LeftActionBut type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '30px', height: '30px' }} src='/assets/minus-round-line.svg' alt="remove from outfit" /></LeftActionBut>}
+          {product.id !== product_id && <RightActionBut><img style={{ width: '30px', height: '30px' }} src="/assets/three-stars.png" alt="compare" /></RightActionBut>}</div>
+        ) : <SlimDiv>{!inOutfits ?
+          <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img src="/assets/plus-round-line.svg" style={{ width: '200px', height: '200px' }} alt="add to outfit" /><div style={{ paddingTop: '30px' }}>Add main product to outfits!</div>
+          </LeftActionBut> :
+          <LeftActionBut style={{ paddingLeft: '17px', paddingTop: '30px' }} type="button" aria-label="add to outfit" onClick={(e) => toggleOutfitStatus(e)}><img style={{ width: '200px', height: '200px' }} src="/assets/minus-round-line.svg" alt="remove from outfit" /><div style={{ paddingTop: '30px' }}>REMOVE main product from  outfits!</div>
+          </LeftActionBut>
+        }</SlimDiv>}
     </div>
   );
 };

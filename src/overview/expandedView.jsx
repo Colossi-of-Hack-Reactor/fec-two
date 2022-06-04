@@ -122,6 +122,7 @@ function ExpandedView(props) {
                   cur="w-resize"
                   zidx={11}
                   data-testid="expandedLeftArrow"
+                  alt="previous image"
                 />
               </ArrowContainer>
             </ArrowDiv>
@@ -133,12 +134,18 @@ function ExpandedView(props) {
                   cur="e-resize"
                   zidx={11}
                   data-testid="expandedRightArrow"
+                  alt="next image"
                 />
               </ArrowContainer>
             </ArrowDiv>
           </BigArrowDiv>
           <ExpandedWhiteBG />
-          <CloseButton onClick={() => setZoom(false)} src={CloseMarkLink} data-testid="closeExpanded" />
+          <CloseButton
+            onClick={() => setZoom(false)}
+            src={CloseMarkLink}
+            data-testid="closeExpanded"
+            alt="close gallery"
+          />
           <ToggleFullscreenBG
             onClick={() => {
               toggleFullscreen();
@@ -146,7 +153,7 @@ function ExpandedView(props) {
             }}
             data-testid="toggleFullscreen"
           >
-            <ToggleFullscreenButton src={ExpandLink} />
+            <ToggleFullscreenButton src={ExpandLink} alt="toggle fullscreen" />
           </ToggleFullscreenBG>
         </>
       )}

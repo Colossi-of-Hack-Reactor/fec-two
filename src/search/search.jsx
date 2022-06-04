@@ -4,10 +4,6 @@ import axios from 'axios';
 import SearchResult from './searchResult.jsx';
 import { CloseLink } from '../overview/overviewAssets.js';
 
-const SearchArea = styled.div`
-  position: relative;
-  display: inline-block;
-`;
 const SearchDropdown = styled.div`
   margin-top: 4px;
   position: absolute;
@@ -38,12 +34,6 @@ const SearchInput = styled.input`
 const SearchBox = styled.div`
   display: flex;
   justify-content: space-between;
-`
-const SearchDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
 `;
 
 const SearchBanner = styled.div`
@@ -89,7 +79,7 @@ const Background = styled.div`
   ${(props) => (props.show ? '' : 'display: none;')}
   opacity: ${(props) => (props.show ? '1' : '0')};
   transition: opacity .5s ease-in-out;
-`
+`;
 
 function Search(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -119,7 +109,6 @@ function Search(props) {
       <Background show={showSearch} />
       <SearchBanner show={showSearch}>
         <SearchBox>
-
           <SearchInput
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -127,8 +116,14 @@ function Search(props) {
             ref={searchRef}
           />
           <CloseDiv>
-            <CloseSearch src={CloseLink} onClick={() => {setSearchTerm(''); setShowSearch(false)}}>
-            </CloseSearch>
+            <CloseSearch
+              src={CloseLink}
+              onClick={() => {
+                setSearchTerm('');
+                setShowSearch(false);
+              }}
+              alt="close search"
+            />
           </CloseDiv>
           {searchResults.length ? (
             <SearchDropdown show>
@@ -152,7 +147,7 @@ function Search(props) {
         </SearchBox>
       </SearchBanner>
     </>
- );
+  );
 }
 
 export default Search;

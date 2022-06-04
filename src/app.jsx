@@ -176,7 +176,7 @@ function App() {
           </Promos>
           <IconDiv>
             <ShoppingBagDiv>
-              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)} />
+              <ShoppingBagSVG onClick={() => setShowCart((a) => !a)} alt="shopping bag" />
               {cart.length ? (
                 <Badge onClick={() => setShowCart((a) => !a)}>
                   <h6>{cart.length}</h6>
@@ -184,13 +184,18 @@ function App() {
               ) : ''}
             </ShoppingBagDiv>
             <SearchDiv>
-              <SearchIcon src={SearchLink} onClick={
-                () => {
-                setShowSearch(true);
-                if (searchRef.current) {
-                  searchRef.current.focus();
-                }}
-                } />
+              <SearchIcon
+                src={SearchLink}
+                onClick={
+                  () => {
+                    setShowSearch(true);
+                    if (searchRef.current) {
+                      searchRef.current.focus();
+                    }
+                  }
+                }
+                alt="search"
+              />
             </SearchDiv>
           </IconDiv>
         </HeaderDiv>

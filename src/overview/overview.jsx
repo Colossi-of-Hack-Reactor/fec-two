@@ -255,38 +255,37 @@ function Overview(props) {
                     <StarButton
                       src={favorite ? FullStarLink : EmptyStarLink}
                       onClick={()=>setFavorite((f) => !f)}
+                      alt="toggle favorite"
                     />
-                    {/* <img src={EmptyStarLink} alt="empty star" />
-                    <img src={FullStarLink} alt="full star" /> */}
                   </SelectSpan>
                 </BagOutfitDiv>
               )
             }
             <SocialDiv>
-              <SocialImg src={FacebookLink} />
-              <SocialImg src={TwitterLink} />
-              <SocialImg src={PinterestLink} />
-              <SocialImg src={InstagramLink} />
+              <SocialImg src={FacebookLink} alt="facebook icon" />
+              <SocialImg src={TwitterLink} alt="twitter icon" />
+              <SocialImg src={PinterestLink} alt="pinterest icon" />
+              <SocialImg src={InstagramLink} alt="instagram icon" />
             </SocialDiv>
-        <WordsDiv>
-          <SloDesDiv data-testid="sloganDescription">
-            <p style={{ fontWeight: 'bold' }}>
-              {product.slogan}
-            </p>
-            <p style={{ fontStyle: 'italic' }}>
-              {product.description}
-            </p>
-          </SloDesDiv>
-          <FeatsDiv data-testid="features">
-            {product.features.map((feat, i) => (
-              <p key={feat.feature + i}>
-                {feat.feature}
-                {': '}
-                {feat.value}
-              </p>
-            ))}
-          </FeatsDiv>
-        </WordsDiv>
+            <WordsDiv>
+              <SloDesDiv data-testid="sloganDescription">
+                <p style={{ fontWeight: 'bold' }}>
+                  {product.slogan}
+                </p>
+                <p style={{ fontStyle: 'italic' }}>
+                  {product.description}
+                </p>
+              </SloDesDiv>
+              <FeatsDiv data-testid="features">
+                {product.features.map((feat, i) => (
+                  <p key={feat.feature + i}>
+                    {feat.feature}
+                    {': '}
+                    {feat.value}
+                  </p>
+                ))}
+              </FeatsDiv>
+            </WordsDiv>
           </InfoDiv>
         </OverviewDiv>
       ) : ''}
