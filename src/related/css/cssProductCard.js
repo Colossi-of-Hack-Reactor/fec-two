@@ -27,12 +27,9 @@ const RightActionBut = styled.div`
 
 const UnisizeImg = styled.img`
   border-radius: 5px;
-  max-height: 200px;
-  min-width: 200px;
-  max-width: 200px;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
-  height: auto;
-  width: auto;
   align-self:end;
 `;
 
