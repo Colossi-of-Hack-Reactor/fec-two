@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
+const expressStaticGzip = require('express-static-gzip');
 const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
@@ -18,7 +19,14 @@ app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-app.use(express.static(path.join(__dirname, '../public/')));
+// app.use(express.static(path.join(__dirname, '../public/')));
+
+app.use(expressStaticGzip(path.join(__dirname, '../public/')));
+app.get('*.js', (req, res, next) => {
+  req.url += '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
 
 app.get('/products', productsAPI.getProducts);
 app.get('/products/:product_id', productsAPI.getProduct);
@@ -34,7 +42,7 @@ app.post('/qa/questions/:question_id/answers', questionsAPI.addAnswer);
 app.post('/qa/questions/', questionsAPI.postQuestion);
 
 /* API for Ratings */
-app.get('/reviews/', ratingsAPI.getReviews);
+app.get('/reviews', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
 app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);

@@ -8,7 +8,7 @@ const headers = {
 
 /* *******Get Ratings and Reviews Model + Route******* */
 exports.getReviews = (req, res) => {
-  axios.get(`${baseURL}/reviews/`, { headers, params: req.query })
+  axios.get(`${baseURL}/reviews`, { headers, params: req.query })
     .then((response) => {
       res.status(200).send(response.data.results);
     })
