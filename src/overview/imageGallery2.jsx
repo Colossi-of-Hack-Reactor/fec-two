@@ -45,6 +45,7 @@ function ImageGallery(props) {
               cur="w-resize"
               zidx={2}
               data-testid="leftArrow"
+              alt="previous image"
             />
           </ArrowContainer>
         </ArrowDiv>
@@ -56,6 +57,7 @@ function ImageGallery(props) {
               cur="e-resize"
               zidx={2}
               data-testid="rightArrow"
+              alt="next image"
             />
           </ArrowContainer>
         </ArrowDiv>

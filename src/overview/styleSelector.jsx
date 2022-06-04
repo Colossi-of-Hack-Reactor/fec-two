@@ -23,6 +23,7 @@ function StyleSelector(props) {
                 src={s.photos[0].thumbnail_url}
                 onClick={() => setStyle(i)}
                 data-testid={`style-${i}`}
+                alt={s.name}
               />
               {i === style
                 ? (

@@ -39,7 +39,7 @@ export default function Ratings(props) {
 
   useEffect(() => {
     setLoading((a) => a + 1);
-    axios.get('/reviews/', {
+    axios.get('/reviews', {
       params: {
         count, page, sort, product_id
       },
@@ -58,7 +58,7 @@ export default function Ratings(props) {
 
   useEffect(() => {
     setLoading((a) => a + 1);
-    axios.get('/reviews/', {
+    axios.get('/reviews', {
       params: {
         count, page, sort, product_id
       },

@@ -337,7 +337,8 @@ const BagButton = styled.button`
 `;
 
 const StarButton = styled.img`
-  height: 100%;
+  height: 35px;
+  width: 35px;
 `;
 
 const ReviewsSpan = styled.span`

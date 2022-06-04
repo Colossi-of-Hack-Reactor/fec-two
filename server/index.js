@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const compression = require('compression');
+const expressStaticGzip = require('express-static-gzip');
 const productsAPI = require('./productsAPI');
 const questionsAPI = require('./questionsAPI');
 const ratingsAPI = require('./ratingsAPI');
@@ -10,16 +12,20 @@ const searchAPI = require('./searchAPI');
 
 const app = express();
 
+app.use(compression());
 app.use(express.json());
 app.use(cors());
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
-app.use(express.static(path.join(__dirname, '../public/')));
+// app.use(express.static(path.join(__dirname, '../public/')));
 
-app.get('/', (req, res) => {
-  res.render(path.join(__dirname, '../public/index.html'));
+app.use(expressStaticGzip(path.join(__dirname, '../public/')));
+app.get('*.js', (req, res, next) => {
+  req.url += '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
 });
 
 app.get('/products', productsAPI.getProducts);
@@ -36,7 +42,7 @@ app.post('/qa/questions/:question_id/answers', questionsAPI.addAnswer);
 app.post('/qa/questions/', questionsAPI.postQuestion);
 
 /* API for Ratings */
-app.get('/reviews/', ratingsAPI.getReviews);
+app.get('/reviews', ratingsAPI.getReviews);
 app.get('/reviews/meta', ratingsAPI.getRatingsByProductId);
 app.post('/reviews', ratingsAPI.addReview);
 app.put('/reviews/:review_id/helpful', ratingsAPI.putReviewHelpful);
