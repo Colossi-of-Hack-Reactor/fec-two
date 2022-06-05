@@ -114,6 +114,20 @@ const addSKUs = function(sku) {
   });
 };
 
+const relatedSchema = new mongoose.Schema({
+  product_id: Number,
+  related: String,
+});
+
+const Relateds = mongoose.model('Relateds', relatedSchema);
+
+const addRelateds = function(product) {
+  return Relateds.create({
+    product_id: product.product_id,
+    related: product.related,
+  });
+};
+
 exports.getProducts = (req, res) => {
   axios.get(`${baseURL}/products`, { headers, params: req.query })
     .then((response) => {
@@ -219,9 +233,23 @@ exports.getStyles = (req, res) => {
 };
 
 exports.getRelated = (req, res) => {
+  const pid = req.params.product_id;
   axios.get(`${baseURL}/products/${req.params.product_id}/related`, { headers })
-    .then((response) => {
-      res.status(200).send(response.data);
+    .then((response) => (
+      addRelateds({
+        product_id: pid,
+        related: JSON.stringify(response.data),
+      })
+        .then(() => {
+          console.log(pid);
+        })
+        .catch((err) => {
+          console.log('error on ', pid);
+          console.log(err);
+        })
+    ))
+    .then(() => {
+      res.status(200).end();
     })
     .catch((err) => {
       res.status(404).send(err);

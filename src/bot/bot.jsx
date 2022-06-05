@@ -6,18 +6,22 @@ function Bot() {
   const [pid, setPid] = useState(37311);
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `/products/${pid}/styles`,
-    })
-      .then(() => {
-        setTimeout(() => {
-          setPid((p) => (p + 1));
-        }, 400);
+    if (pid <= 38321) {
+      axios({
+        method: 'get',
+        url: `/products/${pid}/related`,
       })
-      .catch((err) => {
-        console.log('axios get products error', err);
-      });
+        .then(() => {
+          setTimeout(() => {
+            setPid((p) => (p + 1));
+          }, 400);
+        })
+        .catch((err) => {
+          console.log('axios get products error', err);
+        });
+    } else {
+      console.log('DONE!');
+    }
   }, [pid]);
 
   return (
