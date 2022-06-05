@@ -1,11 +1,13 @@
 const axios = require('axios');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+
 const baseURL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rfe';
 const headers = {
   Authorization: process.env.GITHUBKEY,
 };
 
-mongoose.connect(`mongodb+srv://${process.env.mongoUN}:${process.env.mongoPW}@cluster0.y9iir.mongodb.net/fec?retryWrites=true&w=majority`);
+mongoose.connect(`mongodb+srv://${process.env.mongoUN}:${process.env.mongoPW}@cluster0.y9iir.mongodb.net/fec2?retryWrites=true&w=majority`);
+
 const productSchema = new mongoose.Schema({
   id: Number,
   campus: String,
@@ -17,6 +19,7 @@ const productSchema = new mongoose.Schema({
   created_at: String,
   updated_at: String,
 });
+
 const Product = mongoose.model('Products', productSchema);
 
 const addProduct = function(product) {
@@ -33,25 +36,81 @@ const addProduct = function(product) {
   });
 };
 
-const saleSchema = new mongoose.Schema({
+const featureSchema = new mongoose.Schema({
+  id: Number,
+  feature: String,
+  value: String,
+});
+
+const Feature = mongoose.model('Features', featureSchema);
+
+const addFeature = function(feature) {
+  return Feature.create({
+    id: feature.id,
+    feature: feature.feature,
+    value: feature.value,
+  });
+};
+
+const styleSchema = new mongoose.Schema({
   product_id: Number,
   style_id: Number,
   product_name: String,
   style_name: String,
   original_price: String,
   sale_price: String,
+  default: Boolean,
 });
 
-const Sales = mongoose.model('Sales2', saleSchema);
+const Styles = mongoose.model('Styles', styleSchema);
 
-const addSales = function(sale) {
-  return Sales.create({
-    product_id: sale.product_id,
-    style_id: sale.style_id,
-    product_name: sale.product_name,
-    style_name: sale.style_name,
-    original_price: sale.original_price,
-    sale_price: sale.sale_price,
+const addStyles = function(style) {
+  return Styles.create({
+    product_id: style.product_id,
+    style_id: style.style_id,
+    product_name: style.product_name,
+    style_name: style.style_name,
+    original_price: style.original_price,
+    sale_price: style.sale_price,
+    default: style.default,
+  });
+};
+
+const photoSchema = new mongoose.Schema({
+  product_id: Number,
+  style_id: Number,
+  thumbnail_url: String,
+  url: String,
+});
+
+const Photos = mongoose.model('Photos', photoSchema);
+
+const addPhotos = function(photo) {
+  return Photos.create({
+    product_id: photo.product_id,
+    style_id: photo.style_id,
+    thumbnail_url: photo.thumbnail_url,
+    url: photo.url,
+  });
+};
+
+const skuSchema = new mongoose.Schema({
+  product_id: Number,
+  style_id: Number,
+  sku_id: String,
+  quantity: Number,
+  size: String,
+});
+
+const SKUs = mongoose.model('SKUs', skuSchema);
+
+const addSKUs = function(sku) {
+  return SKUs.create({
+    product_id: sku.product_id,
+    style_id: sku.style_id,
+    sku_id: sku.id,
+    quantity: sku.quantity,
+    size: sku.size,
   });
 };
 
@@ -80,6 +139,20 @@ exports.getProducts = (req, res) => {
 exports.getProduct = (req, res) => {
   axios.get(`${baseURL}/products/${req.params.product_id}`, { headers })
     .then((response) => {
+      for (let i = 0; i < response.data.features.length; i++) {
+        const prod = {};
+        prod.id = response.data.id;
+        prod.feature = response.data.features[i].feature;
+        prod.value = response.data.features[i].value;
+        addFeature(prod)
+          .then(() => {
+            console.log(prod.id);
+          })
+          .catch(err => {
+            console.log('error on ', prod.id);
+            console.log(err);
+          });
+      }
       res.status(200).send(response.data);
     })
     .catch((err) => {
@@ -88,35 +161,57 @@ exports.getProduct = (req, res) => {
 };
 
 exports.getStyles = (req, res) => {
-  axios.get(`${baseURL}/products/${req.params.product_id}/styles`, { headers })
+  let productName;
+  const pid = req.params.product_id;
+
+  Product.find({ id: pid }, 'name')
+    .then((data) => {
+      productName = data[0].name;
+      return axios.get(`${baseURL}/products/${req.params.product_id}/styles`, { headers });
+    })
     .then((response) => {
-      const pid = response.data.product_id;
       const styles = response.data.results;
-      let productName;
       for (let i = 0; i < styles.length; i++) {
-        if (styles[i].sale_price) {
-          Product.find({id: pid}, 'name')
-            .then((data) => {
-              productName = data[0].name;
-              return addSales({
-                product_id: pid,
-                style_id: styles[i].style_id,
-                product_name: productName,
-                style_name: styles[i].name,
-                original_price: styles[i].original_price,
-                sale_price: styles[i].sale_price,
-              })
-            })
-            .then(() => {
-              console.log(pid);
-            })
-            .catch(err => {
-              console.log('error on ', pid);
-              console.log(err);
+        addStyles({
+          product_id: pid,
+          style_id: styles[i].style_id,
+          product_name: productName,
+          style_name: styles[i].name,
+          original_price: styles[i].original_price,
+          sale_price: styles[i].sale_price,
+          default: styles[i]['default?'],
+        }).then(() => {
+          for (let j = 0; j < styles[i].photos.length; j++) {
+            addPhotos({
+              product_id: pid,
+              style_id: styles[i].style_id,
+              thumbnail_url: styles[i].photos[j].thumbnail_url,
+              url: styles[i].photos[j].url,
             });
-        }
+          }
+        }).then(() => {
+          const sku_ids = Object.keys(styles[i].skus);
+          for (let k = 0; k < sku_ids.length; k++) {
+            addSKUs({
+              product_id: pid,
+              style_id: styles[i].style_id,
+              sku_id: sku_ids[k],
+              quantity: styles[i].skus[sku_ids[k]].quantity,
+              size: styles[i].skus[sku_ids[k]].size,
+            });
+          }
+        })
+          .then(() => {
+            console.log(pid);
+          })
+          .catch(err => {
+            console.log('error on ', pid);
+            console.log(err);
+          });
       }
-      res.status(200).send(response.data.results);
+    })
+    .then(() => {
+      res.status(200).end();
     })
     .catch((err) => {
       res.status(404).send(err);
