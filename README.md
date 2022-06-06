@@ -1,7 +1,5 @@
 # Front End Capstone
-## Project Atelier
-### Code of Conduct
-
+## Project Atelier / Colossus of Clothes
 
 ### Setup Instructions
 1. Install yarn globally via npm:
@@ -17,17 +15,22 @@
 
 3. Make a copy of example.env, rename it to .env, and change the values of the properties in the file as desired/necessary.
 
-///PENDING REVIEW////
-4. Render the client side in the browser via:
+4. Build the webpack bundle:
 
   ```
-  $yarn dev
+  $yarn build
   ```
 
-5. To run tests:
+5. Start the server:
+
+  ```
+  $yarn server
+  ```
+
+6. The website should now be accessible (by default at port 3000, e.g., https://localhost:3000).
+
+7. To run tests:
 
   ```
   $yarn test
   ```
-
-///PENDING REVIEW ^^^////
